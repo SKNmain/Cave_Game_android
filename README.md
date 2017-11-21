@@ -16,5 +16,5 @@ Do Zrobienia:
 6. save
 7. LV(dodawanie punktów do atrybutów)
 8. Gnerowanie mapy
-9. pułabki
+9. pułapki
 10. Bonusowe mapy
