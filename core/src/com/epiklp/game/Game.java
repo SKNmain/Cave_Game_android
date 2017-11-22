@@ -2,9 +2,7 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -107,14 +105,14 @@ public class Game extends ApplicationAdapter implements Interface {
 
 			}
 		});
-		//textureGame.draw();
+		//textureGame.drawHUD();
 		tmr.render();
 		batch.begin();
 		batch.draw(playerText,player.getPosition().x-0.8f, player.getPosition().y - 1.5f, 108/SCALE/PPM, 192/SCALE/PPM);
 		batch.end();
 		b2dr.render(world, camera.combined.scl(PPM));
 		controller.draw();
-		ui.draw(hero.getLive(), hero.getMagic(), player.getPosition().x, player.getPosition().y);
+		ui.drawHUD(hero.getLive(), hero.getMagic(), player.getPosition().x, player.getPosition().y);
 	}
 	public void update(float delta)
 	{
@@ -200,7 +198,7 @@ public class Game extends ApplicationAdapter implements Interface {
 		}
 
 
-		if(controller.isDownPressed())
+		if(controller.isAttackPressed())
 			hero.setLive(-3);
 	}
 
