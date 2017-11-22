@@ -18,3 +18,4 @@ Do Zrobienia:
 8. Gnerowanie mapy
 9. pułapki
 10. Bonusowe mapy
+11. Efekty dźwiękowe / dźwięk
