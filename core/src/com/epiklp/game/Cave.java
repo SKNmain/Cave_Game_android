@@ -9,12 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 
 public class Cave extends Game{
-    public SpriteBatch batch;
-    public Stage stage;
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        stage = new Stage();
         this.setScreen(new Menu(this));
     }
 
