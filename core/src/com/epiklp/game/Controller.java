@@ -9,9 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-/**
- * Created by epiklp on 18.11.17.
- */
+
 
 public class Controller implements Interface {
     private Stage stage;

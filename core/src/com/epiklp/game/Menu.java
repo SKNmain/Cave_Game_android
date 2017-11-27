@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 
-/**
- * Created by epiklp on 22.11.17.
- */
 
 class Menu implements Screen {
     final Cave cave;

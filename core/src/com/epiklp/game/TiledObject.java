@@ -15,9 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 
-/**
- * Created by epiklp on 19.11.17.
- */
 
 public class TiledObject {
     public static Array<Body> parseTiledObjectLayer(World world, MapObjects objects) {

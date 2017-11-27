@@ -27,10 +27,6 @@ import com.badlogic.gdx.utils.Array;
 
 import box2dLight.RayHandler;
 
-/**
- * Created by epiklp on 27.11.17.
- */
-
 class GameScreen implements Screen, Interface {
     final Cave cave;
 
@@ -55,7 +51,7 @@ class GameScreen implements Screen, Interface {
     private Hero hero;
     private Array<Body> bodies;
 
-//    private RayHandler rayHandler;
+    private RayHandler rayHandler;
 
     public GameScreen(Cave cave) {
         this.cave = cave;
@@ -83,7 +79,7 @@ class GameScreen implements Screen, Interface {
 
         bodies = TiledObject.parseTiledObjectLayer(world, map.getLayers().get("collision").getObjects());
 
-        //rayHandler = new RayHandler(world);
+        rayHandler = new RayHandler(world);
 
     }
 
@@ -227,7 +223,7 @@ class GameScreen implements Screen, Interface {
 
     @Override
     public void dispose() {
-//        rayHandler.dispose();
+        rayHandler.dispose();
         world.dispose();
         b2dr.dispose();
         batch.dispose();

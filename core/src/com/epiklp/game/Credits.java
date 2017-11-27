@@ -11,9 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
-/**
- * Created by epiklp on 27.11.17.
- */
 
 class Credits implements Screen, Interface {
     final Cave cave;

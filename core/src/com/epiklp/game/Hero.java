@@ -1,8 +1,5 @@
 package com.epiklp.game;
 
-/**
- * Created by epiklp on 14.11.17.
- */
 
 public class Hero implements Interface {
 

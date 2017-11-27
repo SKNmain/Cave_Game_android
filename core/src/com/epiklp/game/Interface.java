@@ -1,10 +1,5 @@
 package com.epiklp.game;
 
-import com.badlogic.gdx.Gdx;
-
-/**
- * Created by epiklp on 18.11.17.
- */
 
 public interface Interface {
     int width = 1280;

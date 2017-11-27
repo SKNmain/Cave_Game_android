@@ -2,10 +2,6 @@ package com.epiklp.game.enemies;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
-/**
- * Created by epiklp on 19.11.17.
- */
-
 public abstract class Enemy {
     private float strengh;
     private float life;
