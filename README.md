@@ -1,5 +1,5 @@
 # Cave_Game_android
-First our Project on libgdx
+Our first Project on libgdx
 
 science club activity
 
