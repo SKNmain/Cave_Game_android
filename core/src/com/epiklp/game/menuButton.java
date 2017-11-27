@@ -65,10 +65,11 @@ public class menuButton extends InputListener{
 
         tbr = new Table();
         tbr.bottom().left();
+        tbr.row().padBottom(10);
         tbr.add(playImage).size(playImage.getWidth(), playImage.getHeight());
-        tbr.padBottom(10);
+        tbr.row().padBottom(10);
         tbr.add(continueImage).size(playImage.getWidth(), playImage.getHeight());
-        tbr.padBottom(10);
+        tbr.row().padBottom(10);
         tbr.add(creditImage).size(playImage.getWidth(), playImage.getHeight());
 
         stage.addActor(tbr);

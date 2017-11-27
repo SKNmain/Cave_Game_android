@@ -37,16 +37,16 @@ class Menu implements Screen {
     {
         if(menu.getPlayPress())
         {
-            cave.setScreen(new GameScrean(cave));
+            cave.setScreen(new GameScreen(cave));
             dispose();
         }
         if(menu.getContinuePress())
         {
-
         }
         if(menu.getCreditPress())
         {
-
+            cave.setScreen(new Credits(cave));
+            dispose();
         }
     }
 

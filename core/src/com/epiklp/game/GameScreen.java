@@ -2,6 +2,7 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,11 +25,13 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+import box2dLight.RayHandler;
+
 /**
  * Created by epiklp on 27.11.17.
  */
 
-class GameScrean implements Screen, Interface {
+class GameScreen implements Screen, Interface {
     final Cave cave;
 
     private OrthographicCamera camera;
@@ -50,9 +53,11 @@ class GameScrean implements Screen, Interface {
 
     //hero
     private Hero hero;
-    Array<Body> bodies;
+    private Array<Body> bodies;
 
-    public GameScrean(Cave cave) {
+//    private RayHandler rayHandler;
+
+    public GameScreen(Cave cave) {
         this.cave = cave;
 
         camera = new OrthographicCamera(width/PPM/SCALE, height/PPM/SCALE);
@@ -62,7 +67,7 @@ class GameScrean implements Screen, Interface {
         controller = new Controller();
         ui = new UI();
 
-        world = new World(new Vector2(0,-10),false);
+        world = new World(new Vector2(0,-10),true);
 
         b2dr = new Box2DDebugRenderer();
         //rayHandler = new RayHandler(world);
@@ -77,6 +82,9 @@ class GameScrean implements Screen, Interface {
         tmr = new OrthogonalTiledMapRenderer(map, 0.062f);
 
         bodies = TiledObject.parseTiledObjectLayer(world, map.getLayers().get("collision").getObjects());
+
+        //rayHandler = new RayHandler(world);
+
     }
 
     @Override
@@ -219,6 +227,7 @@ class GameScrean implements Screen, Interface {
 
     @Override
     public void dispose() {
+//        rayHandler.dispose();
         world.dispose();
         b2dr.dispose();
         batch.dispose();
