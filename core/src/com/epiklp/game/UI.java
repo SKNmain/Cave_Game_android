@@ -48,7 +48,7 @@ public class UI implements Interface{
         return tmp;
     }
 
-    public void drawHUD(int live, int magic, float x, float y)
+    public void draw(int live, int magic, float x, float y)
     {
         update(live, magic);
         batch.begin();

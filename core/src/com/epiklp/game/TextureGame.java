@@ -1,13 +1,9 @@
 package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 /**
@@ -27,11 +23,10 @@ public class TextureGame implements Interface {
         for(int i=0; i<9; i++) {
             tmp = "layer/" + (i+1) + ".png";
             LayerImage[i] = new Image(new Texture(Gdx.files.internal(tmp)));
-            LayerImage[i].setWidth(width*SCALE);
-            LayerImage[i].setHeight(height*SCALE);
+            LayerImage[i].setWidth(width);
+            LayerImage[i].setHeight(height);
             stage.addActor(LayerImage[i]);
         }
-        stage.getCamera().position.y = height/SCALE + 26;
     }
 
     public void draw()

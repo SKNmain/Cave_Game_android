@@ -58,7 +58,7 @@ public class BodyEditorLoader {
      * located at the bottom left corner of the image. This reference point
      * will be put right over the BodyDef position point. Therefore, you should
      * place this reference point carefully to let you place your body in your
-     * world easily with its BodyDef.position point. Note that to drawHUD an image
+     * world easily with its BodyDef.position point. Note that to draw an image
      * at the position of your body, you will need to know this reference point
      * (see {@link #getOrigin(java.lang.String, float)}.
      * <br/><br/>
