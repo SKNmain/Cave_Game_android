@@ -139,7 +139,6 @@ class GameScreen implements Screen{
         controller.draw();
 
 
-        Gdx.app.debug("Hero life", Integer.toString(hero.getLife()));
 
         ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
     }
@@ -147,7 +146,6 @@ class GameScreen implements Screen{
     private void checkEndGame() {
         if(hero.isDead()) {
             cave.setScreen(new EndScreen(cave));
-            Gdx.app.debug("Is dead", "Game over");
         }
     }
 

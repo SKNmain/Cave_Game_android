@@ -38,22 +38,18 @@ class Menu implements Screen {
 
     private void update(float delta) {
         if(menu.getPlayPress()) {
-            Gdx.app.debug("Menu", "Przcycisk nowa gra");
             cave.setScreen(new GameScreen(cave));
             dispose();
         }
         if(menu.getContinuePress()) {
-            Gdx.app.debug("Menu", "Przcycisk kontynuuj");
         }
         if(menu.getCreditPress()) {
-            Gdx.app.debug("Menu", "Przcycisk autorzy");
             cave.setScreen(new CreditsScreen(cave));
             dispose();
         }
         if(menu.getQuitPress()){
-            Gdx.app.debug("Menu", "Przycisk wyjscia z gry");
             dispose();
-         //   Gdx.app.exit();
+           Gdx.app.exit();
         }
     }
 
