@@ -1,8 +1,15 @@
 package com.epiklp.game.actors;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.epiklp.game.Cave;
+
+import javax.xml.soap.Text;
 
 /**
  * Created by Asmei on 2017-11-27.
@@ -14,7 +21,7 @@ public abstract class GameActor extends Actor{
     protected int life;
     protected float speedWalk;
     protected String name;
-
+    protected Texture texture = new Texture(Gdx.files.internal("character/1.png"));
     protected Body body;
     protected Sprite sprite;
 
@@ -22,7 +29,11 @@ public abstract class GameActor extends Actor{
     public float getSpeedWalk() {
         return speedWalk;
     }
-
+    @Override
+    public void draw(Batch batch, float parentAlpha){
+        batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a * parentAlpha);
+        batch.draw(texture,body.getPosition().x-0.8f, body.getPosition().y - 1.5f, 108/ Cave.SCALE/Cave.PPM, 192/Cave.SCALE/Cave.PPM);
+    }
     public void setSpeedWalk(float speedWalk) {
         this.speedWalk = speedWalk;
     }
@@ -58,7 +69,6 @@ public abstract class GameActor extends Actor{
     public void setLife(int life) {
         this.life += life;
     }
-
 
     public String getName() {
         return name;

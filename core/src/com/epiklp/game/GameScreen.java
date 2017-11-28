@@ -23,15 +23,21 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.epiklp.game.actors.Hero;
 
 /**
  * Created by epiklp on 27.11.17.
+ *
+ * Stage dla controllera
  */
 
 class GameScreen implements Screen{
     final Cave cave;
+
+    private Stage stage;
 
     private OrthographicCamera camera;
     private Controller controller;
@@ -58,11 +64,10 @@ class GameScreen implements Screen{
 
     public GameScreen(Cave cave) {
         this.cave = cave;
-
-
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
         camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
                                         Cave.HEIGHT/Cave.PPM/Cave.SCALE);
-        hero = new Hero();
 
         //	textureGame = new TextureGame();
         controller = new Controller();
@@ -74,9 +79,11 @@ class GameScreen implements Screen{
         //rayHandler = new RayHandler(world);
 
 
-
+        hero = new Hero();
         hero.setBody(createBox(400, 300,28f , 48, false));
         hero.setSprite(new Sprite(new Texture("character/1.png")));
+        stage.addActor(hero);
+
         batch = new SpriteBatch();
 
 
@@ -124,18 +131,15 @@ class GameScreen implements Screen{
         });
 
         checkEndGame();
-
         //textureGame.draw();
         tmr.render();
-        batch.begin();
-        batch.draw(hero.getSprite(),hero.getBody().getPosition().x-0.8f, hero.getBody().getPosition().y - 1.5f, 108/Cave.SCALE/Cave.PPM, 192/Cave.SCALE/Cave.PPM);
-        batch.end();
-        b2dr.render(world, camera.combined.scl(Cave.PPM));
+        b2dr.render(world, camera.combined/*.scl(Cave.PPM)*/);
         controller.draw();
-
-
-
         ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+
+
+        stage.act();
+        stage.draw();
     }
 
     private void checkEndGame() {

@@ -1,6 +1,9 @@
 package com.epiklp.game.actors;
 
 
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.epiklp.game.Cave;
+
 /**
  * Created by epiklp on 14.11.17.
  */
