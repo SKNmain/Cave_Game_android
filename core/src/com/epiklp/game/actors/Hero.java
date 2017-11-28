@@ -10,6 +10,12 @@ public class Hero extends GameActor {
     private int magic;
     private boolean ground = false;
 
+    public Hero() {
+        this.life = 100;
+        this.magic = 100;
+        this.speedWalk = 3f;
+    }
+
     public Hero(int life, int magic, float speedWalk)
     {
         this.life = life;

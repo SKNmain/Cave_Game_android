@@ -31,10 +31,6 @@ import com.epiklp.game.actors.Hero;
  */
 
 class GameScreen implements Screen{
-    private static int tempLifeHero = 100;
-    private static int tempMagicHero = 100;
-    private static float tempSpeedHero = 3f;
-
     final Cave cave;
 
     private OrthographicCamera camera;
@@ -63,11 +59,10 @@ class GameScreen implements Screen{
     public GameScreen(Cave cave) {
         this.cave = cave;
 
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
                                         Cave.HEIGHT/Cave.PPM/Cave.SCALE);
-        hero = new Hero(tempLifeHero, tempMagicHero, tempSpeedHero);
+        hero = new Hero();
 
         //	textureGame = new TextureGame();
         controller = new Controller();

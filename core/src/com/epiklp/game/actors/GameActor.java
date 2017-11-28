@@ -2,12 +2,13 @@ package com.epiklp.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
 /**
  * Created by Asmei on 2017-11-27.
  */
 
-public abstract class GameActor {
+public abstract class GameActor extends Actor{
 
     protected float strengh;
     protected int life;
