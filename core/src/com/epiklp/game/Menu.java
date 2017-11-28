@@ -2,6 +2,12 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 
 /**
@@ -11,13 +17,13 @@ import com.badlogic.gdx.Screen;
 class Menu implements Screen {
     final Cave cave;
     private TextureGame textMenu;
-    private menuButton menu;
+    private MenuButtons menu;
 
     public Menu(final Cave cave) {
         this.cave = cave;
 
         textMenu = new TextureGame();
-        menu = new menuButton();
+        menu = new MenuButtons();
     }
 
     @Override
@@ -33,20 +39,24 @@ class Menu implements Screen {
 
     }
 
-    private void update(float delta)
-    {
-        if(menu.getPlayPress())
-        {
+    private void update(float delta) {
+        if(menu.getPlayPress()) {
+            Gdx.app.debug("Menu", "Przcycisk nowa gra");
             cave.setScreen(new GameScreen(cave));
             dispose();
         }
-        if(menu.getContinuePress())
-        {
+        if(menu.getContinuePress()) {
+            Gdx.app.debug("Menu", "Przcycisk kontynuuj");
         }
-        if(menu.getCreditPress())
-        {
-            cave.setScreen(new Credits(cave));
+        if(menu.getCreditPress()) {
+            Gdx.app.debug("Menu", "Przcycisk autorzy");
+            cave.setScreen(new CreditsScreen(cave));
             dispose();
+        }
+        if(menu.getQuitPress()){
+            Gdx.app.debug("Menu", "Przycisk wyjscia z gry");
+            dispose();
+         //   Gdx.app.exit();
         }
     }
 
@@ -74,5 +84,116 @@ class Menu implements Screen {
     public void dispose() {
         textMenu.dispose();
         menu.dispose();
+    }
+
+    /**
+     * Created by epiklp on 22.11.17.
+     */
+
+    public static class MenuButtons extends InputListener {
+        private Stage stage;
+        private Image playImage, creditImage, continueImage, quitImage;
+        private Boolean playPress, creditPress, continuePress, quitPress;
+
+        private Table tbr;
+
+        public MenuButtons()
+        {
+            stage = new Stage();
+            Gdx.input.setInputProcessor(stage);
+            playPress = creditPress = continuePress = quitPress = false;
+            playImage = new Image(new Texture("MenuButtons/button_play.png"));
+            playImage.addListener(new InputListener(){
+                @Override
+                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                                    playPress = true;
+                                    return true;
+                                }
+
+                                @Override
+                                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                                    playPress = false;
+                                }
+            });
+            continueImage = new Image(new Texture("MenuButtons/button_continue.png"));
+            continueImage.addListener(new InputListener(){
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    continuePress = true;
+                    return true;
+                }
+
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    continuePress = false;
+                }
+            });
+            creditImage = new Image(new Texture("MenuButtons/button_credit.png"));
+            creditImage.addListener(new InputListener(){
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    creditPress = true;
+                    return true;
+                }
+
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    creditPress = false;
+                }
+            });
+            quitImage = new Image(new Texture("MenuButtons/button_quit.png"));
+            quitImage.addListener(new InputListener(){
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    quitPress = true;
+                    return true;
+                }
+            });
+
+            tbr = new Table();
+            tbr.bottom().left();
+            tbr.row().padBottom(10);
+            tbr.add(playImage).size(playImage.getWidth(), playImage.getHeight());
+            tbr.row().padBottom(10);
+            tbr.add(continueImage).size(continueImage.getWidth(), continueImage.getHeight());
+            tbr.row().padBottom(10);
+            tbr.add(creditImage).size(creditImage.getWidth(), creditImage.getHeight());
+            tbr.row().padBottom(10);
+            tbr.add(quitImage).size(quitImage.getWidth(), quitImage.getHeight());
+
+            stage.addActor(tbr);
+
+        }
+
+        public void draw()
+        {
+            stage.act();
+            stage.draw();
+        }
+
+        public void dispose()
+        {
+            stage.dispose();
+        }
+
+        public Boolean getPlayPress() {
+            return playPress;
+        }
+
+        public Boolean getCreditPress() {
+            return creditPress;
+        }
+
+        public Boolean getContinuePress() {
+            return continuePress;
+        }
+
+        public Boolean getQuitPress() {
+            return quitPress;
+        }
+
+        public void setQuitPress(Boolean quitPress) {
+            this.quitPress = quitPress;
+        }
     }
 }

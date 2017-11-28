@@ -1,8 +1,8 @@
 package com.epiklp.game;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,14 +24,17 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-
-import box2dLight.RayHandler;
+import com.epiklp.game.actors.Hero;
 
 /**
  * Created by epiklp on 27.11.17.
  */
 
-class GameScreen implements Screen, Interface {
+class GameScreen implements Screen{
+    private static int tempLifeHero = 100;
+    private static int tempMagicHero = 100;
+    private static float tempSpeedHero = 3f;
+
     final Cave cave;
 
     private OrthographicCamera camera;
@@ -60,8 +63,11 @@ class GameScreen implements Screen, Interface {
     public GameScreen(Cave cave) {
         this.cave = cave;
 
-        camera = new OrthographicCamera(width/PPM/SCALE, height/PPM/SCALE);
-        hero = new Hero();
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
+        camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
+                                        Cave.HEIGHT/Cave.PPM/Cave.SCALE);
+        hero = new Hero(tempLifeHero, tempMagicHero, tempSpeedHero);
 
         //	textureGame = new TextureGame();
         controller = new Controller();
@@ -74,9 +80,10 @@ class GameScreen implements Screen, Interface {
 
 
 
-        player = CreateBox(400, 300,28f , 48, false);
+        hero.setBody(createBox(400, 300,28f , 48, false));
+        hero.setSprite(new Sprite(new Texture("character/1.png")));
         batch = new SpriteBatch();
-        playerText = new Sprite(new Texture("character/1.png"));
+
 
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 0.062f);
@@ -120,15 +127,30 @@ class GameScreen implements Screen, Interface {
 
             }
         });
+
+        checkEndGame();
+
         //textureGame.draw();
         tmr.render();
         batch.begin();
-        batch.draw(playerText,player.getPosition().x-0.8f, player.getPosition().y - 1.5f, 108/SCALE/PPM, 192/SCALE/PPM);
+        batch.draw(hero.getSprite(),hero.getBody().getPosition().x-0.8f, hero.getBody().getPosition().y - 1.5f, 108/Cave.SCALE/Cave.PPM, 192/Cave.SCALE/Cave.PPM);
         batch.end();
-        b2dr.render(world, camera.combined.scl(PPM));
+        b2dr.render(world, camera.combined.scl(Cave.PPM));
         controller.draw();
-        ui.draw(hero.getLive(), hero.getMagic(), player.getPosition().x, player.getPosition().y);
+
+
+        Gdx.app.debug("Hero life", Integer.toString(hero.getLife()));
+
+        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
     }
+
+    private void checkEndGame() {
+        if(hero.isDead()) {
+            cave.setScreen(new EndScreen(cave));
+            Gdx.app.debug("Is dead", "Game over");
+        }
+    }
+
     public void update(float delta)
     {
         world.step(1/60f, 6, 2);
@@ -139,40 +161,39 @@ class GameScreen implements Screen, Interface {
     }
 
     private void cameraUpdate() {
-        Vector3 poition = camera.position;
-        poition.x = player.getPosition().x;
-        poition.y = player.getPosition().y;//height/PPM/4;
-        camera.position.set(poition);
+        Vector3 position = camera.position;
+        position.x = hero.getBody().getPosition().x;
+        position.y = hero.getBody().getPosition().y;//HEIGHT/PPM/4;
+        camera.position.set(position);
         camera.update();
     }
 
-    private Body CreateBox(int x, int y, float width, float height, boolean isStatic) {
+    private Body createBox(int x, int y, float width, float height, boolean isStatic) {
         Body pBody;
         BodyDef def = new BodyDef();
         if(isStatic) def.type = BodyDef.BodyType.StaticBody;
         else def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(x/PPM, y/PPM);
+        def.position.set(x/Cave.PPM, y/Cave.PPM);
         def.fixedRotation = true;
         pBody = world.createBody(def);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/PPM,height/PPM);
+        shape.setAsBox(width/Cave.PPM,height/Cave.PPM);
 
         pBody.createFixture(shape,1).setUserData("player");
         shape.dispose();
         return pBody;
     }
 
-
     private void inputUpdate() {
 
         if(Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
-                playerText.setFlip(true, false);
-                if (horizontalForce > -(hero.getspeedWalk()))
+                hero.getSprite().setFlip(true, false);
+                if (horizontalForce > -(hero.getSpeedWalk()))
                     horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
-                playerText.setFlip(false, false);
-                if (horizontalForce < (hero.getspeedWalk()))
+                hero.getSprite().setFlip(false, false);
+                if (horizontalForce < (hero.getSpeedWalk()))
                     horizontalForce += 0.4f;
             }
         }
@@ -193,16 +214,16 @@ class GameScreen implements Screen, Interface {
             }
         }
 
-        player.setLinearVelocity(horizontalForce, player.getLinearVelocity().y);
+        hero.getBody().setLinearVelocity(horizontalForce, hero.getBody().getLinearVelocity().y);
 
         if (controller.isUpPressed() && hero.getGround())
         {
-            player.setLinearVelocity(0, 7);
+            hero.getBody().setLinearVelocity(0, 7);
         }
 
 
         if(controller.isDownPressed())
-            hero.setLive(-3);
+            hero.setLife(-3);
     }
 
     @Override
@@ -238,24 +259,4 @@ class GameScreen implements Screen, Interface {
         map.dispose();
     }
 
-    public Body createwithJson()
-    {
-        BodyEditorLoader loader = new BodyEditorLoader(
-                Gdx.files.internal("jon/punkty.json"));
-
-        // 1. Create a BodyDef, as usual.
-        BodyDef bd = new BodyDef();
-        bd.position.set(0, 0);
-        bd.type = BodyDef.BodyType.DynamicBody;
-        bd.fixedRotation = true;
-
-        // 2. Create a FixtureDef, as usual.
-        FixtureDef fd = new FixtureDef();
-        fd.density = 1;
-        fd.friction = 0.5f;
-        fd.restitution = 0.3f;
-        Body body = world.createBody(bd);
-        loader.attachFixture(body, "Name", fd, 1.7f);
-        return body;
-    }
 }

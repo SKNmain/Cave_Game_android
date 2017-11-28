@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
  * Created by epiklp on 27.11.17.
  */
 
-class Credits implements Screen, Interface {
+class CreditsScreen implements Screen{
     final Cave cave;
     private TextureGame textMenu;
     private Stage stage;
@@ -25,7 +25,7 @@ class Credits implements Screen, Interface {
     private Image backImage;
     private Boolean backPress;
 
-    public Credits(Cave cave) {
+    public CreditsScreen(Cave cave) {
         this.cave = cave;
         textMenu = new TextureGame();
         stage = new Stage();
@@ -33,7 +33,7 @@ class Credits implements Screen, Interface {
         bitmapFont = new BitmapFont();
         labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
         text = new Label("Autorzy:\n Rafal Rybowski\n Kamil Sykula", labelStyle);
-        text.setPosition(0, height/2);
+        text.setPosition(0, Cave.HEIGHT/2);
         text.setFontScale(5);
         stage.addActor(text);
         backPress = false;
@@ -46,7 +46,7 @@ class Credits implements Screen, Interface {
                 return true;
             }
         });
-        backImage.setPosition(width-backImage.getWidth(),0);
+        backImage.setPosition(Cave.WIDTH-backImage.getWidth(),0);
         stage.addActor(backImage);
     }
 

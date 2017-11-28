@@ -63,7 +63,7 @@ public class BodyEditorLoader {
      * (see {@link #getOrigin(java.lang.String, float)}.
      * <br/><br/>
      *
-     * Also, saved shapes are normalized. As shown in the tool, the width of
+     * Also, saved shapes are normalized. As shown in the tool, the WIDTH of
      * the image is considered to be always 1 meter. Thus, you need to provide
      * a scale factor so the polygons get resized according to your needs (not
      * every body is 1 meter large in your game, I guess).
@@ -71,7 +71,7 @@ public class BodyEditorLoader {
      * @param body The Box2d body you want to attach the fixture to.
      * @param name The name of the fixture you want to load.
      * @param fd The fixture parameters to apply to the created body fixture.
-     * @param scale The desired scale of the body. The default width is 1.
+     * @param scale The desired scale of the body. The default WIDTH is 1.
      */
     public void attachFixture(Body body, String name, FixtureDef fd, float scale) {
         RigidBodyModel rbModel = model.rigidBodies.get(name);

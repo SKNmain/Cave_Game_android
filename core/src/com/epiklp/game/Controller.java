@@ -2,6 +2,7 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,20 +14,21 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
  * Created by epiklp on 18.11.17.
  */
 
-public class Controller implements Interface {
+public class Controller{
+    private static final float BUTTON_SIZE = Cave.WIDTH/10;
     private Stage stage;
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Table tabr;
 
     public Controller()
     {
-        stage = new Stage(new ExtendViewport(width, height));
+        stage = new Stage(new ExtendViewport(Cave.WIDTH, Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
         Table tabl = new Table();
         tabl.bottom().left();
         Image imu = new Image(new Texture("button/Up.png"));
-        imu.setSize(width/10,width/10);
+        imu.setSize(BUTTON_SIZE,BUTTON_SIZE);
         imu.addListener(new InputListener() {
 
                             @Override
@@ -42,7 +44,7 @@ public class Controller implements Interface {
                         });
 
         Image iml = new Image(new Texture("button/Left.png"));
-        iml.setSize(width/10,width/10);
+        iml.setSize(BUTTON_SIZE, BUTTON_SIZE);
         iml.addListener(new InputListener() {
 
                             @Override
@@ -62,9 +64,9 @@ public class Controller implements Interface {
         stage.addActor(tabl);
 
         tabr = new Table();
-        tabr.setPosition(width-(width/10)/2, (width/10));
+        tabr.setPosition(Cave.WIDTH-(Cave.WIDTH/10)/2, (Cave.WIDTH/10));
         Image imr = new Image(new Texture("button/Right.png"));
-        imr.setSize(width/10,width/10);
+        imr.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imr.addListener(new InputListener() {
 
                             @Override
@@ -80,7 +82,7 @@ public class Controller implements Interface {
                         });
 
         Image ime = new Image(new Texture("button/Attack.png"));
-        ime.setSize(width/10,width/10);
+        ime.setSize(BUTTON_SIZE, BUTTON_SIZE);
         ime.addListener(new InputListener() {
 
             @Override

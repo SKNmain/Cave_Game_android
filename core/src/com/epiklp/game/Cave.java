@@ -9,6 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  */
 
 public class Cave extends Game{
+    public static final int WIDTH   = 1280;
+    public static final int HEIGHT  = 720;
+    public static final int PPM     = 32;
+    public static final float SCALE = 2;
+
+
+
     @Override
     public void create() {
         this.setScreen(new Menu(this));

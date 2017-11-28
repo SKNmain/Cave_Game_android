@@ -53,8 +53,8 @@ public class TiledObject {
         for(int i=0; i<verticle.length/2; ++i)
         {
             worldVerticle[i] = new Vector2();
-            worldVerticle[i].x = verticle[i * 2] / Interface.PPM;
-            worldVerticle[i].y = verticle[i * 2 + 1] / Interface.PPM;
+            worldVerticle[i].x = verticle[i * 2] / Cave.PPM;
+            worldVerticle[i].y = verticle[i * 2 + 1] / Cave.PPM;
         }
 
         ChainShape cs = new ChainShape();
@@ -65,10 +65,10 @@ public class TiledObject {
     private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
         Rectangle rectangle = rectangleObject.getRectangle();
         PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / Interface.PPM*2,
-                (rectangle.y + rectangle.height * 0.5f ) / Interface.PPM*2);
-        polygon.setAsBox(rectangle.width * 0.5f / Interface.PPM*2,
-                rectangle.height * 0.5f / Interface.PPM*2,
+        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / Cave.PPM*2,
+                (rectangle.y + rectangle.height * 0.5f ) / Cave.PPM*2);
+        polygon.setAsBox(rectangle.width * 0.5f / Cave.PPM*2,
+                rectangle.height * 0.5f / Cave.PPM*2,
                 size,
                 0.0f);
         return polygon;
