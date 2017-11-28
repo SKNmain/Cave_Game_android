@@ -26,6 +26,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.actors.Hero;
 
 /**
@@ -55,7 +56,7 @@ class GameScreen implements Screen{
     private UI ui;
     private OrthogonalTiledMapRenderer tmr;
     private TiledMap map;
-
+    private Viewport viewport;
     //hero
     private Hero hero;
     private Array<Body> bodies;
@@ -64,11 +65,14 @@ class GameScreen implements Screen{
 
     public GameScreen(Cave cave) {
         this.cave = cave;
-        stage = new Stage(new ExtendViewport(Cave.WIDTH,Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
+
         camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
                                         Cave.HEIGHT/Cave.PPM/Cave.SCALE);
+        viewport = new ExtendViewport(Cave.WIDTH/Cave.PPM/Cave.SCALE,
+                Cave.HEIGHT/Cave.PPM/Cave.SCALE, camera);
 
+        stage = new Stage(viewport);
         //	textureGame = new TextureGame();
         controller = new Controller();
         ui = new UI();
@@ -224,6 +228,10 @@ class GameScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
+        //camera.viewportHeight = 30f * height/width;
+        //camera.viewportWidth = 30f;
+        //camera.update();
+        stage.getViewport().update(width,height);
 
     }
 
