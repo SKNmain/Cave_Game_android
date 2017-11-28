@@ -10,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
-/**
- * Created by epiklp on 18.11.17.
- */
+
 
 public class Controller{
     private static final float BUTTON_SIZE = Cave.WIDTH/10;

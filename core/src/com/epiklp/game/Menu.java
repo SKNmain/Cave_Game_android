@@ -10,9 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 
-/**
- * Created by epiklp on 22.11.17.
- */
 
 class Menu implements Screen {
     final Cave cave;

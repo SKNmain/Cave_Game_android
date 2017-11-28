@@ -1,12 +1,8 @@
 package com.epiklp.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 
-/**
- * Created by epiklp on 21.11.17.
- */
+
 
 public class Cave extends Game{
     public static final int WIDTH   = 1280;

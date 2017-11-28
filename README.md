@@ -1,5 +1,5 @@
 # Cave_Game_android
-First our Project on libgdx
+Our first Project on libgdx
 
 science club activity
 
@@ -8,7 +8,7 @@ Zrobione:
 2. podstawowy kontroler
 
 Do Zrobienia:
-1. Menu
+1. Menu +
 2. Boty/przeciwnik
 3. Światło
 4. Ekwipunek/Itemy
