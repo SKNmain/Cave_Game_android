@@ -64,7 +64,7 @@ class GameScreen implements Screen{
 
     public GameScreen(Cave cave) {
         this.cave = cave;
-        stage = new Stage();
+        stage = new Stage(new ExtendViewport(Cave.WIDTH,Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
         camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
                                         Cave.HEIGHT/Cave.PPM/Cave.SCALE);
@@ -79,9 +79,8 @@ class GameScreen implements Screen{
         //rayHandler = new RayHandler(world);
 
 
-        hero = new Hero();
+        hero = new Hero(new Sprite(new Texture("character/1.png")));
         hero.setBody(createBox(400, 300,28f , 48, false));
-        hero.setSprite(new Sprite(new Texture("character/1.png")));
         stage.addActor(hero);
 
         batch = new SpriteBatch();
