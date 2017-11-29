@@ -4,11 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -16,11 +14,13 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.epiklp.game.actors.Enemy;
+import com.epiklp.game.actors.GameActor;
+import com.epiklp.game.actors.FlameDemon;
 import com.epiklp.game.actors.Hero;
 
 /**
@@ -50,6 +50,8 @@ class GameScreen implements Screen{
     private Viewport viewport;
     //hero
     private Hero hero;
+    private GameActor enemy;
+    private Array<Enemy> enemies;
     private Array<Body> bodies;
 
 //    private RayHandler rayHandler;
@@ -68,8 +70,10 @@ class GameScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         //rayHandler = new RayHandler(world);
 
-
-        //hero = new Hero(new Sprite(new Texture("character/1.png")));
+        //enemies = new Array<Enemy>();
+        //stage.addActor(enemies.get(0));
+        enemy = new FlameDemon();
+        stage.addActor(enemy);
         hero = new Hero();
         stage.addActor(hero);
 
@@ -97,6 +101,10 @@ class GameScreen implements Screen{
         TheBox.world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
+                Body a = contact.getFixtureA().getBody();
+                Body b = contact.getFixtureB().getBody();
+     //           a.
+         //       if()
                 hero.setGround(true);
             }
 
@@ -185,7 +193,7 @@ class GameScreen implements Screen{
         hero.setSpeedX(horizontalForce);
         if (controller.isUpPressed() && hero.getGround())
         {
-            hero.setSpeedY(7);
+            hero.setSpeedY(7f);
         }
 
 

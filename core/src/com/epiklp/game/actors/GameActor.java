@@ -24,11 +24,6 @@ public abstract class GameActor extends Actor{
 
     public GameActor(Sprite sprite) {
         this.sprite = sprite;
-        //Set sprite size in Box2D cord and center origin it must stay with 108 and 192 - cause if we change a sprite, we change
-        //a size
-        sprite.setSize(108/Cave.SCALE, 192/Cave.SCALE);
-        sprite.setOrigin(108/2, 192/2);
-
     }
 
     public float getSpeedWalk() {

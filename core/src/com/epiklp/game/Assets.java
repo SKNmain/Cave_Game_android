@@ -22,6 +22,7 @@ public class Assets {
     public static final AssetManager manager = new AssetManager();
 
     public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/1.png", Texture.class);
+    public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9];
     public static BitmapFont character;
 

@@ -31,7 +31,7 @@ public class TheBox {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width/Cave.PPM,height/Cave.PPM);
 
-        pBody.createFixture(shape,1).setUserData("player");
+        pBody.createFixture(shape,1);//.setUserData("player");
         shape.dispose();
         return pBody;
     }

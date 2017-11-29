@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.epiklp.game.Assets;
+import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
 
 /**
@@ -19,6 +20,8 @@ public class Hero extends GameActor {
 
     public Hero() {
         super(new Sprite(Assets.manager.get(Assets.player)));
+        sprite.setSize(108/ Cave.SCALE, 192/Cave.SCALE);
+        sprite.setOrigin(108/2, 192/2);
         setBody(TheBox.createBox(400, 300,28f , 48, false));
 
         this.life = 100;
@@ -59,6 +62,6 @@ public class Hero extends GameActor {
         body.setLinearVelocity(speedX, body.getLinearVelocity().y);
     }
     public void setSpeedY(float speedY){
-        body.setLinearVelocity(body.getLinearVelocity().x, speedY);
+        body.setLinearVelocity(0, speedY);
     }
 }

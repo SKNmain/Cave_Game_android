@@ -1,6 +1,7 @@
 package com.epiklp.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.epiklp.game.Cave;
 
 /**
  * Created by epiklp on 19.11.17.
@@ -11,6 +12,7 @@ public class Enemy extends GameActor {
 
     public Enemy(Sprite sprite) {
         super(sprite);
+        sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
     }
 
     public float getChanceOfDrop() {
