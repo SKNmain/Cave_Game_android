@@ -127,7 +127,7 @@ class GameScreen implements Screen{
         checkEndGame();
         //textureGame.draw();
         tmr.render();
-        b2dr.render(world, camera.combined.scl(Cave.PPM));
+        b2dr.render(world, camera.combined/*.scl(Cave.PPM)*/);
 
         stage.act();
         stage.draw();

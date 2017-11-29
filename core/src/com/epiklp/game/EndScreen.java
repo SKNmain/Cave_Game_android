@@ -34,10 +34,9 @@ public class EndScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         bitmapFont = new BitmapFont();
-        labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        labelStyle = new Label.LabelStyle(Assets.character, Color.WHITE);
         text = new Label("GAME OVER!", labelStyle);
         text.setPosition(0, Cave.HEIGHT/2);
-        text.setFontScale(5);
         stage.addActor(text);
         backPress = false;
         backImage = new Image(new Texture("MenuButtons/button_quit.png"));
