@@ -38,14 +38,14 @@ class Menu implements Screen {
 
     private void update(float delta) {
         if(menu.getPlayPress()) {
-            cave.setScreen(new GameScreen(cave));
             dispose();
+            cave.setScreen(new GameScreen(cave));
         }
         if(menu.getContinuePress()) {
         }
         if(menu.getCreditPress()) {
-            cave.setScreen(new CreditsScreen(cave));
             dispose();
+            cave.setScreen(new CreditsScreen(cave));
         }
         if(menu.getQuitPress()){
             dispose();

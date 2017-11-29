@@ -68,7 +68,6 @@ class GameScreen implements Screen{
 
         Gdx.input.setInputProcessor(stage);
 
-        //	textureGame = new TextureGame();
         controller = new Controller();
         ui = new UI();
 
@@ -77,11 +76,10 @@ class GameScreen implements Screen{
         //rayHandler = new RayHandler(world);
 
 
-        hero = new Hero(new Sprite(new Texture("character/1.png")));
+        //hero = new Hero(new Sprite(new Texture("character/1.png")));
+        hero = new Hero(new Sprite(Assets.manager.get(Assets.player)));
         hero.setBody(createBox(400, 300,28f , 48, false));
         stage.addActor(hero);
-
-
 
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
@@ -159,7 +157,7 @@ class GameScreen implements Screen{
         position.x = hero.getBody().getPosition().x * Cave.PPM;
         position.y = hero.getBody().getPosition().y * Cave.PPM;//HEIGHT/PPM/4;
         camera.position.set(position);
-        camera.update();1
+        camera.update();
     }
 
     private Body createBox(int x, int y, float width, float height, boolean isStatic) {
@@ -247,7 +245,6 @@ class GameScreen implements Screen{
         world.dispose();
         b2dr.dispose();
         ui.dispose();
-        //textureGame.dispose();
         controller.dispose();
         tmr.dispose();
         map.dispose();

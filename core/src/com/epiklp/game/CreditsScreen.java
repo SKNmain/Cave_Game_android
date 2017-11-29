@@ -56,8 +56,8 @@ class CreditsScreen implements Screen{
     public void render(float delta) {
         if(backPress == true)
         {
-            cave.setScreen(new Menu(cave));
             dispose();
+            cave.setScreen(new Menu(cave));
         }
         textMenu.draw();
         stage.act();

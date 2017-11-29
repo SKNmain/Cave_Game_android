@@ -14,6 +14,11 @@ public class Cave extends Game{
 
     @Override
     public void create() {
+        Assets.load();
+        Assets.manager.finishLoading();
+        //z tego bedzie mozna zrobic pasek ładowania gdy bedzie wincej assetów
+    //    while(!Assets.manager.update())
+    //        System.out.println(Assets.manager.getProgress()*100 + "%");
         this.setScreen(new Menu(this));
     }
 
@@ -39,6 +44,7 @@ public class Cave extends Game{
 
     @Override
     public void dispose() {
-
+        super.dispose();
+        Assets.dispose();
     }
 }
