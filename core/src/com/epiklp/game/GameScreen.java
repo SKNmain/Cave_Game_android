@@ -78,7 +78,7 @@ class GameScreen implements Screen{
 
         //hero = new Hero(new Sprite(new Texture("character/1.png")));
         hero = new Hero(new Sprite(Assets.manager.get(Assets.player)));
-        hero.setBody(createBox(400, 300,28f , 48, false));
+        hero.setBody(PhysicCreator.createBox(world,400, 300,28f , 48, false));
         stage.addActor(hero);
 
         map = new TmxMapLoader().load("Map/map.tmx");
@@ -127,7 +127,7 @@ class GameScreen implements Screen{
         checkEndGame();
         //textureGame.draw();
         tmr.render();
-        b2dr.render(world, camera.combined/*.scl(Cave.PPM)*/);
+        b2dr.render(world, camera.combined.scl(Cave.PPM));
 
         stage.act();
         stage.draw();
@@ -160,21 +160,6 @@ class GameScreen implements Screen{
         camera.update();
     }
 
-    private Body createBox(int x, int y, float width, float height, boolean isStatic) {
-        Body pBody;
-        BodyDef def = new BodyDef();
-        if(isStatic) def.type = BodyDef.BodyType.StaticBody;
-        else def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(x/Cave.PPM, y/Cave.PPM);
-        def.fixedRotation = true;
-        pBody = world.createBody(def);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/Cave.PPM,height/Cave.PPM);
-
-        pBody.createFixture(shape,1).setUserData("player");
-        shape.dispose();
-        return pBody;
-    }
 
     private void inputUpdate() {
 
@@ -205,12 +190,10 @@ class GameScreen implements Screen{
                 horizontalForce = 0;
             }
         }
-
-        hero.getBody().setLinearVelocity(horizontalForce, hero.getBody().getLinearVelocity().y);
-
+        hero.setSpeedX(horizontalForce);
         if (controller.isUpPressed() && hero.getGround())
         {
-            hero.getBody().setLinearVelocity(0, 7);
+            hero.setSpeedY(7);
         }
 
 

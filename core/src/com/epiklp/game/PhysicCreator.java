@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -12,6 +13,21 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class PhysicCreator {
 
+    public static Body createBox(World world, int x, int y, float width, float height, boolean isStatic) {
+        Body pBody;
+        BodyDef def = new BodyDef();
+        if(isStatic) def.type = BodyDef.BodyType.StaticBody;
+        else def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(x/Cave.PPM, y/Cave.PPM);
+        def.fixedRotation = true;
+        pBody = world.createBody(def);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width/Cave.PPM,height/Cave.PPM);
+
+        pBody.createFixture(shape,1).setUserData("player");
+        shape.dispose();
+        return pBody;
+    }
 
 
     public static Body createwithJson(World world)

@@ -51,4 +51,10 @@ public class Hero extends GameActor {
         this.ground = ground;
     }
 
+    public void setSpeedX(float speedX){
+        body.setLinearVelocity(speedX, body.getLinearVelocity().y);
+    }
+    public void setSpeedY(float speedY){
+        body.setLinearVelocity(body.getLinearVelocity().x, speedY);
+    }
 }
