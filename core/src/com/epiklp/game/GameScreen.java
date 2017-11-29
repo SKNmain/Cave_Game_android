@@ -1,27 +1,21 @@
 package com.epiklp.game;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -46,7 +40,7 @@ class GameScreen implements Screen{
 
     //physic world 2D
     private Box2DDebugRenderer b2dr;
-    private World world;
+
     private float horizontalForce = 0;
 
     //texture && sprite && font && map
@@ -65,26 +59,24 @@ class GameScreen implements Screen{
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH/Cave.SCALE,Cave.HEIGHT/Cave.SCALE, camera);
         stage = new Stage(viewport);
-
+        TheBox.initWorld();
         Gdx.input.setInputProcessor(stage);
 
         controller = new Controller();
         ui = new UI();
 
-        world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
         //rayHandler = new RayHandler(world);
 
 
         //hero = new Hero(new Sprite(new Texture("character/1.png")));
-        hero = new Hero(new Sprite(Assets.manager.get(Assets.player)));
-        hero.setBody(PhysicCreator.createBox(world,400, 300,28f , 48, false));
+        hero = new Hero();
         stage.addActor(hero);
 
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
-        bodies = TiledObject.parseTiledObjectLayer(world, map.getLayers().get("collision").getObjects());
+        bodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
 
         //rayHandler = new RayHandler(world);
 
@@ -102,7 +94,7 @@ class GameScreen implements Screen{
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update(Gdx.graphics.getDeltaTime());
-        world.setContactListener(new ContactListener() {
+        TheBox.world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
                 hero.setGround(true);
@@ -127,7 +119,7 @@ class GameScreen implements Screen{
         checkEndGame();
         //textureGame.draw();
         tmr.render();
-        b2dr.render(world, camera.combined.scl(Cave.PPM));
+        b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
         stage.act();
         stage.draw();
@@ -145,7 +137,7 @@ class GameScreen implements Screen{
 
     public void update(float delta)
     {
-        world.step(1/60f, 6, 2);
+        TheBox.world.step(1/60f, 6, 2);
         inputUpdate();
         cameraUpdate();
         tmr.setView(camera);
@@ -225,7 +217,7 @@ class GameScreen implements Screen{
     @Override
     public void dispose() {
 //        rayHandler.dispose();
-        world.dispose();
+        TheBox.destroyWorld();
         b2dr.dispose();
         ui.dispose();
         controller.dispose();

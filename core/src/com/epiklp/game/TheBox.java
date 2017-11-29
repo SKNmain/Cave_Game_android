@@ -1,6 +1,7 @@
 package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -11,9 +12,15 @@ import com.badlogic.gdx.physics.box2d.World;
  * Created by Asmei on 2017-11-28.
  */
 
-public class PhysicCreator {
+public class TheBox {
+    public static World world;
 
-    public static Body createBox(World world, int x, int y, float width, float height, boolean isStatic) {
+    private TheBox(){}
+
+    public static void initWorld(){
+        world = new World(new Vector2(0, -10f), true);
+    }
+    public static Body createBox( int x, int y, float width, float height, boolean isStatic) {
         Body pBody;
         BodyDef def = new BodyDef();
         if(isStatic) def.type = BodyDef.BodyType.StaticBody;
@@ -30,7 +37,7 @@ public class PhysicCreator {
     }
 
 
-    public static Body createwithJson(World world)
+    public static Body createwithJson()
     {
         BodyEditorLoader loader = new BodyEditorLoader(
                 Gdx.files.internal("jon/punkty.json"));
@@ -51,4 +58,9 @@ public class PhysicCreator {
         return body;
     }
 
+    public static void destroyWorld(){
+        if(world!=null){
+            world.dispose();
+        }
+    }
 }
