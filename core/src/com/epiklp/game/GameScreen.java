@@ -62,11 +62,10 @@ class GameScreen implements Screen{
 
     public GameScreen(Cave cave) {
         this.cave = cave;
-        camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
-                                        Cave.HEIGHT/Cave.PPM/Cave.SCALE);
-        viewport = new ExtendViewport(Cave.WIDTH/Cave.PPM/Cave.SCALE,
-                Cave.HEIGHT/Cave.PPM/Cave.SCALE, camera);
+        camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
+        viewport = new ExtendViewport(Cave.WIDTH/Cave.SCALE,Cave.HEIGHT/Cave.SCALE, camera);
         stage = new Stage(viewport);
+
         Gdx.input.setInputProcessor(stage);
 
         //	textureGame = new TextureGame();
@@ -85,7 +84,7 @@ class GameScreen implements Screen{
 
 
         map = new TmxMapLoader().load("Map/map.tmx");
-        tmr = new OrthogonalTiledMapRenderer(map, 0.062f);
+        tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
         bodies = TiledObject.parseTiledObjectLayer(world, map.getLayers().get("collision").getObjects());
 
@@ -130,7 +129,7 @@ class GameScreen implements Screen{
         checkEndGame();
         //textureGame.draw();
         tmr.render();
-        b2dr.render(world, camera.combined/*.scl(Cave.PPM)*/);
+        b2dr.render(world, camera.combined.scl(Cave.PPM));
 
         stage.act();
         stage.draw();
@@ -152,12 +151,13 @@ class GameScreen implements Screen{
         inputUpdate();
         cameraUpdate();
         tmr.setView(camera);
+        stage.getViewport().setCamera(camera);
     }
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
-        position.x = hero.getBody().getPosition().x;
-        position.y = hero.getBody().getPosition().y;//HEIGHT/PPM/4;
+        position.x = hero.getBody().getPosition().x * Cave.PPM;
+        position.y = hero.getBody().getPosition().y * Cave.PPM;//HEIGHT/PPM/4;
         camera.position.set(position);
         camera.update();
     }
@@ -222,9 +222,6 @@ class GameScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-        //camera.viewportHeight = 30f * height/width;
-        //camera.viewportWidth = 30f;
-        //camera.update();
         stage.getViewport().update(width,height);
 
     }

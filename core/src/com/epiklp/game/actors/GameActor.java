@@ -24,9 +24,11 @@ public abstract class GameActor extends Actor{
 
     public GameActor(Sprite sprite) {
         this.sprite = sprite;
-        //Set sprite size in Box2D cord and center origin
-        sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-        sprite.setSize(sprite.getWidth()/Cave.PPM/Cave.SCALE, sprite.getHeight()/Cave.PPM/Cave.SCALE);
+        //Set sprite size in Box2D cord and center origin it must stay with 108 and 192 - cause if we change a sprite, we change
+        //a size
+        sprite.setSize(108/Cave.SCALE, 192/Cave.SCALE);
+        sprite.setOrigin(108/2, 192/2);
+
     }
 
     public float getSpeedWalk() {
@@ -34,7 +36,7 @@ public abstract class GameActor extends Actor{
     }
     @Override
     public void draw(Batch batch, float parentAlpha){
-        sprite.setPosition(body.getPosition().x-sprite.getOriginX()/Cave.PPM/Cave.SCALE, body.getPosition().y-sprite.getOriginY()/Cave.PPM/Cave.SCALE);
+        sprite.setPosition(body.getPosition().x*Cave.PPM-sprite.getWidth()/2, body.getPosition().y * Cave.PPM-sprite.getHeight()/2 );
         sprite.draw(batch);
     }
     public void setSpeedWalk(float speedWalk) {
