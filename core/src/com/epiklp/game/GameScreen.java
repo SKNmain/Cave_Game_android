@@ -47,12 +47,9 @@ class GameScreen implements Screen{
     //physic world 2D
     private Box2DDebugRenderer b2dr;
     private World world;
-    private Body player, mapgame;
     private float horizontalForce = 0;
 
     //texture && sprite && font && map
-    private SpriteBatch batch;
-    private Sprite playerText;
     private UI ui;
     private OrthogonalTiledMapRenderer tmr;
     private TiledMap map;
@@ -65,20 +62,18 @@ class GameScreen implements Screen{
 
     public GameScreen(Cave cave) {
         this.cave = cave;
-        Gdx.input.setInputProcessor(stage);
-
         camera = new OrthographicCamera(Cave.WIDTH/Cave.PPM/Cave.SCALE,
                                         Cave.HEIGHT/Cave.PPM/Cave.SCALE);
         viewport = new ExtendViewport(Cave.WIDTH/Cave.PPM/Cave.SCALE,
                 Cave.HEIGHT/Cave.PPM/Cave.SCALE, camera);
-
         stage = new Stage(viewport);
+        Gdx.input.setInputProcessor(stage);
+
         //	textureGame = new TextureGame();
         controller = new Controller();
         ui = new UI();
 
         world = new World(new Vector2(0,-10),true);
-
         b2dr = new Box2DDebugRenderer();
         //rayHandler = new RayHandler(world);
 
@@ -87,7 +82,6 @@ class GameScreen implements Screen{
         hero.setBody(createBox(400, 300,28f , 48, false));
         stage.addActor(hero);
 
-        batch = new SpriteBatch();
 
 
         map = new TmxMapLoader().load("Map/map.tmx");
@@ -137,12 +131,13 @@ class GameScreen implements Screen{
         //textureGame.draw();
         tmr.render();
         b2dr.render(world, camera.combined/*.scl(Cave.PPM)*/);
-        controller.draw();
-        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
-
 
         stage.act();
         stage.draw();
+
+        controller.draw();
+        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+
     }
 
     private void checkEndGame() {
@@ -157,7 +152,6 @@ class GameScreen implements Screen{
         inputUpdate();
         cameraUpdate();
         tmr.setView(camera);
-        batch.setProjectionMatrix(camera.combined);
     }
 
     private void cameraUpdate() {
@@ -255,7 +249,6 @@ class GameScreen implements Screen{
 //        rayHandler.dispose();
         world.dispose();
         b2dr.dispose();
-        batch.dispose();
         ui.dispose();
         //textureGame.dispose();
         controller.dispose();
