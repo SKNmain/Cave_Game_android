@@ -50,4 +50,9 @@ public class ParallaxBackground extends Actor {
             batch.draw(layers.get(i), x, y, originX, originY, width, heigth,scaleX,scaleY,rotation,srcX,srcY,layers.get(i).getWidth(),layers.get(i).getHeight(),flipX,flipY);
         }
     }
+
+    public void dispose()
+    {
+        layers.clear();
+    }
 }
