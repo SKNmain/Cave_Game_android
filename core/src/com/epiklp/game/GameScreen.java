@@ -107,7 +107,9 @@ class GameScreen implements Screen {
             public void beginContact(Contact contact) {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
-                if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero) {
+                boolean aIsSensor = contact.getFixtureA().isSensor();
+                boolean bIsSensor = contact.getFixtureB().isSensor();
+                if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && !aIsSensor) {
                     Hero hero = (Hero) b.getUserData();
                     Enemy enemy = (Enemy) a.getUserData();
                     hero.setLife(-enemy.getStrengh());
@@ -115,13 +117,23 @@ class GameScreen implements Screen {
                     if (enemy.isDead()) deadBodies.add(enemy);
 
                 }
-                if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero) {
+                if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
                     Hero hero = (Hero) a.getUserData();
                     Enemy enemy = (Enemy) b.getUserData();
                     hero.setLife(-enemy.getStrengh());
                     enemy.setLife(-hero.getStrengh());
                     if (enemy.isDead()) deadBodies.add(enemy);
-
+                }
+                //sensor
+                if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
+                    Hero hero = (Hero) b.getUserData();
+                    Enemy enemy = (Enemy) a.getUserData();
+                    enemy.followHero(hero.getBody().getPosition());
+                }
+                if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
+                    Hero hero = (Hero) a.getUserData();
+                    Enemy enemy = (Enemy) b.getUserData();
+                    enemy.followHero(hero.getBody().getPosition());
                 }
             }
 

@@ -58,7 +58,18 @@ public class TheBox {
         loader.attachFixture(body, "Name", fd, 1.7f);
         return body;
     }
+    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter){
 
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width/Cave.PPM,height/Cave.PPM, new Vector2(shiftFromCenter.x/Cave.PPM,shiftFromCenter.y/Cave.PPM), 0);
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = shape;
+        fixDef.density = 0;
+        fixDef.friction = 0;
+        fixDef.isSensor = true;
+        body.createFixture(fixDef);
+        shape.dispose();
+    }
     public static void destroyWorld() {
         if (world != null) {
             world.dispose();

@@ -1,6 +1,7 @@
 package com.epiklp.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.epiklp.game.TheBox;
 
 /**
@@ -17,6 +18,15 @@ public class Enemy extends GameActor {
 
     public boolean isDead() {
         return life <= 0;
+    }
+
+    public void followHero(Vector2 pos){
+        if(pos.x > body.getPosition().x){
+            body.setLinearVelocity(speedWalk, 0);
+        }
+        else{
+            body.setLinearVelocity(-speedWalk, 0);
+        }
     }
 
     public float getChanceOfDrop() {
