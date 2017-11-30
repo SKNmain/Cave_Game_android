@@ -103,14 +103,21 @@ class GameScreen implements Screen{
             public void beginContact(Contact contact) {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
-     //           a.
-         //       if()
-                hero.setGround(true);
+
+                if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero){
+                    Hero hero = (Hero)b.getUserData();
+                    Enemy enemy = (Enemy)a.getUserData();
+                    hero.setLife(-enemy.getStrengh());
+                }
+                if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero){
+                    Hero hero = (Hero)a.getUserData();
+                    Enemy enemy = (Enemy)b.getUserData();
+                    hero.setLife(-enemy.getStrengh());
+                }
             }
 
             @Override
             public void endContact(Contact contact) {
-                hero.setGround(false);
             }
 
             @Override
@@ -191,7 +198,7 @@ class GameScreen implements Screen{
             }
         }
         hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed() && hero.getGround())
+        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0)
         {
             hero.setSpeedY(7f);
         }

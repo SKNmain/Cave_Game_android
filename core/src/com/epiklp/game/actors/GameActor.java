@@ -15,7 +15,7 @@ import com.epiklp.game.Cave;
 
 public abstract class GameActor extends Actor{
 
-    protected float strengh;
+    protected int strengh;
     protected int life;
     protected float speedWalk;
     protected String name;
@@ -50,11 +50,11 @@ public abstract class GameActor extends Actor{
         this.body = body;
     }
 
-    public float getStrengh() {
+    public int getStrengh() {
         return strengh;
     }
 
-    public void setStrengh(float strengh) {
+    public void setStrengh(int strengh) {
         this.strengh = strengh;
     }
 

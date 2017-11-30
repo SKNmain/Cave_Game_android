@@ -23,6 +23,8 @@ public class Hero extends GameActor {
         sprite.setSize(108/ Cave.SCALE, 192/Cave.SCALE);
         sprite.setOrigin(108/2, 192/2);
         setBody(TheBox.createBox(400, 300,28f , 48, false));
+        body.setUserData(this);
+
 
         this.life = 100;
         this.magic = 100;
