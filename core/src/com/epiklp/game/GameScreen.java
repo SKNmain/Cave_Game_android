@@ -19,17 +19,19 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.actors.Enemy;
-import com.epiklp.game.actors.GameActor;
 import com.epiklp.game.actors.FlameDemon;
+import com.epiklp.game.actors.GameActor;
 import com.epiklp.game.actors.Hero;
+
+import java.util.Iterator;
 
 /**
  * Created by epiklp on 27.11.17.
- *
+ * <p>
  * Stage dla controllera
  */
 
-class GameScreen implements Screen{
+class GameScreen implements Screen {
     final Cave cave;
 
     private Stage stage;
@@ -53,13 +55,14 @@ class GameScreen implements Screen{
     private GameActor enemy;
     private Array<Enemy> enemies;
     private Array<Body> bodies;
+    private Array<Enemy> deadBodies;
 
 //    private RayHandler rayHandler;
 
     public GameScreen(Cave cave) {
         this.cave = cave;
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
-        viewport = new ExtendViewport(Cave.WIDTH/Cave.SCALE,Cave.HEIGHT/Cave.SCALE, camera);
+        viewport = new ExtendViewport(Cave.WIDTH / Cave.SCALE, Cave.HEIGHT / Cave.SCALE, camera);
         stage = new Stage(viewport);
         TheBox.initWorld();
         Gdx.input.setInputProcessor(stage);
@@ -70,8 +73,9 @@ class GameScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         //rayHandler = new RayHandler(world);
 
-        //enemies = new Array<Enemy>();
-        //stage.addActor(enemies.get(0));
+        deadBodies = new Array<Enemy>();
+
+
         enemy = new FlameDemon();
         stage.addActor(enemy);
         hero = new Hero();
@@ -103,16 +107,21 @@ class GameScreen implements Screen{
             public void beginContact(Contact contact) {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
+                if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero) {
+                    Hero hero = (Hero) b.getUserData();
+                    Enemy enemy = (Enemy) a.getUserData();
+                    hero.setLife(-enemy.getStrengh());
+                    enemy.setLife(-hero.getStrengh());
+                    if (enemy.isDead()) deadBodies.add(enemy);
 
-                if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero){
-                    Hero hero = (Hero)b.getUserData();
-                    Enemy enemy = (Enemy)a.getUserData();
-                    hero.setLife(-enemy.getStrengh());
                 }
-                if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero){
-                    Hero hero = (Hero)a.getUserData();
-                    Enemy enemy = (Enemy)b.getUserData();
+                if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero) {
+                    Hero hero = (Hero) a.getUserData();
+                    Enemy enemy = (Enemy) b.getUserData();
                     hero.setLife(-enemy.getStrengh());
+                    enemy.setLife(-hero.getStrengh());
+                    if (enemy.isDead()) deadBodies.add(enemy);
+
                 }
             }
 
@@ -145,14 +154,14 @@ class GameScreen implements Screen{
     }
 
     private void checkEndGame() {
-        if(hero.isDead()) {
+        if (hero.isDead()) {
             cave.setScreen(new EndScreen(cave));
         }
     }
 
-    public void update(float delta)
-    {
-        TheBox.world.step(1/60f, 6, 2);
+    public void update(float delta) {
+        sweepDeadBodies();
+        TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();
         cameraUpdate();
         tmr.setView(camera);
@@ -170,7 +179,7 @@ class GameScreen implements Screen{
 
     private void inputUpdate() {
 
-        if(Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
                 hero.getSprite().setFlip(true, false);
                 if (horizontalForce > -(hero.getSpeedWalk()))
@@ -180,37 +189,24 @@ class GameScreen implements Screen{
                 if (horizontalForce < (hero.getSpeedWalk()))
                     horizontalForce += 0.4f;
             }
-        }
-        else
-        {
-            if(horizontalForce > 0.1)
-            {
+        } else {
+            if (horizontalForce > 0.1) {
                 horizontalForce -= 0.2f;
-            }
-            else
-            if(horizontalForce < -0.1)
-            {
+            } else if (horizontalForce < -0.1) {
                 horizontalForce += 0.2f;
-            }
-            else
-            {
+            } else {
                 horizontalForce = 0;
             }
         }
         hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0)
-        {
+        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {
             hero.setSpeedY(7f);
         }
-
-
-        if(controller.isDownPressed())
-            hero.setLife(-3);
     }
 
     @Override
     public void resize(int width, int height) {
-        stage.getViewport().update(width,height);
+        stage.getViewport().update(width, height);
 
     }
 
@@ -240,4 +236,13 @@ class GameScreen implements Screen{
         map.dispose();
     }
 
+    public void sweepDeadBodies() {
+        if (!TheBox.world.isLocked()) {
+            Iterator<Enemy> i = deadBodies.iterator();
+            while (i.hasNext()) {
+                i.next().destroy();
+                i.remove();
+            }
+        }
+    }
 }

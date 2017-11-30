@@ -5,7 +5,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 
-class CreditsScreen implements Screen{
+class CreditsScreen implements Screen {
     final Cave cave;
     private TextureGame textMenu;
     private Stage stage;
@@ -31,11 +30,11 @@ class CreditsScreen implements Screen{
         bitmapFont = new BitmapFont();
         labelStyle = new Label.LabelStyle(Assets.character, Color.WHITE);
         text = new Label("Autorzy:\n Rafal Rybowski\n Kamil Sykula", labelStyle);
-        text.setPosition(0, Cave.HEIGHT/2);
+        text.setPosition(0, Cave.HEIGHT / 2);
         stage.addActor(text);
         backPress = false;
         backImage = new Image(new Texture("MenuButtons/button_back.png"));
-        backImage.addListener(new InputListener(){
+        backImage.addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -43,7 +42,7 @@ class CreditsScreen implements Screen{
                 return true;
             }
         });
-        backImage.setPosition(Cave.WIDTH-backImage.getWidth(),0);
+        backImage.setPosition(Cave.WIDTH - backImage.getWidth(), 0);
         stage.addActor(backImage);
     }
 
@@ -54,8 +53,7 @@ class CreditsScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        if(backPress == true)
-        {
+        if (backPress == true) {
             dispose();
             cave.setScreen(new Menu(cave));
         }

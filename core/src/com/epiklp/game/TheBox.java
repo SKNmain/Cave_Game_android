@@ -15,30 +15,31 @@ import com.badlogic.gdx.physics.box2d.World;
 public class TheBox {
     public static World world;
 
-    private TheBox(){}
+    private TheBox() {
+    }
 
-    public static void initWorld(){
+    public static void initWorld() {
         world = new World(new Vector2(0, -10f), true);
     }
-    public static Body createBox( int x, int y, float width, float height, boolean isStatic) {
+
+    public static Body createBox(int x, int y, float width, float height, boolean isStatic) {
         Body pBody;
         BodyDef def = new BodyDef();
-        if(isStatic) def.type = BodyDef.BodyType.StaticBody;
+        if (isStatic) def.type = BodyDef.BodyType.StaticBody;
         else def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(x/Cave.PPM, y/Cave.PPM);
+        def.position.set(x / Cave.PPM, y / Cave.PPM);
         def.fixedRotation = true;
         pBody = world.createBody(def);
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/Cave.PPM,height/Cave.PPM);
+        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
 
-        pBody.createFixture(shape,1);//.setUserData("player");
+        pBody.createFixture(shape, 1);//.setUserData("player");
         shape.dispose();
         return pBody;
     }
 
 
-    public static Body createwithJson()
-    {
+    public static Body createwithJson() {
         BodyEditorLoader loader = new BodyEditorLoader(
                 Gdx.files.internal("jon/punkty.json"));
 
@@ -58,8 +59,8 @@ public class TheBox {
         return body;
     }
 
-    public static void destroyWorld(){
-        if(world!=null){
+    public static void destroyWorld() {
+        if (world != null) {
             world.dispose();
         }
     }

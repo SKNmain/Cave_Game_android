@@ -2,16 +2,10 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
-import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.utils.Array;
-
-import java.awt.Font;
 
 /**
  * Created by epiklp on 29.11.17.
@@ -26,13 +20,12 @@ public class Assets {
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9];
     public static BitmapFont character;
 
-    public static void load()
-    {
+    public static void load() {
         manager.load(player);
-        String tmp="";
-        for(int i =0; i<9; i++)
-        {
-            tmp = "layer/" + (i+1)+".png";
+        manager.load(flameDemon);
+        String tmp = "";
+        for (int i = 0; i < 9; i++) {
+            tmp = "layer/" + (i + 1) + ".png";
             layer[i] = new AssetDescriptor<Texture>(tmp, Texture.class);
             manager.load(layer[i]);
         }
@@ -47,8 +40,7 @@ public class Assets {
 
     }
 
-    public static void dispose()
-    {
+    public static void dispose() {
         manager.dispose();
     }
 }

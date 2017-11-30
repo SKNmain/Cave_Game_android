@@ -1,24 +1,25 @@
 package com.epiklp.game.actors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.epiklp.game.Cave;
 
 /**
  * Created by Asmei on 2017-11-27.
  */
 
-public abstract class GameActor extends Actor{
+public abstract class GameActor extends Actor {
 
     protected int strengh;
     protected int life;
+
     protected float speedWalk;
+    protected float attackSpeed;
+
     protected String name;
+
     protected Body body;
     protected Sprite sprite;
 
@@ -29,11 +30,13 @@ public abstract class GameActor extends Actor{
     public float getSpeedWalk() {
         return speedWalk;
     }
+
     @Override
-    public void draw(Batch batch, float parentAlpha){
-        sprite.setPosition(body.getPosition().x*Cave.PPM-sprite.getWidth()/2, body.getPosition().y * Cave.PPM-sprite.getHeight()/2 );
+    public void draw(Batch batch, float parentAlpha) {
+        sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
     }
+
     public void setSpeedWalk(float speedWalk) {
         this.speedWalk = speedWalk;
     }
@@ -74,6 +77,16 @@ public abstract class GameActor extends Actor{
         this.name = name;
     }
 
-    public boolean isDead(){return (life <= 0);}
+    public boolean isDead() {
+        return (life <= 0);
+    }
+
+    public float getAttackSpeed() {
+        return attackSpeed;
+    }
+
+    public void setAttackSpeed(float attackSpeed) {
+        this.attackSpeed = attackSpeed;
+    }
 }
 

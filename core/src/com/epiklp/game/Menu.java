@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 
-
 class Menu implements Screen {
     final Cave cave;
     private TextureGame textMenu;
@@ -37,19 +36,19 @@ class Menu implements Screen {
     }
 
     private void update(float delta) {
-        if(menu.getPlayPress()) {
+        if (menu.getPlayPress()) {
             dispose();
             cave.setScreen(new GameScreen(cave));
         }
-        if(menu.getContinuePress()) {
+        if (menu.getContinuePress()) {
         }
-        if(menu.getCreditPress()) {
+        if (menu.getCreditPress()) {
             dispose();
             cave.setScreen(new CreditsScreen(cave));
         }
-        if(menu.getQuitPress()){
+        if (menu.getQuitPress()) {
             dispose();
-           Gdx.app.exit();
+            Gdx.app.exit();
         }
     }
 
@@ -90,26 +89,25 @@ class Menu implements Screen {
 
         private Table tbr;
 
-        public MenuButtons()
-        {
+        public MenuButtons() {
             stage = new Stage();
             Gdx.input.setInputProcessor(stage);
             playPress = creditPress = continuePress = quitPress = false;
             playImage = new Image(new Texture("MenuButtons/button_play.png"));
-            playImage.addListener(new InputListener(){
+            playImage.addListener(new InputListener() {
                 @Override
-                                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                    playPress = true;
-                                    return true;
-                                }
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    playPress = true;
+                    return true;
+                }
 
-                                @Override
-                                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                                    playPress = false;
-                                }
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    playPress = false;
+                }
             });
             continueImage = new Image(new Texture("MenuButtons/button_continue.png"));
-            continueImage.addListener(new InputListener(){
+            continueImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     continuePress = true;
@@ -122,7 +120,7 @@ class Menu implements Screen {
                 }
             });
             creditImage = new Image(new Texture("MenuButtons/button_credit.png"));
-            creditImage.addListener(new InputListener(){
+            creditImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     creditPress = true;
@@ -135,7 +133,7 @@ class Menu implements Screen {
                 }
             });
             quitImage = new Image(new Texture("MenuButtons/button_quit.png"));
-            quitImage.addListener(new InputListener(){
+            quitImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                     quitPress = true;
@@ -158,14 +156,12 @@ class Menu implements Screen {
 
         }
 
-        public void draw()
-        {
+        public void draw() {
             stage.act();
             stage.draw();
         }
 
-        public void dispose()
-        {
+        public void dispose() {
             stage.dispose();
         }
 

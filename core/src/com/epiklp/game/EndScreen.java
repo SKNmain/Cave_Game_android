@@ -36,11 +36,11 @@ public class EndScreen implements Screen {
         bitmapFont = new BitmapFont();
         labelStyle = new Label.LabelStyle(Assets.character, Color.WHITE);
         text = new Label("GAME OVER!", labelStyle);
-        text.setPosition(0, Cave.HEIGHT/2);
+        text.setPosition(0, Cave.HEIGHT / 2);
         stage.addActor(text);
         backPress = false;
         backImage = new Image(new Texture("MenuButtons/button_quit.png"));
-        backImage.addListener(new InputListener(){
+        backImage.addListener(new InputListener() {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -48,7 +48,7 @@ public class EndScreen implements Screen {
                 return true;
             }
         });
-        backImage.setPosition(Cave.WIDTH-backImage.getWidth(),0);
+        backImage.setPosition(Cave.WIDTH - backImage.getWidth(), 0);
         stage.addActor(backImage);
 
     }
@@ -61,8 +61,7 @@ public class EndScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if(backPress == true)
-        {
+        if (backPress == true) {
             cave.setScreen(new Menu(cave));
             dispose();
         }

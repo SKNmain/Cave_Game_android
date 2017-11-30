@@ -2,7 +2,6 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -11,73 +10,71 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
-
-public class Controller{
-    private static final float BUTTON_SIZE = Cave.WIDTH/10;
+public class Controller {
+    private static final float BUTTON_SIZE = Cave.WIDTH / 10;
     private Stage stage;
     private boolean upPressed, downPressed, leftPressed, rightPressed;
     private Table tabr;
 
-    public Controller()
-    {
+    public Controller() {
         stage = new Stage(new ExtendViewport(Cave.WIDTH, Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
         Table tabl = new Table();
         tabl.bottom().left();
         Image imu = new Image(new Texture("button/Up.png"));
-        imu.setSize(BUTTON_SIZE,BUTTON_SIZE);
+        imu.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imu.addListener(new InputListener() {
 
-                            @Override
-                            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                upPressed = true;
-                                return true;
-                            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                upPressed = true;
+                return true;
+            }
 
-                            @Override
-                            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                                upPressed = false;
-                            }
-                        });
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                upPressed = false;
+            }
+        });
 
         Image iml = new Image(new Texture("button/Left.png"));
         iml.setSize(BUTTON_SIZE, BUTTON_SIZE);
         iml.addListener(new InputListener() {
 
-                            @Override
-                            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                leftPressed = true;
-                                return true;
-                            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                leftPressed = true;
+                return true;
+            }
 
-                            @Override
-                            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                                leftPressed = false;
-                            }
-                        });
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                leftPressed = false;
+            }
+        });
         tabl.add(imu).size(iml.getWidth(), iml.getHeight());
         tabl.row().padBottom(10);
         tabl.add(iml).size(iml.getWidth(), iml.getHeight());
         stage.addActor(tabl);
 
         tabr = new Table();
-        tabr.setPosition(Cave.WIDTH-(Cave.WIDTH/10)/2, (Cave.WIDTH/10));
+        tabr.setPosition(Cave.WIDTH - (Cave.WIDTH / 10) / 2, (Cave.WIDTH / 10));
         Image imr = new Image(new Texture("button/Right.png"));
         imr.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imr.addListener(new InputListener() {
 
-                            @Override
-                            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                                rightPressed = true;
-                                return true;
-                            }
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                rightPressed = true;
+                return true;
+            }
 
-                            @Override
-                            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                                rightPressed = false;
-                            }
-                        });
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                rightPressed = false;
+            }
+        });
 
         Image ime = new Image(new Texture("button/Attack.png"));
         ime.setSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -100,8 +97,7 @@ public class Controller{
         stage.addActor(tabr);
     }
 
-    public void draw()
-    {
+    public void draw() {
         stage.act();
         stage.draw();
     }
@@ -122,8 +118,7 @@ public class Controller{
         return rightPressed;
     }
 
-    public void dispose()
-    {
+    public void dispose() {
         stage.dispose();
     }
 }

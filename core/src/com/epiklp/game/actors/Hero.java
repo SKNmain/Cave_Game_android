@@ -1,10 +1,6 @@
 package com.epiklp.game.actors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
@@ -18,21 +14,21 @@ public class Hero extends GameActor {
     private int magic;
     private boolean ground = false;
 
+
     public Hero() {
         super(new Sprite(Assets.manager.get(Assets.player)));
-        sprite.setSize(108/ Cave.SCALE, 192/Cave.SCALE);
-        sprite.setOrigin(108/2, 192/2);
-        setBody(TheBox.createBox(400, 300,28f , 48, false));
+        sprite.setSize(108 / Cave.SCALE, 192 / Cave.SCALE);
+        sprite.setOrigin(108 / 2, 192 / 2);
+        setBody(TheBox.createBox(400, 300, 28f, 48, false));
         body.setUserData(this);
-
 
         this.life = 100;
         this.magic = 100;
         this.speedWalk = 3f;
+        this.strengh = 10;
     }
 
-    public Hero(Sprite sprite, int life, int magic, float speedWalk)
-    {
+    public Hero(Sprite sprite, int life, int magic, float speedWalk) {
         super(sprite);
         this.life = life;
         this.magic = magic;
@@ -45,7 +41,7 @@ public class Hero extends GameActor {
 
     @Override
     public float getSpeedWalk() {
-        return speedWalk+life*0.03f;
+        return speedWalk + life * 0.03f;
     }
 
     public boolean getGround() {
@@ -60,10 +56,11 @@ public class Hero extends GameActor {
         this.ground = ground;
     }
 
-    public void setSpeedX(float speedX){
+    public void setSpeedX(float speedX) {
         body.setLinearVelocity(speedX, body.getLinearVelocity().y);
     }
-    public void setSpeedY(float speedY){
+
+    public void setSpeedY(float speedY) {
         body.setLinearVelocity(0, speedY);
     }
 }
