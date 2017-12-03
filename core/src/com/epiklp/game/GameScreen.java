@@ -55,25 +55,24 @@ class GameScreen implements Screen {
     private GameActor enemy;
     private Array<Enemy> enemies;
     private Array<Body> bodies;
-    private Array<Enemy> deadBodies;
+
+    private MyContactListener myContactListener;
 
 //    private RayHandler rayHandler;
 
     public GameScreen(Cave cave) {
         this.cave = cave;
+        TheBox.initWorld();
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / Cave.SCALE, Cave.HEIGHT / Cave.SCALE, camera);
         stage = new Stage(viewport);
-        TheBox.initWorld();
         Gdx.input.setInputProcessor(stage);
-
+        myContactListener = new MyContactListener();
         controller = new Controller();
         ui = new UI();
 
         b2dr = new Box2DDebugRenderer();
         //rayHandler = new RayHandler(world);
-
-        deadBodies = new Array<Enemy>();
 
 
         enemy = new FlameDemon();
@@ -102,55 +101,7 @@ class GameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         update(Gdx.graphics.getDeltaTime());
-        TheBox.world.setContactListener(new ContactListener() {
-            @Override
-            public void beginContact(Contact contact) {
-                Body a = contact.getFixtureA().getBody();
-                Body b = contact.getFixtureB().getBody();
-                boolean aIsSensor = contact.getFixtureA().isSensor();
-                boolean bIsSensor = contact.getFixtureB().isSensor();
-                if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && !aIsSensor) {
-                    Hero hero = (Hero) b.getUserData();
-                    Enemy enemy = (Enemy) a.getUserData();
-                    hero.setLife(-enemy.getStrengh());
-                    enemy.setLife(-hero.getStrengh());
-                    if (enemy.isDead()) deadBodies.add(enemy);
-
-                }
-                if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
-                    Hero hero = (Hero) a.getUserData();
-                    Enemy enemy = (Enemy) b.getUserData();
-                    hero.setLife(-enemy.getStrengh());
-                    enemy.setLife(-hero.getStrengh());
-                    if (enemy.isDead()) deadBodies.add(enemy);
-                }
-                //sensor
-                if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
-                    Hero hero = (Hero) b.getUserData();
-                    Enemy enemy = (Enemy) a.getUserData();
-                    enemy.followHero(hero.getBody().getPosition());
-                }
-                if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
-                    Hero hero = (Hero) a.getUserData();
-                    Enemy enemy = (Enemy) b.getUserData();
-                    enemy.followHero(hero.getBody().getPosition());
-                }
-            }
-
-            @Override
-            public void endContact(Contact contact) {
-            }
-
-            @Override
-            public void preSolve(Contact contact, Manifold oldManifold) {
-
-            }
-
-            @Override
-            public void postSolve(Contact contact, ContactImpulse impulse) {
-
-            }
-        });
+        TheBox.world.setContactListener(myContactListener);
 
         checkEndGame();
         //textureGame.draw();
@@ -250,7 +201,7 @@ class GameScreen implements Screen {
 
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {
-            Iterator<Enemy> i = deadBodies.iterator();
+            Iterator<Enemy> i = myContactListener.getDeadsTableIter();
             while (i.hasNext()) {
                 i.next().destroy();
                 i.remove();

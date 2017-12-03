@@ -22,26 +22,25 @@ public class Hero extends GameActor {
         setBody(TheBox.createBox(400, 300, 28f, 48, false));
         body.setUserData(this);
 
-        this.life = 100;
-        this.magic = 100;
-        this.speedWalk = 3f;
-        this.strengh = 10;
+        initStats();
     }
 
-    public Hero(Sprite sprite, int life, int magic, float speedWalk) {
-        super(sprite);
-        this.life = life;
-        this.magic = magic;
-        this.speedWalk = speedWalk;
-    }
-
-    public int getMagic() {
-        return magic;
+    @Override
+    public void initStats() {
+        this.life        = 100;
+        this.magic        = 100;
+        this.attackSpeed = 2;
+        this.speedWalk   = 3f;
+        this.strengh     = 10;
     }
 
     @Override
     public float getSpeedWalk() {
         return speedWalk + life * 0.03f;
+    }
+
+    public int getMagic() {
+        return magic;
     }
 
     public boolean getGround() {

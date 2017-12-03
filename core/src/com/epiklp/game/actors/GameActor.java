@@ -27,14 +27,15 @@ public abstract class GameActor extends Actor {
         this.sprite = sprite;
     }
 
-    public float getSpeedWalk() {
-        return speedWalk;
-    }
-
+    public abstract void initStats();
     @Override
     public void draw(Batch batch, float parentAlpha) {
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
+    }
+
+    public float getSpeedWalk() {
+        return speedWalk;
     }
 
     public void setSpeedWalk(float speedWalk) {
