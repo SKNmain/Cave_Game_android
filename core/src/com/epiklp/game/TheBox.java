@@ -72,4 +72,8 @@ public class TheBox {
             world.dispose();
         }
     }
+    //It should be check world.isLocket before you use it
+    public static void destroyBody(Body body){
+        world.destroyBody(body);
+    }
 }

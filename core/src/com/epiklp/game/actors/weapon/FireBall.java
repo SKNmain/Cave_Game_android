@@ -1,4 +1,4 @@
-package com.epiklp.game.actors;
+package com.epiklp.game.actors.weapon;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,44 +17,31 @@ import com.epiklp.game.TheBox;
  * Created by epiklp on 29.11.17.
  */
 
-public class FireBall {
-    private boolean alive, turn;
+public class FireBall extends Bullet{
     private float time;
-    private Body body;
-    private Sprite sprite;
-
-    public Body getBody() {
-        return body;
-    }
-
-
-
-    public Sprite getSprite() {
-        return sprite;
-    }
-
 
     public FireBall(float X, float Y)
     {
-        sprite = new Sprite(Assets.manager.get(Assets.FireBall));
+        super(new Sprite(Assets.manager.get(Assets.FireBall)));
         this.body = TheBox.createBox(0, 0,32f,32f,false);
         this.body.setTransform((X + 2), Y, 0f);
-        alive = true;
+        active = true;
         time = 5;
     }
-
-    public void update(float delta)
+    @Override
+    public void act(float delta)
     {
         body.setLinearVelocity(100*delta, 1);
         time -= delta;
         if(time < 0)
         {
-            alive = false;
+            active = false;
         }
     }
 
-    public boolean getalive()
-    {
-        return alive;
+
+    @Override
+    public void initStats() {
+
     }
 }

@@ -10,19 +10,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.epiklp.game.actors.Enemy;
-import com.epiklp.game.actors.FireBall;
-import com.epiklp.game.actors.FlameDemon;
-import com.epiklp.game.actors.GameActor;
+import com.epiklp.game.actors.enemies.Enemy;
+import com.epiklp.game.actors.weapon.FireBall;
+import com.epiklp.game.actors.enemies.FlameDemon;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.Hero;
 
 import java.util.Iterator;
@@ -54,11 +49,10 @@ class GameScreen implements Screen {
     private Viewport viewport;
     //hero
     private Hero hero;
-    private GameActor enemy;
+    private GameObject enemy;
     private Array<Enemy> enemies;
     private Array<Body> bodies;
 
-    private Array<FireBall> activeFireBalls;
     private float nextAtack =0;
     private MyContactListener myContactListener;
 //    private RayHandler rayHandler;
@@ -126,16 +120,15 @@ class GameScreen implements Screen {
     }
 
     public void update(float delta) {
-        nextAtack += delta;
         sweepDeadBodies();
         TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();
         cameraUpdate();
-        FireBallUpdate(delta);
+       // FireBallUpdate(delta);
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
     }
-
+/*
     private void FireBallUpdate(float delta) {
         for(FireBall active: activeFireBalls)
         {
@@ -146,7 +139,7 @@ class GameScreen implements Screen {
             }
             active.update(delta);
         }
-    }
+    }*/
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
@@ -225,7 +218,7 @@ class GameScreen implements Screen {
 
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {
-            Iterator<Enemy> i = myContactListener.getDeadsTableIter();
+            Iterator<GameObject> i = myContactListener.getDeadsTableIter();
             while (i.hasNext()) {
                 i.next().destroy();
                 i.remove();

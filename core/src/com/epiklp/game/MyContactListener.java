@@ -6,7 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
-import com.epiklp.game.actors.Enemy;
+import com.epiklp.game.actors.GameObject;
+import com.epiklp.game.actors.enemies.Enemy;
 import com.epiklp.game.actors.Hero;
 
 import java.util.Iterator;
@@ -16,7 +17,7 @@ import java.util.Iterator;
  */
 
 public class MyContactListener implements ContactListener {
-    private Array<Enemy> deads = new Array<Enemy>();
+    private Array<GameObject> deads = new Array<GameObject>();
 
     @Override
     public void beginContact(Contact contact) {
@@ -80,7 +81,7 @@ public class MyContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
-    public Iterator<Enemy> getDeadsTableIter(){
+    public Iterator<GameObject> getDeadsTableIter(){
         return deads.iterator();
     }
 }

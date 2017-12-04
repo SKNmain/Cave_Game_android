@@ -1,17 +1,16 @@
 package com.epiklp.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
+import com.epiklp.game.actors.weapon.Shootable;
 
 /**
  * Created by epiklp on 14.11.17.
  */
 
-public class Hero extends GameActor {
+public class Hero extends GameCharacter implements Shootable {
 
     private int magic;
     private boolean ground = false;
@@ -65,4 +64,8 @@ public class Hero extends GameActor {
         body.setLinearVelocity(0, speedY);
     }
 
+    @Override
+    public void shoot() {
+
+    }
 }
