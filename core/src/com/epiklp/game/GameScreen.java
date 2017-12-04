@@ -140,6 +140,16 @@ class GameScreen implements Screen {
                     Enemy enemy = (Enemy) b.getUserData();
                     enemy.followHero(hero.getBody().getPosition());
                 }
+
+                if(b.getUserData() instanceof FireBall && a.getUserData() instanceof Enemy && !aIsSensor)
+                {
+                    Enemy enemy = (Enemy) a.getUserData();
+                    enemy.setLife(-10);
+                    FireBall fireBall = (FireBall) b.getUserData();
+                    activeFireBalls.removeValue(fireBall, false);
+                    if (enemy.isDead()) deadBodies.add(enemy);
+                    TheBox.world.destroyBody(fireBall.getBody());
+                }
             }
 
             @Override
@@ -193,7 +203,7 @@ class GameScreen implements Screen {
             if(active.getalive() == false)
             {
                 TheBox.world.destroyBody(active.getBody());
-                activeFireBalls.removeValue(active, true);
+                activeFireBalls.removeValue(active, false);
             }
             active.update(delta);
         }
@@ -234,11 +244,12 @@ class GameScreen implements Screen {
             hero.setSpeedY(7f);
         }
 
-        if(controller.isatackPressed() && nextAtack > 2f)
+        if(controller.isatackPressed() && nextAtack > 1f && hero.getMagic() >=10)
         {
             FireBall tmp = new FireBall(hero.getBody().getPosition().x, hero.getBody().getPosition().y);
             activeFireBalls.add(tmp);
             nextAtack = 0;
+            hero.setMagic(-10);
         }
     }
 

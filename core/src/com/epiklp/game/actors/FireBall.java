@@ -39,13 +39,15 @@ public class FireBall {
         sprite = new Sprite(Assets.manager.get(Assets.FireBall));
         this.body = TheBox.createBox(0, 0,32f,32f,false);
         this.body.setTransform((X + 2), Y, 0f);
+        this.body.setUserData(this);
+        TheBox.createBoxSensor( body, 32,32, new Vector2(0, 0));
         alive = true;
         time = 5;
     }
 
     public void update(float delta)
     {
-        body.setLinearVelocity(100*delta, 1);
+        body.setLinearVelocity(400*delta, 0.1f);
         time -= delta;
         if(time < 0)
         {
