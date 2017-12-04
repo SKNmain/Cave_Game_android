@@ -15,14 +15,11 @@ import com.badlogic.gdx.physics.box2d.World;
 public class TheBox {
     public static World world;
 
-    private TheBox() {
-    }
-
     public static void initWorld() {
         world = new World(new Vector2(0, -10f), true);
     }
 
-    public static Body createBox(int x, int y, float width, float height, boolean isStatic) {
+    public static Body createBox(float x, float y, float width, float height, boolean isStatic) {
         Body pBody;
         BodyDef def = new BodyDef();
         if (isStatic) def.type = BodyDef.BodyType.StaticBody;

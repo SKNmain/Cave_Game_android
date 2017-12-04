@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class Controller {
     private static final float BUTTON_SIZE = Cave.WIDTH / 10;
     private Stage stage;
-    private boolean upPressed, downPressed, leftPressed, rightPressed;
+    private boolean upPressed, atackPressed, leftPressed, rightPressed;
     private Table tabr;
 
     public Controller() {
@@ -82,13 +82,13 @@ public class Controller {
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed = true;
+                atackPressed = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                downPressed = false;
+                atackPressed = false;
             }
         });
         tabr.add(ime).size(iml.getWidth(), iml.getHeight());
@@ -106,8 +106,8 @@ public class Controller {
         return upPressed;
     }
 
-    public boolean isDownPressed() {
-        return downPressed;
+    public boolean isatackPressed() {
+        return atackPressed;
     }
 
     public boolean isLeftPressed() {

@@ -1,6 +1,8 @@
 package com.epiklp.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
@@ -62,4 +64,5 @@ public class Hero extends GameActor {
     public void setSpeedY(float speedY) {
         body.setLinearVelocity(0, speedY);
     }
+
 }
