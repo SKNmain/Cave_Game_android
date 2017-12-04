@@ -16,6 +16,8 @@ public class Assets {
     public static final AssetManager manager = new AssetManager();
 
     public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/1.png", Texture.class);
+    public static final AssetDescriptor<Texture> FireBall = new AssetDescriptor<Texture>("character/firebal.png", Texture.class);
+
     public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9];
     public static BitmapFont character;
@@ -23,6 +25,8 @@ public class Assets {
     public static void load() {
         manager.load(player);
         manager.load(flameDemon);
+        manager.load(FireBall);
+
         String tmp = "";
         for (int i = 0; i < 9; i++) {
             tmp = "layer/" + (i + 1) + ".png";
