@@ -10,7 +10,7 @@ import com.epiklp.game.Cave;
  * Created by Asmei on 2017-11-27.
  */
 
-public abstract class GameActor extends Actor {
+public abstract class GameCharacter extends GameObject {
 
     protected int strengh;
     protected int life;
@@ -18,12 +18,8 @@ public abstract class GameActor extends Actor {
     protected float speedWalk;
     protected float attackSpeed;
 
-    protected String name;
-
-    protected Body body;
-    protected Sprite sprite;
-
-    public GameActor(Sprite sprite) {
+    public GameCharacter(Sprite sprite) {
+        super(sprite);
         this.sprite = sprite;
     }
 
@@ -42,18 +38,6 @@ public abstract class GameActor extends Actor {
         this.speedWalk = speedWalk;
     }
 
-    public Sprite getSprite() {
-        return sprite;
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
-    public void setBody(Body body) {
-        this.body = body;
-    }
-
     public int getStrengh() {
         return strengh;
     }
@@ -68,14 +52,8 @@ public abstract class GameActor extends Actor {
 
     public void setLife(int life) {
         this.life += life;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        if(isDead())
+            setToDelete();
     }
 
     public boolean isDead() {

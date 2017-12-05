@@ -7,6 +7,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.epiklp.game.actors.GameObject;
+
+import java.util.Iterator;
 
 /**
  * Created by Asmei on 2017-11-28.
@@ -14,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class TheBox {
     public static World world;
+    private static Array<GameObject> deleteArray = new Array<GameObject>();
 
     public static void initWorld() {
         world = new World(new Vector2(0, -10f), true);
@@ -71,5 +76,16 @@ public class TheBox {
         if (world != null) {
             world.dispose();
         }
+    }
+    //It should be check world.isLocket before you use it
+    public static void destroyBody(Body body){
+        world.destroyBody(body);
+    }
+
+    public static void addToDeleteArray(GameObject gameObject){
+        deleteArray.add(gameObject);
+    }
+    public static Iterator<GameObject> getDeleteArrayIter(){
+        return deleteArray.iterator();
     }
 }

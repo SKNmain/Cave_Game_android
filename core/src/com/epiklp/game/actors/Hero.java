@@ -1,17 +1,17 @@
 package com.epiklp.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
+import com.epiklp.game.actors.weapon.FireBall;
+import com.epiklp.game.actors.weapon.Shootable;
 
 /**
  * Created by epiklp on 14.11.17.
  */
 
-public class Hero extends GameActor {
+public class Hero extends GameCharacter implements Shootable {
 
     private int magic;
     private boolean ground = false;
@@ -30,8 +30,8 @@ public class Hero extends GameActor {
     @Override
     public void initStats() {
         this.life        = 100;
-        this.magic        = 100;
-        this.attackSpeed = 2;
+        this.magic       = 100;
+        this.attackSpeed = 2f;
         this.speedWalk   = 3f;
         this.strengh     = 10;
     }
@@ -65,4 +65,11 @@ public class Hero extends GameActor {
         body.setLinearVelocity(0, speedY);
     }
 
+    @Override
+    public void shoot(float delta) {
+        setMagic(-10);
+        FireBall fireBall = new FireBall(body.getPosition().x, body.getPosition().y, strengh);
+        this.getStage().addActor(fireBall);
+        activeBullets.add(fireBall);
+    }
 }

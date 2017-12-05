@@ -1,9 +1,10 @@
-package com.epiklp.game.actors;
+package com.epiklp.game.actors.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.epiklp.game.TheBox;
+import com.epiklp.game.actors.GameCharacter;
 
 /**
  * Created by epiklp on 19.11.17.
@@ -13,7 +14,7 @@ import com.epiklp.game.TheBox;
  * Wszystkie wartości dla attackRange oraz watchRange podawac w jednostkach Box2d!
  */
 
-public abstract class Enemy extends GameActor {
+public abstract class Enemy extends GameCharacter {
     protected float   chanceOfDrop;
     protected float   attackRange;
     protected float   watchRange;
@@ -54,9 +55,9 @@ public abstract class Enemy extends GameActor {
     }
 
     protected void followHero(){
-        if (heroPos.x > body.getPosition().x-attackRange) {
+        if (heroPos.x > body.getPosition().x) {
             body.setLinearVelocity(speedWalk, 0);
-        }else if (heroPos.x < body.getPosition().x-attackRange) {
+        }else if (heroPos.x < body.getPosition().x) {
             body.setLinearVelocity(-speedWalk, 0);
         }
     }
@@ -76,8 +77,4 @@ public abstract class Enemy extends GameActor {
         return chanceOfDrop;
     }
 
-    public void destroy() {
-        TheBox.world.destroyBody(body);
-        this.remove();
-    }
 }

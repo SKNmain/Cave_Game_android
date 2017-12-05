@@ -10,19 +10,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.epiklp.game.actors.Enemy;
-import com.epiklp.game.actors.FireBall;
-import com.epiklp.game.actors.FlameDemon;
-import com.epiklp.game.actors.GameActor;
+import com.epiklp.game.actors.enemies.Enemy;
+import com.epiklp.game.actors.weapon.FireBall;
+import com.epiklp.game.actors.enemies.FlameDemon;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.Hero;
 
 import java.util.Iterator;
@@ -54,12 +49,11 @@ class GameScreen implements Screen {
     private Viewport viewport;
     //hero
     private Hero hero;
-    private GameActor enemy;
+    private GameObject enemy;
     private Array<Enemy> enemies;
     private Array<Body> bodies;
 
-    private Array<FireBall> activeFireBalls;
-    private float nextAtack =0;
+    private float nextAtack = 0;
     private MyContactListener myContactListener;
 //    private RayHandler rayHandler;
 
@@ -82,7 +76,6 @@ class GameScreen implements Screen {
         stage.addActor(enemy);
         hero = new Hero();
         stage.addActor(hero);
-        activeFireBalls = new Array<FireBall>();
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
@@ -115,7 +108,7 @@ class GameScreen implements Screen {
         stage.draw();
 
         controller.draw();
-        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y );
+        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
 
     }
 
@@ -126,26 +119,16 @@ class GameScreen implements Screen {
     }
 
     public void update(float delta) {
-        nextAtack += delta;
-        sweepDeadBodies();
         TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();
         cameraUpdate();
-        FireBallUpdate(delta);
+        // FireBallUpdate(delta);
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
-    }
+        sweepDeadBodies();
 
-    private void FireBallUpdate(float delta) {
-        for(FireBall active: activeFireBalls)
-        {
-            if(active.getalive() == false)
-            {
-                TheBox.world.destroyBody(active.getBody());
-                activeFireBalls.removeValue(active, true);
-            }
-            active.update(delta);
-        }
+
+        nextAtack += delta;
     }
 
     private void cameraUpdate() {
@@ -183,10 +166,8 @@ class GameScreen implements Screen {
             hero.setSpeedY(7f);
         }
 
-        if(controller.isatackPressed() && nextAtack > 2f)
-        {
-            FireBall tmp = new FireBall(hero.getBody().getPosition().x, hero.getBody().getPosition().y);
-            activeFireBalls.add(tmp);
+        if (controller.isAttackPressed() && nextAtack > 2f) {
+            hero.shoot(Gdx.graphics.getDeltaTime());
             nextAtack = 0;
         }
     }
@@ -225,7 +206,7 @@ class GameScreen implements Screen {
 
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {
-            Iterator<Enemy> i = myContactListener.getDeadsTableIter();
+            Iterator<GameObject> i = TheBox.getDeleteArrayIter();
             while (i.hasNext()) {
                 i.next().destroy();
                 i.remove();

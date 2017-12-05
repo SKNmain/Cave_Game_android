@@ -6,8 +6,10 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.utils.Array;
-import com.epiklp.game.actors.Enemy;
+import com.epiklp.game.actors.GameObject;
+import com.epiklp.game.actors.enemies.Enemy;
 import com.epiklp.game.actors.Hero;
+import com.epiklp.game.actors.weapon.Bullet;
 
 import java.util.Iterator;
 
@@ -16,7 +18,6 @@ import java.util.Iterator;
  */
 
 public class MyContactListener implements ContactListener {
-    private Array<Enemy> deads = new Array<Enemy>();
 
     @Override
     public void beginContact(Contact contact) {
@@ -30,26 +31,58 @@ public class MyContactListener implements ContactListener {
             Enemy enemy = (Enemy) a.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
-            if (enemy.isDead()) deads.add(enemy);
-
+            return;
         }
         if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
             Hero hero = (Hero) a.getUserData();
             Enemy enemy = (Enemy) b.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
-            if (enemy.isDead()) deads.add(enemy);
+            return;
         }
         //sensor
         if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
             Hero hero = (Hero) b.getUserData();
             Enemy enemy = (Enemy) a.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
+            return;
         }
         if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
             Hero hero = (Hero) a.getUserData();
             Enemy enemy = (Enemy) b.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
+            return;
+        }
+
+
+        if(a.getUserData() instanceof Bullet && b.getUserData() instanceof Enemy && !bIsSensor) {
+            Bullet bullet = (Bullet) a.getUserData();
+            Enemy enemy = (Enemy) b.getUserData();
+            enemy.setLife(-bullet.getHitPoint());
+            bullet.setToDelete();
+            return;
+        }
+
+        if(b.getUserData() instanceof Bullet && a.getUserData() instanceof Enemy && !aIsSensor) {
+            Bullet bullet = (Bullet) b.getUserData();
+            Enemy enemy = (Enemy) a.getUserData();
+            enemy.setLife(-bullet.getHitPoint());
+            bullet.setToDelete();
+            return;
+        }
+
+        if(a.getUserData() instanceof Bullet && b.getUserData().equals("TiledObject"))
+        {
+            Bullet bullet = (Bullet) a.getUserData();
+            bullet.setToDelete();
+            return;
+        }
+
+        if(a.getUserData().equals("TiledObject") && b.getUserData() instanceof Bullet)
+        {
+            Bullet bullet = (Bullet) b.getUserData();
+            bullet.setToDelete();
+            return;
         }
     }
 
@@ -79,9 +112,6 @@ public class MyContactListener implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
-    }
-    public Iterator<Enemy> getDeadsTableIter(){
-        return deads.iterator();
     }
 }
 

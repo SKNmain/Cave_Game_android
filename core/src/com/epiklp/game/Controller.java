@@ -106,7 +106,7 @@ public class Controller {
         return upPressed;
     }
 
-    public boolean isatackPressed() {
+    public boolean isAttackPressed() {
         return atackPressed;
     }
 
