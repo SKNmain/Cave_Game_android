@@ -169,6 +169,7 @@ class GameScreen implements Screen {
         if (controller.isAttackPressed() && nextAtack > 2f) {
             hero.shoot(Gdx.graphics.getDeltaTime());
             nextAtack = 0;
+            hero.setMagic(-10);
         }
     }
 
