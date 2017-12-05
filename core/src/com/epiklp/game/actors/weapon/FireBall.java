@@ -24,7 +24,7 @@ public class FireBall extends Bullet{
     {
         super(new Sprite(Assets.manager.get(Assets.FireBall)), hitPoint);
         body = TheBox.createBox(0, 0,32f,32f,false);
-        sprite.setSize(0.3f * Cave.PPM * Cave.SCALE, 0.3f * Cave.PPM * Cave.SCALE);
+        sprite.setSize(0.7f * Cave.PPM * Cave.SCALE, 0.7f * Cave.PPM * Cave.SCALE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
         body.setTransform((x + 2), y, 0f);
         body.setUserData(this);

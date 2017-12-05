@@ -17,6 +17,7 @@ public abstract class GameCharacter extends GameObject {
 
     protected float speedWalk;
     protected float attackSpeed;
+    protected float attackDelta;
 
     public GameCharacter(Sprite sprite) {
         super(sprite);
@@ -28,6 +29,12 @@ public abstract class GameCharacter extends GameObject {
     public void draw(Batch batch, float parentAlpha) {
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
+    }
+
+
+    @Override
+    public void act(float delta){
+        attackDelta += delta;
     }
 
     public float getSpeedWalk() {

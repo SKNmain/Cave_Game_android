@@ -53,7 +53,6 @@ class GameScreen implements Screen {
     private Array<Enemy> enemies;
     private Array<Body> bodies;
 
-    private float nextAtack = 0;
     private MyContactListener myContactListener;
 //    private RayHandler rayHandler;
 
@@ -61,7 +60,7 @@ class GameScreen implements Screen {
         this.cave = cave;
         TheBox.initWorld();
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
-        viewport = new ExtendViewport(Cave.WIDTH / Cave.SCALE, Cave.HEIGHT / Cave.SCALE, camera);
+        viewport = new ExtendViewport(Cave.WIDTH / 1.5f , Cave.HEIGHT / 1.5f, camera);
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         myContactListener = new MyContactListener();
@@ -126,9 +125,6 @@ class GameScreen implements Screen {
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
         sweepDeadBodies();
-
-
-        nextAtack += delta;
     }
 
     private void cameraUpdate() {
@@ -166,10 +162,8 @@ class GameScreen implements Screen {
             hero.setSpeedY(7f);
         }
 
-        if (controller.isAttackPressed() && nextAtack > 2f) {
-            hero.shoot(Gdx.graphics.getDeltaTime());
-            nextAtack = 0;
-            hero.setMagic(-10);
+        if (controller.isAttackPressed()) {
+            hero.shoot();
         }
     }
 

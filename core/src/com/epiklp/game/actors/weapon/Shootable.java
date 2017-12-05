@@ -10,6 +10,6 @@ public interface Shootable {
     final int LIMIT = 5;
     Array<Bullet> activeBullets = new Array<Bullet>();
 
-    void shoot(float delta);
+    void shoot();
 
 }

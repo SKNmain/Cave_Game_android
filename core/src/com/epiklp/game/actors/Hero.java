@@ -36,6 +36,7 @@ public class Hero extends GameCharacter implements Shootable {
         this.strengh     = 10;
     }
 
+
     @Override
     public float getSpeedWalk() {
         return speedWalk + life * 0.03f;
@@ -66,10 +67,13 @@ public class Hero extends GameCharacter implements Shootable {
     }
 
     @Override
-    public void shoot(float delta) {
-        setMagic(-10);
-        FireBall fireBall = new FireBall(body.getPosition().x, body.getPosition().y, strengh);
-        this.getStage().addActor(fireBall);
-        activeBullets.add(fireBall);
+    public void shoot() {
+        if(getMagic() > 10 && attackSpeed <= attackDelta) {
+            setMagic(-10);
+            FireBall fireBall = new FireBall(body.getPosition().x, body.getPosition().y, strengh);
+            this.getStage().addActor(fireBall);
+            activeBullets.add(fireBall);
+            attackDelta = 0;
+        }
     }
 }
