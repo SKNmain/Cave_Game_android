@@ -29,7 +29,10 @@ public abstract class GameObject extends Actor {
 
     public void destroy(){
         TheBox.destroyBody(body);
+        this.remove();
     }
+
+    public void setToDelete(){TheBox.addToDeleteArray(this);}
 
     public Sprite getSprite() {
         return sprite;

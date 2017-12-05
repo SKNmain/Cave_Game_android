@@ -10,11 +10,15 @@ import com.epiklp.game.actors.GameObject;
 public abstract class Bullet extends GameObject {
 
 
-    public boolean active, turn;
-    public Bullet(Sprite sprite){
+    protected boolean active, turn;
+    protected int hitPoint;
+
+    public Bullet(Sprite sprite, int hitPoint){
         super(sprite);
+        this.hitPoint = hitPoint;
     }
 
+    public int getHitPoint(){return hitPoint;}
     public boolean isActive()
     {
         return active;

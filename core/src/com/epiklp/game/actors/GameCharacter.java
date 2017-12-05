@@ -52,6 +52,8 @@ public abstract class GameCharacter extends GameObject {
 
     public void setLife(int life) {
         this.life += life;
+        if(isDead())
+            setToDelete();
     }
 
     public boolean isDead() {

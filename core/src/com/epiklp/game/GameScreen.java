@@ -53,7 +53,7 @@ class GameScreen implements Screen {
     private Array<Enemy> enemies;
     private Array<Body> bodies;
 
-    private float nextAtack =0;
+    private float nextAtack = 0;
     private MyContactListener myContactListener;
 //    private RayHandler rayHandler;
 
@@ -76,7 +76,6 @@ class GameScreen implements Screen {
         stage.addActor(enemy);
         hero = new Hero();
         stage.addActor(hero);
-        activeFireBalls = new Array<FireBall>();
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
@@ -109,7 +108,7 @@ class GameScreen implements Screen {
         stage.draw();
 
         controller.draw();
-        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y );
+        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
 
     }
 
@@ -120,26 +119,17 @@ class GameScreen implements Screen {
     }
 
     public void update(float delta) {
-        sweepDeadBodies();
         TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();
         cameraUpdate();
-       // FireBallUpdate(delta);
+        // FireBallUpdate(delta);
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
+        sweepDeadBodies();
+
+
+        nextAtack += delta;
     }
-/*
-    private void FireBallUpdate(float delta) {
-        for(FireBall active: activeFireBalls)
-        {
-            if(active.getalive() == false)
-            {
-                TheBox.world.destroyBody(active.getBody());
-                activeFireBalls.removeValue(active, true);
-            }
-            active.update(delta);
-        }
-    }*/
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
@@ -176,10 +166,8 @@ class GameScreen implements Screen {
             hero.setSpeedY(7f);
         }
 
-        if(controller.isatackPressed() && nextAtack > 2f)
-        {
-            FireBall tmp = new FireBall(hero.getBody().getPosition().x, hero.getBody().getPosition().y);
-            activeFireBalls.add(tmp);
+        if (controller.isAttackPressed() && nextAtack > 2f) {
+            hero.shoot(Gdx.graphics.getDeltaTime());
             nextAtack = 0;
         }
     }
@@ -218,7 +206,7 @@ class GameScreen implements Screen {
 
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {
-            Iterator<GameObject> i = myContactListener.getDeadsTableIter();
+            Iterator<GameObject> i = TheBox.getDeleteArrayIter();
             while (i.hasNext()) {
                 i.next().destroy();
                 i.remove();

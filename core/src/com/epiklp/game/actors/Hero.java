@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
+import com.epiklp.game.actors.weapon.FireBall;
 import com.epiklp.game.actors.weapon.Shootable;
 
 /**
@@ -29,8 +30,8 @@ public class Hero extends GameCharacter implements Shootable {
     @Override
     public void initStats() {
         this.life        = 100;
-        this.magic        = 100;
-        this.attackSpeed = 2;
+        this.magic       = 100;
+        this.attackSpeed = 2f;
         this.speedWalk   = 3f;
         this.strengh     = 10;
     }
@@ -65,7 +66,10 @@ public class Hero extends GameCharacter implements Shootable {
     }
 
     @Override
-    public void shoot() {
-
+    public void shoot(float delta) {
+        setMagic(-10);
+        FireBall fireBall = new FireBall(body.getPosition().x, body.getPosition().y, strengh);
+        this.getStage().addActor(fireBall);
+        activeBullets.add(fireBall);
     }
 }

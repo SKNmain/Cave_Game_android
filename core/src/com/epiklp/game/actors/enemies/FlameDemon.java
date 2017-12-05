@@ -1,10 +1,11 @@
-package com.epiklp.game.actors;
+package com.epiklp.game.actors.enemies;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
+import com.epiklp.game.actors.enemies.Enemy;
 
 /**
  * Created by Asmei on 2017-11-29.
@@ -26,12 +27,12 @@ public class FlameDemon extends Enemy {
 
     @Override
     public void initStats() {
-        this.life        = 20;
+        this.life        = 50;
         this.attackSpeed = 2;
-        this.speedWalk   = 2;
+        this.speedWalk   = 4;
         this.strengh     = 10;
-        this.attackRange = 3f;
-        this.watchRange  = 2f;
+        this.attackRange = 5f;
+        this.watchRange  = 3f;
 
     }
 }

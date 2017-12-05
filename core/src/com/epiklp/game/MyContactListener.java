@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.enemies.Enemy;
 import com.epiklp.game.actors.Hero;
+import com.epiklp.game.actors.weapon.Bullet;
 
 import java.util.Iterator;
 
@@ -17,7 +18,6 @@ import java.util.Iterator;
  */
 
 public class MyContactListener implements ContactListener {
-    private Array<GameObject> deads = new Array<GameObject>();
 
     @Override
     public void beginContact(Contact contact) {
@@ -31,7 +31,6 @@ public class MyContactListener implements ContactListener {
             Enemy enemy = (Enemy) a.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
-            if (enemy.isDead()) deads.add(enemy);
 
         }
         if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
@@ -39,7 +38,6 @@ public class MyContactListener implements ContactListener {
             Enemy enemy = (Enemy) b.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
-            if (enemy.isDead()) deads.add(enemy);
         }
         //sensor
         if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
@@ -52,6 +50,21 @@ public class MyContactListener implements ContactListener {
             Enemy enemy = (Enemy) b.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
         }
+
+
+        if(a.getUserData() instanceof Bullet && b.getUserData() instanceof Enemy && !bIsSensor) {
+            Bullet bullet = (Bullet) a.getUserData();
+            Enemy enemy = (Enemy) b.getUserData();
+            enemy.setLife(-bullet.getHitPoint());
+            bullet.setToDelete();
+        }
+        if(b.getUserData() instanceof Bullet && a.getUserData() instanceof Enemy && !aIsSensor) {
+            Bullet bullet = (Bullet) b.getUserData();
+            Enemy enemy = (Enemy) a.getUserData();
+            enemy.setLife(-bullet.getHitPoint());
+            bullet.setToDelete();
+        }
+        //if(a.getUserData() instanceof Bullet || b.getUserData() instanceof )
     }
 
     @Override
@@ -80,9 +93,6 @@ public class MyContactListener implements ContactListener {
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
-    }
-    public Iterator<GameObject> getDeadsTableIter(){
-        return deads.iterator();
     }
 }
 
