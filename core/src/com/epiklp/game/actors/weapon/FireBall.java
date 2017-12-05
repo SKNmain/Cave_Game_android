@@ -33,13 +33,13 @@ public class FireBall extends Bullet{
         active = true;
         time = 5f;
 
-        body.applyLinearImpulse(70, 0, x, y, true);
+        body.applyLinearImpulse(50, 0, x, y, true);
 
     }
     @Override
     public void act(float delta)
     {
-        //body.setLinearVelocity(200*delta, 0);
+        body.setLinearVelocity(body.getLinearVelocity().x, -body.getLinearVelocity().y);
         time -= delta;
         if(time < 0)
         {

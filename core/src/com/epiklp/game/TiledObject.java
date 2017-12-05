@@ -31,7 +31,8 @@ public class TiledObject {
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.StaticBody;
             body = world.createBody(bdef);
-            body.createFixture(shape, 1).setUserData(TiledObject.class);
+            body.createFixture(shape, 1);
+            body.setUserData(TiledObject.class.getSimpleName());
             bodies.add(body);
             shape.dispose();
         }

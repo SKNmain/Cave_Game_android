@@ -31,24 +31,27 @@ public class MyContactListener implements ContactListener {
             Enemy enemy = (Enemy) a.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
-
+            return;
         }
         if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
             Hero hero = (Hero) a.getUserData();
             Enemy enemy = (Enemy) b.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
+            return;
         }
         //sensor
         if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
             Hero hero = (Hero) b.getUserData();
             Enemy enemy = (Enemy) a.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
+            return;
         }
         if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
             Hero hero = (Hero) a.getUserData();
             Enemy enemy = (Enemy) b.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
+            return;
         }
 
 
@@ -57,14 +60,30 @@ public class MyContactListener implements ContactListener {
             Enemy enemy = (Enemy) b.getUserData();
             enemy.setLife(-bullet.getHitPoint());
             bullet.setToDelete();
+            return;
         }
+
         if(b.getUserData() instanceof Bullet && a.getUserData() instanceof Enemy && !aIsSensor) {
             Bullet bullet = (Bullet) b.getUserData();
             Enemy enemy = (Enemy) a.getUserData();
             enemy.setLife(-bullet.getHitPoint());
             bullet.setToDelete();
+            return;
         }
-        //if(a.getUserData() instanceof Bullet || b.getUserData() instanceof )
+
+        if(a.getUserData() instanceof Bullet && b.getUserData().equals("TiledObject"))
+        {
+            Bullet bullet = (Bullet) a.getUserData();
+            bullet.setToDelete();
+            return;
+        }
+
+        if(a.getUserData().equals("TiledObject") && b.getUserData() instanceof Bullet)
+        {
+            Bullet bullet = (Bullet) b.getUserData();
+            bullet.setToDelete();
+            return;
+        }
     }
 
     @Override
