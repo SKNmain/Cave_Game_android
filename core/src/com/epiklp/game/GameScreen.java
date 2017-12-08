@@ -2,6 +2,7 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -21,6 +22,9 @@ import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.Hero;
 
 import java.util.Iterator;
+
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 /**
  * Created by epiklp on 27.11.17.
@@ -56,6 +60,9 @@ class GameScreen implements Screen {
     private MyContactListener myContactListener;
 //    private RayHandler rayHandler;
 
+    public RayHandler light;
+    public PointLight pointLight;
+
     public GameScreen(Cave cave) {
         this.cave = cave;
         TheBox.initWorld();
@@ -78,10 +85,13 @@ class GameScreen implements Screen {
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
+
         bodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
 
-        //rayHandler = new RayHandler(world);
-
+        light = new RayHandler(TheBox.world);
+        light.setAmbientLight(0.3f);
+        pointLight = new PointLight(light, 36, new Color(1,1,1,1), 1000, hero.getX(), hero.getY());
+        pointLight.attachToBody(hero.getBody());
     }
 
     @Override
@@ -101,8 +111,8 @@ class GameScreen implements Screen {
         checkEndGame();
         //textureGame.draw();
         tmr.render();
+        light.updateAndRender();
         b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
-
         stage.act();
         stage.draw();
 
@@ -124,6 +134,8 @@ class GameScreen implements Screen {
         // FireBallUpdate(delta);
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
+        pointLight.update();
+        light.setCombinedMatrix(camera);
         sweepDeadBodies();
     }
 
@@ -197,6 +209,7 @@ class GameScreen implements Screen {
         controller.dispose();
         tmr.dispose();
         map.dispose();
+        light.dispose();
     }
 
     public void sweepDeadBodies() {

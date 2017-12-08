@@ -1,11 +1,15 @@
 package com.epiklp.game.actors;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
 import com.epiklp.game.actors.weapon.FireBall;
 import com.epiklp.game.actors.weapon.Shootable;
+
+import box2dLight.PointLight;
+import box2dLight.RayHandler;
 
 /**
  * Created by epiklp on 14.11.17.
@@ -15,6 +19,7 @@ public class Hero extends GameCharacter implements Shootable {
 
     private int magic;
     private boolean ground = false;
+
 
 
     public Hero() {
