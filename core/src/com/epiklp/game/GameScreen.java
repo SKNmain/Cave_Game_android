@@ -16,7 +16,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.actors.enemies.Enemy;
-import com.epiklp.game.actors.weapon.FireBall;
 import com.epiklp.game.actors.enemies.FlameDemon;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.Hero;
@@ -55,7 +54,7 @@ class GameScreen implements Screen {
     private Hero hero;
     private GameObject enemy;
     private Array<Enemy> enemies;
-    private Array<Body> bodies;
+    private Array<Body> mapBodies;
 
     private MyContactListener myContactListener;
 
@@ -82,7 +81,12 @@ class GameScreen implements Screen {
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
-        bodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
+        mapBodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
+        //initRayHandler();
+
+    }
+
+    private void initRayHandler() {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
         rayHandler = new RayHandler(TheBox.world);
@@ -95,7 +99,6 @@ class GameScreen implements Screen {
         pointLight = new PointLight(rayHandler, 360, new Color(1f, 1f, 1f, 1f), 18, -2,-2);
         pointLight.attachToBody(hero.getBody());
         pointLight.setXray(false);
-
     }
 
     @Override
@@ -106,11 +109,11 @@ class GameScreen implements Screen {
     public void update(float delta) {
         TheBox.world.step(1 / 60f, 6, 2);
 
-        rayHandler.update();
-        pointLight.update();
+       // rayHandler.update();
+       // pointLight.update();
         inputUpdate();
         cameraUpdate();
-        rayHandler.setCombinedMatrix(camera.combined.scl(32));
+//        rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
         sweepDeadBodies();
@@ -131,7 +134,7 @@ class GameScreen implements Screen {
 
         stage.act();
         stage.draw();
-        rayHandler.render();
+        //rayHandler.render();
         controller.draw();
         ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
 
@@ -143,18 +146,6 @@ class GameScreen implements Screen {
         }
     }
 
-    public void update(float delta) {
-        TheBox.world.step(1 / 60f, 6, 2);
-        inputUpdate();
-        cameraUpdate();
-        // FireBallUpdate(delta);
-        tmr.setView(camera);
-        stage.getViewport().setCamera(camera);
-        sweepDeadBodies();
-
-
-        nextAtack += delta;
-    }
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
@@ -225,7 +216,7 @@ class GameScreen implements Screen {
         controller.dispose();
         tmr.dispose();
         map.dispose();
-        rayHandler.dispose();
+        //rayHandler.dispose();
     }
 
     public void sweepDeadBodies() {

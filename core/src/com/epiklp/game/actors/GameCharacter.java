@@ -15,6 +15,8 @@ public abstract class GameCharacter extends GameObject {
     protected int strengh;
     protected int life;
 
+    protected boolean turn
+
     protected float speedWalk;
     protected float attackSpeed;
     protected float attackDelta;

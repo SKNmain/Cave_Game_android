@@ -35,7 +35,7 @@ public class Hero extends GameCharacter implements Shootable {
     public void initStats() {
         this.life        = 100;
         this.magic       = 100;
-        this.attackSpeed = 2f;
+        this.attackSpeed = 1.5f;
         this.speedWalk   = 3f;
         this.strengh     = 10;
     }
