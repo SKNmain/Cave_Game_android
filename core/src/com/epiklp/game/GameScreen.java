@@ -143,6 +143,18 @@ class GameScreen implements Screen {
         }
     }
 
+    public void update(float delta) {
+        TheBox.world.step(1 / 60f, 6, 2);
+        inputUpdate();
+        cameraUpdate();
+        // FireBallUpdate(delta);
+        tmr.setView(camera);
+        stage.getViewport().setCamera(camera);
+        sweepDeadBodies();
+
+
+        nextAtack += delta;
+    }
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
