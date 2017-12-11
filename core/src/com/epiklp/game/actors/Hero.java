@@ -28,7 +28,6 @@ public class Hero extends GameCharacter implements Shootable {
         sprite.setOrigin(108 / 2, 192 / 2);
         setBody(TheBox.createBox(400, 300, 28f, 48, false));
         body.setUserData(this);
-
         initStats();
     }
 

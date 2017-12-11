@@ -58,10 +58,9 @@ class GameScreen implements Screen {
     private Array<Body> bodies;
 
     private MyContactListener myContactListener;
-//    private RayHandler rayHandler;
 
-    public RayHandler light;
-    public PointLight pointLight;
+    private RayHandler rayHandler;
+    private PointLight pointLight;
 
     public GameScreen(Cave cave) {
         this.cave = cave;
@@ -75,8 +74,6 @@ class GameScreen implements Screen {
         ui = new UI();
 
         b2dr = new Box2DDebugRenderer();
-        //rayHandler = new RayHandler(world);
-
 
         enemy = new FlameDemon();
         stage.addActor(enemy);
@@ -85,18 +82,38 @@ class GameScreen implements Screen {
         map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
-
         bodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
+        RayHandler.setGammaCorrection(false);
+        RayHandler.useDiffuseLight(false);
+        rayHandler = new RayHandler(TheBox.world);
+        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
+        rayHandler.setCulling(true);
+        rayHandler.setBlur(true);
+        rayHandler.setBlurNum(1);
+        rayHandler.setShadows(true);
 
-        light = new RayHandler(TheBox.world);
-        light.setAmbientLight(0.3f);
-        pointLight = new PointLight(light, 36, new Color(1,1,1,1), 1000, hero.getX(), hero.getY());
+        pointLight = new PointLight(rayHandler, 360, new Color(1f, 1f, 1f, 1f), 18, -2,-2);
         pointLight.attachToBody(hero.getBody());
+        pointLight.setXray(false);
+
     }
 
     @Override
     public void show() {
 
+    }
+
+    public void update(float delta) {
+        TheBox.world.step(1 / 60f, 6, 2);
+
+        rayHandler.update();
+        pointLight.update();
+        inputUpdate();
+        cameraUpdate();
+        rayHandler.setCombinedMatrix(camera.combined.scl(32));
+        tmr.setView(camera);
+        stage.getViewport().setCamera(camera);
+        sweepDeadBodies();
     }
 
     @Override
@@ -109,13 +126,12 @@ class GameScreen implements Screen {
         TheBox.world.setContactListener(myContactListener);
 
         checkEndGame();
-        //textureGame.draw();
         tmr.render();
-        light.updateAndRender();
         b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
+
         stage.act();
         stage.draw();
-
+        rayHandler.render();
         controller.draw();
         ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
 
@@ -127,17 +143,6 @@ class GameScreen implements Screen {
         }
     }
 
-    public void update(float delta) {
-        TheBox.world.step(1 / 60f, 6, 2);
-        inputUpdate();
-        cameraUpdate();
-        // FireBallUpdate(delta);
-        tmr.setView(camera);
-        stage.getViewport().setCamera(camera);
-        pointLight.update();
-        light.setCombinedMatrix(camera);
-        sweepDeadBodies();
-    }
 
     private void cameraUpdate() {
         Vector3 position = camera.position;
@@ -202,14 +207,13 @@ class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-//        rayHandler.dispose();
         TheBox.destroyWorld();
         b2dr.dispose();
         ui.dispose();
         controller.dispose();
         tmr.dispose();
         map.dispose();
-        light.dispose();
+        rayHandler.dispose();
     }
 
     public void sweepDeadBodies() {
