@@ -18,7 +18,6 @@ public class FlameDemon extends Enemy {
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
         body = TheBox.createBox(1000, 100, 30f, 50f, false);
         TheBox.createBoxSensor(body, 200f, 90f, new Vector2(0,45f));
-
         body.setUserData(this);
 
         initStats();

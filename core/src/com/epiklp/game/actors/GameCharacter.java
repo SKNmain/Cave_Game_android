@@ -15,7 +15,7 @@ public abstract class GameCharacter extends GameObject {
     protected int strengh;
     protected int life;
 
-    protected boolean turn
+    protected boolean turn = true;
 
     protected float speedWalk;
     protected float attackSpeed;
@@ -75,6 +75,16 @@ public abstract class GameCharacter extends GameObject {
 
     public void setAttackSpeed(float attackSpeed) {
         this.attackSpeed = attackSpeed;
+    }
+
+    public void setTurn(boolean a)
+    {
+        turn = a;
+    }
+
+    public boolean getTurn()
+    {
+        return turn;
     }
 }
 

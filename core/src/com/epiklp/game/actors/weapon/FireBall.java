@@ -19,27 +19,40 @@ import com.epiklp.game.TheBox;
 
 public class FireBall extends Bullet{
     private float time;
+    private int turn = 1;
 
-    public FireBall(float x, float y, int hitPoint)
+    public FireBall(float x, float y, int hitPoint, boolean turn)
     {
         super(new Sprite(Assets.manager.get(Assets.FireBall)), hitPoint);
         body = TheBox.createBox(0, 0,32f,32f,false);
         sprite.setSize(0.7f * Cave.PPM * Cave.SCALE, 0.7f * Cave.PPM * Cave.SCALE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
-        body.setTransform((x + 2), y, 0f);
+        if(turn == true)
+        {
+            this.turn = 1;
+            body.setTransform((x +  2), y, 0f);
+        }
+        else
+        {
+            this.turn = -1;
+            body.setTransform((x - 2), y, 0f);
+            sprite.setFlip(true, false);
+        }
+
         body.setUserData(this);
 
         body.setBullet(true);
         active = true;
         time = 5f;
 
-        body.applyLinearImpulse(50, 0, x, y, true);
+
+        body.applyLinearImpulse(this.turn*50, 0, x, y, true);
 
     }
     @Override
     public void act(float delta)
     {
-        body.setLinearVelocity(body.getLinearVelocity().x, -body.getLinearVelocity().y);
+        body.setLinearVelocity( body.getLinearVelocity().x, -body.getLinearVelocity().y);
         time -= delta;
         if(time < 0)
         {

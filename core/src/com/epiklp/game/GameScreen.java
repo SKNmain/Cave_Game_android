@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -60,6 +61,8 @@ class GameScreen implements Screen {
 
     private RayHandler rayHandler;
     private PointLight pointLight;
+    private boolean light = false;
+    private float tmp =0;
 
     public GameScreen(Cave cave) {
         this.cave = cave;
@@ -82,7 +85,7 @@ class GameScreen implements Screen {
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
         mapBodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
-        //initRayHandler();
+        initRayHandler();
 
     }
 
@@ -90,15 +93,14 @@ class GameScreen implements Screen {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
         rayHandler = new RayHandler(TheBox.world);
-        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
+        rayHandler.setAmbientLight(.05f);
         rayHandler.setCulling(true);
-        rayHandler.setBlur(true);
-        rayHandler.setBlurNum(1);
         rayHandler.setShadows(true);
 
-        pointLight = new PointLight(rayHandler, 360, new Color(1f, 1f, 1f, 1f), 18, -2,-2);
+        pointLight = new PointLight(rayHandler, 720, new Color(11.000f, 0.549f, 0.000f, 1f), 10, -2,-2);
         pointLight.attachToBody(hero.getBody());
         pointLight.setXray(false);
+        pointLight.setIgnoreAttachedBody(true);
     }
 
     @Override
@@ -109,13 +111,20 @@ class GameScreen implements Screen {
     public void update(float delta) {
         TheBox.world.step(1 / 60f, 6, 2);
 
-       // rayHandler.update();
-       // pointLight.update();
+        rayHandler.update();
         inputUpdate();
         cameraUpdate();
-//        rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
+        rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
+        //nie wiem czy ma to byc głupie mryganie swiatła niby fajne ale z drugiej strony do dupy
+            if(light = !light) {
+                pointLight.setDistance(15);
+            }
+            else
+            {
+                pointLight.setDistance(10);
+            }
         sweepDeadBodies();
     }
 
@@ -134,7 +143,7 @@ class GameScreen implements Screen {
 
         stage.act();
         stage.draw();
-        //rayHandler.render();
+        rayHandler.render();
         controller.draw();
         ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
 
@@ -161,10 +170,12 @@ class GameScreen implements Screen {
         if (Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
                 hero.getSprite().setFlip(true, false);
+                hero.setTurn(false);
                 if (horizontalForce > -(hero.getSpeedWalk()))
                     horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
                 hero.getSprite().setFlip(false, false);
+                hero.setTurn(true);
                 if (horizontalForce < (hero.getSpeedWalk()))
                     horizontalForce += 0.4f;
             }
@@ -216,7 +227,8 @@ class GameScreen implements Screen {
         controller.dispose();
         tmr.dispose();
         map.dispose();
-        //rayHandler.dispose();
+        rayHandler.dispose();
+        pointLight.dispose();
     }
 
     public void sweepDeadBodies() {

@@ -9,7 +9,6 @@ public class Cave extends Game {
     public static final int PPM = 32;
     public static final float SCALE = 2;
 
-
     @Override
     public void create() {
         Assets.load();
