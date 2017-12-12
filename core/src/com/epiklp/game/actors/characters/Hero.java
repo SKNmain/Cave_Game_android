@@ -1,5 +1,6 @@
 package com.epiklp.game.actors.characters;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
@@ -17,13 +18,13 @@ public class Hero extends GameCharacter implements Shootable {
     private boolean ground = false;
 
 
-
     public Hero() {
         super(new Sprite(Assets.manager.get(Assets.player)));
         sprite.setSize(108 / Cave.SCALE, 192 / Cave.SCALE);
         sprite.setOrigin(108 / 2, 192 / 2);
-        setBody(TheBox.createBox(400, 300, 28f, 48, false));
+        setBody(TheBox.createBox(400, 300, 28f, 48, false, TheBox.CATEGORY_PLAYER, TheBox.MASK_PLAYER));
         body.setUserData(this);
+        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, 1f), 10, -2,-2);
         initStats();
     }
 
@@ -35,7 +36,6 @@ public class Hero extends GameCharacter implements Shootable {
         this.speedWalk   = 3f;
         this.strengh     = 10;
     }
-
 
     @Override
     public float getSpeedWalk() {
@@ -69,7 +69,7 @@ public class Hero extends GameCharacter implements Shootable {
     @Override
     public void shoot() {
         if(getMagic() > 10 && attackSpeed <= attackDelta) {
-            //setMagic(-10);
+            setMagic(-10);
             FireBall fireBall = new FireBall(body.getPosition().x, body.getPosition().y, strengh, getTurn());
             this.getStage().addActor(fireBall);
             activeBullets.add(fireBall);

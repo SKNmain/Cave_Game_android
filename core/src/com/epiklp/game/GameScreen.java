@@ -22,6 +22,7 @@ import com.epiklp.game.actors.characters.Hero;
 
 import java.util.Iterator;
 
+import box2dLight.Light;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
@@ -58,9 +59,6 @@ class GameScreen implements Screen {
 
     private MyContactListener myContactListener;
 
-    private RayHandler rayHandler;
-    private PointLight pointLight;
-    private boolean light = false;
     private float tmp =0;
 
     public GameScreen(Cave cave) {
@@ -84,23 +82,9 @@ class GameScreen implements Screen {
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
         mapBodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
-        initRayHandler();
 
     }
 
-    private void initRayHandler() {
-        RayHandler.setGammaCorrection(false);
-        RayHandler.useDiffuseLight(false);
-        rayHandler = new RayHandler(TheBox.world);
-        rayHandler.setAmbientLight(.05f);
-        rayHandler.setCulling(true);
-        rayHandler.setShadows(true);
-
-        pointLight = new PointLight(rayHandler, 720, new Color(11.000f, 0.549f, 0.000f, 1f), 10, -2,-2);
-        pointLight.attachToBody(hero.getBody());
-        pointLight.setXray(false);
-        pointLight.setIgnoreAttachedBody(true);
-    }
 
     @Override
     public void show() {
@@ -110,20 +94,13 @@ class GameScreen implements Screen {
     public void update(float delta) {
         TheBox.world.step(1 / 60f, 6, 2);
 
-        rayHandler.update();
+        TheBox.rayHandler.update();
         inputUpdate();
         cameraUpdate();
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
-        rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
-        //nie wiem czy ma to byc głupie mryganie swiatła niby fajne ale z drugiej strony do dupy
-            if(light = !light) {
-                pointLight.setDistance(15);
-            }
-            else
-            {
-                pointLight.setDistance(10);
-            }
+        TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
+
         sweepDeadBodies();
     }
 
@@ -142,7 +119,7 @@ class GameScreen implements Screen {
 
         stage.act();
         stage.draw();
-        rayHandler.render();
+        TheBox.rayHandler.render();
         controller.draw();
         ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
 
@@ -226,9 +203,7 @@ class GameScreen implements Screen {
         controller.dispose();
         tmr.dispose();
         map.dispose();
-        rayHandler.dispose();
-        pointLight.dispose();
-    }
+     }
 
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {

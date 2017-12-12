@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
 
+import box2dLight.Light;
+
 /**
  * Created by Asmei on 2017-11-27.
  */
@@ -15,6 +17,8 @@ public abstract class GameObject extends Actor {
 
     protected Body body;
     protected Sprite sprite;
+    protected Light light;
+
 
     public GameObject(Sprite sprite) {
         this.sprite = sprite;
@@ -28,6 +32,8 @@ public abstract class GameObject extends Actor {
     }
 
     public void destroy(){
+        if(light != null)
+            light.remove();
         TheBox.destroyBody(body);
         this.remove();
     }

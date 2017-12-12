@@ -5,7 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.epiklp.game.Cave;
+import com.epiklp.game.TheBox;
 import com.epiklp.game.actors.GameObject;
+
+import box2dLight.PointLight;
 
 /**
  * Created by Asmei on 2017-11-27.
@@ -21,6 +24,7 @@ public abstract class GameCharacter extends GameObject {
     protected float speedWalk;
     protected float attackSpeed;
     protected float attackDelta;
+
 
     public GameCharacter(Sprite sprite) {
         super(sprite);
