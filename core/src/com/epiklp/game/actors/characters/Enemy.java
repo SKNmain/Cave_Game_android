@@ -1,10 +1,8 @@
-package com.epiklp.game.actors.enemies;
+package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.epiklp.game.TheBox;
-import com.epiklp.game.actors.GameCharacter;
 
 /**
  * Created by epiklp on 19.11.17.

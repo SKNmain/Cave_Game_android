@@ -1,4 +1,4 @@
-package com.epiklp.game.actors.weapon;
+package com.epiklp.game.actors.weapons;
 
 import com.badlogic.gdx.utils.Array;
 

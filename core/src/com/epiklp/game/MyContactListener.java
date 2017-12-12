@@ -5,13 +5,9 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.utils.Array;
-import com.epiklp.game.actors.GameObject;
-import com.epiklp.game.actors.enemies.Enemy;
-import com.epiklp.game.actors.Hero;
-import com.epiklp.game.actors.weapon.Bullet;
-
-import java.util.Iterator;
+import com.epiklp.game.actors.characters.Enemy;
+import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.actors.weapons.Bullet;
 
 /**
  * Created by Asmei on 2017-12-02.

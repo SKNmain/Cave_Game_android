@@ -11,15 +11,14 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.epiklp.game.actors.enemies.Enemy;
-import com.epiklp.game.actors.enemies.FlameDemon;
+import com.epiklp.game.actors.characters.Enemy;
+import com.epiklp.game.actors.characters.FlameDemon;
 import com.epiklp.game.actors.GameObject;
-import com.epiklp.game.actors.Hero;
+import com.epiklp.game.actors.characters.Hero;
 
 import java.util.Iterator;
 

@@ -1,4 +1,4 @@
-package com.epiklp.game.actors.weapon;
+package com.epiklp.game.actors.weapons;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epiklp.game.actors.GameObject;
@@ -10,7 +10,7 @@ import com.epiklp.game.actors.GameObject;
 public abstract class Bullet extends GameObject {
 
 
-    protected boolean active, turn;
+    protected boolean active;
     protected int hitPoint;
 
     public Bullet(Sprite sprite, int hitPoint){

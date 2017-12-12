@@ -1,15 +1,11 @@
-package com.epiklp.game.actors;
+package com.epiklp.game.actors.characters;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
-import com.epiklp.game.actors.weapon.FireBall;
-import com.epiklp.game.actors.weapon.Shootable;
-
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
+import com.epiklp.game.actors.weapons.FireBall;
+import com.epiklp.game.actors.weapons.Shootable;
 
 /**
  * Created by epiklp on 14.11.17.

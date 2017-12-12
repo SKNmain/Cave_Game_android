@@ -1,10 +1,11 @@
-package com.epiklp.game.actors;
+package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.epiklp.game.Cave;
+import com.epiklp.game.actors.GameObject;
 
 /**
  * Created by Asmei on 2017-11-27.
