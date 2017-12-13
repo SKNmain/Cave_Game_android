@@ -22,10 +22,25 @@ public class Assets {
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9];
     public static BitmapFont character;
 
+    public static final AssetDescriptor<Texture> leftButton = new AssetDescriptor<Texture>("button/Left.png", Texture.class);
+    public static final AssetDescriptor<Texture> rightButton = new AssetDescriptor<Texture>("button/Right.png", Texture.class);
+    public static final AssetDescriptor<Texture> attackButton = new AssetDescriptor<Texture>("button/Attack.png", Texture.class);
+    public static final AssetDescriptor<Texture> upButton = new AssetDescriptor<Texture>("button/Up.png", Texture.class);
+    public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("button/Left.png", Texture.class);
+
+
     public static void load() {
         manager.load(player);
         manager.load(flameDemon);
         manager.load(FireBall);
+
+        manager.load(leftButton);
+        manager.load(rightButton);
+        manager.load(upButton);
+        manager.load(attackButton);
+        manager.load(homeButton);
+
+
 
         String tmp = "";
         for (int i = 0; i < 9; i++) {

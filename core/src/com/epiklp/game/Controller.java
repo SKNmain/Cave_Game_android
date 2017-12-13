@@ -22,7 +22,7 @@ public class Controller {
 
         Table tabl = new Table();
         tabl.bottom().left();
-        Image imu = new Image(new Texture("button/Up.png"));
+        Image imu = new Image(Assets.manager.get(Assets.upButton));
         imu.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imu.addListener(new InputListener() {
 
@@ -38,7 +38,7 @@ public class Controller {
             }
         });
 
-        Image iml = new Image(new Texture("button/Left.png"));
+        Image iml = new Image(Assets.manager.get(Assets.leftButton));
         iml.setSize(BUTTON_SIZE, BUTTON_SIZE);
         iml.addListener(new InputListener() {
 
@@ -60,7 +60,7 @@ public class Controller {
 
         tabr = new Table();
         tabr.setPosition(Cave.WIDTH - (Cave.WIDTH / 10) / 2, (Cave.WIDTH / 10));
-        Image imr = new Image(new Texture("button/Right.png"));
+        Image imr = new Image(Assets.manager.get(Assets.rightButton));
         imr.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imr.addListener(new InputListener() {
 
@@ -76,7 +76,7 @@ public class Controller {
             }
         });
 
-        Image ime = new Image(new Texture("button/Attack.png"));
+        Image ime = new Image(Assets.manager.get(Assets.attackButton));
         ime.setSize(BUTTON_SIZE, BUTTON_SIZE);
         ime.addListener(new InputListener() {
 

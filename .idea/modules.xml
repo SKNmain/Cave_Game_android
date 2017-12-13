@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cave_Game.iml" filepath="$PROJECT_DIR$/Cave_Game.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Cave_Game_android.iml" filepath="$PROJECT_DIR$/Cave_Game_android.iml" />
       <module fileurl="file://D:\Programowanie\Android\Cave_Game\Cave_Game_android.iml" filepath="D:\Programowanie\Android\Cave_Game\Cave_Game_android.iml" />
       <module fileurl="file://D:\Programowanie\Android\Cave_Game\.idea\Cave_Game_android.iml" filepath="D:\Programowanie\Android\Cave_Game\.idea\Cave_Game_android.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
