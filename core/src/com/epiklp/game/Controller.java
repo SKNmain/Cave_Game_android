@@ -97,7 +97,7 @@ public class Controller {
             }
         });
 
-        Image ime = new Image(Assets.manager.get(Assets.rightButton));
+        Image ime = new Image(Assets.manager.get(Assets.attackButton));
         ime.setSize(BUTTON_SIZE, BUTTON_SIZE);
         ime.addListener(new InputListener() {
 

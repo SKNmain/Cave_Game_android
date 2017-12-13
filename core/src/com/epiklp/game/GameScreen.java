@@ -5,6 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -185,6 +188,19 @@ class GameScreen implements Screen {
 
     @Override
     public void pause() {
+        SpriteBatch batch;
+        Texture tmp;
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGB888);
+        pixmap.setColor(.13f, .24f, .19f, .5f);
+        pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        tmp = new Texture(pixmap);
+        batch = new SpriteBatch();
+        pixmap.dispose();
+        batch.begin();
+            batch.draw(tmp,0,0);
+        batch.end();
+        batch.dispose();
+        tmp.dispose();
 
     }
 

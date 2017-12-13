@@ -16,8 +16,8 @@ public class Cave extends Game {
         //z tego bedzie mozna zrobic pasek ładowania gdy bedzie wincej assetów
         //    while(!Assets.manager.update())
         //        System.out.println(Assets.manager.getProgress()*100 + "%");
-        //this.setScreen(new Menu(this));
-        this.setScreen(new GameScreen(this));
+        this.setScreen(new Menu(this));
+        //this.setScreen(new GameScreen(this));
     }
 
     @Override
