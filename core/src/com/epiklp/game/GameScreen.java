@@ -2,12 +2,12 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -24,10 +25,6 @@ import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Hero;
 
 import java.util.Iterator;
-
-import box2dLight.Light;
-import box2dLight.PointLight;
-import box2dLight.RayHandler;
 
 /**
  * Created by epiklp on 27.11.17.
@@ -148,10 +145,12 @@ class GameScreen implements Screen {
 
         if (Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
+                hero.getSprite().setFlip(true, false);
                 hero.setTurn(false);
                 if (horizontalForce > -(hero.getSpeedWalk()))
                     horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
+                hero.getSprite().setFlip(false, false);
                 hero.setTurn(true);
                 if (horizontalForce < (hero.getSpeedWalk()))
                     horizontalForce += 0.4f;
@@ -174,9 +173,9 @@ class GameScreen implements Screen {
             hero.shoot();
         }
 
-        //to jest do bardzo szybkiej zmiany!!!!
-        if(controller.isResetPressed()){
-            cave.setScreen(new GameScreen(cave));
+        if(controller.isHomePresed())
+        {
+            pause();
         }
     }
 
@@ -188,20 +187,19 @@ class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        SpriteBatch batch;
         Texture tmp;
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGB888);
-        pixmap.setColor(.13f, .24f, .19f, .5f);
+        pixmap.setColor(1, 1, 1, 1);
         pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         tmp = new Texture(pixmap);
-        batch = new SpriteBatch();
+        Image img = new Image(tmp);
         pixmap.dispose();
-        batch.begin();
-            batch.draw(tmp,0,0);
-        batch.end();
-        batch.dispose();
-        tmp.dispose();
-
+        stage.addActor(img);
+        stage.act();
+        stage.draw();
+        while(!Gdx.input.isTouched()) {
+            img = null;
+        }
     }
 
     @Override

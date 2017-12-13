@@ -50,26 +50,20 @@ public class MyContactListener implements ContactListener {
             return;
         }
 
-        //Shooting
+
         if(a.getUserData() instanceof Bullet && b.getUserData() instanceof Enemy && !bIsSensor) {
             Bullet bullet = (Bullet) a.getUserData();
-            if(bullet.getGameCharacter() instanceof Hero) {
-                Enemy enemy = (Enemy) b.getUserData();
-                enemy.setLife(-bullet.getHitPoint());
-                enemy.setAttacked(true).setHeroPos(bullet.getGameCharacter().getBody().getPosition());
-                bullet.setToDelete();
-            }
+            Enemy enemy = (Enemy) b.getUserData();
+            enemy.setLife(-bullet.getHitPoint());
+            bullet.setToDelete();
             return;
         }
 
         if(b.getUserData() instanceof Bullet && a.getUserData() instanceof Enemy && !aIsSensor) {
             Bullet bullet = (Bullet) b.getUserData();
-            if(bullet.getGameCharacter() instanceof Hero) {
-                Enemy enemy = (Enemy) a.getUserData();
-                enemy.setLife(-bullet.getHitPoint());
-                enemy.setAttacked(true).setHeroPos(bullet.getGameCharacter().getBody().getPosition());
-                bullet.setToDelete();
-            }
+            Enemy enemy = (Enemy) a.getUserData();
+            enemy.setLife(-bullet.getHitPoint());
+            bullet.setToDelete();
             return;
         }
 

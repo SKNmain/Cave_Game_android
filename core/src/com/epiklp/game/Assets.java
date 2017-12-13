@@ -20,14 +20,13 @@ public class Assets {
 
     public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9];
-
     public static BitmapFont character;
 
     public static final AssetDescriptor<Texture> leftButton = new AssetDescriptor<Texture>("button/Left.png", Texture.class);
     public static final AssetDescriptor<Texture> rightButton = new AssetDescriptor<Texture>("button/Right.png", Texture.class);
     public static final AssetDescriptor<Texture> attackButton = new AssetDescriptor<Texture>("button/Attack.png", Texture.class);
     public static final AssetDescriptor<Texture> upButton = new AssetDescriptor<Texture>("button/Up.png", Texture.class);
-    public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("button/Left.png", Texture.class);
+    public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("button/home2.png", Texture.class);
 
 
     public static void load() {

@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 
@@ -44,7 +47,7 @@ public class UI {
         update(life, magic);
         batch.begin();
         batch.draw(lifeTexture, -1, Cave.HEIGHT - 64); // x = -1 is only temporary, to check if all texture will disapper if hero is dead
-        batch.draw(magicTexture, -1, Cave.HEIGHT - 112);
+        batch.draw(magicTexture, -1, Cave.HEIGHT - 112);;
         batch.end();
         text.setText("FPS: " + Gdx.graphics.getFramesPerSecond() + "\n" + "x: " + x + " y: " + y);
         stage.act();
@@ -64,7 +67,6 @@ public class UI {
         lifeTexture.dispose();
         magicTexture.dispose();
         stage.dispose();
-
     }
 
 }

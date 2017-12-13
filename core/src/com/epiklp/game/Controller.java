@@ -13,12 +13,13 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class Controller {
     private static final float BUTTON_SIZE = Cave.WIDTH / 10;
     private Stage stage;
-    private boolean upPressed, atackPressed, leftPressed, rightPressed, resetPressed;
+    private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed;
+    private Table tabr;
 
     public Controller() {
         stage = new Stage(new ExtendViewport(Cave.WIDTH, Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
-        
+
         Table tabl = new Table();
         tabl.bottom().left();
         Image imu = new Image(Assets.manager.get(Assets.upButton));
@@ -57,7 +58,7 @@ public class Controller {
         tabl.add(iml).size(iml.getWidth(), iml.getHeight());
         stage.addActor(tabl);
 
-        Table tabr = new Table();
+        tabr = new Table();
         tabr.setPosition(Cave.WIDTH - (Cave.WIDTH / 10) / 2, (Cave.WIDTH / 10));
         Image imr = new Image(Assets.manager.get(Assets.rightButton));
         imr.setSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -95,6 +96,21 @@ public class Controller {
         tabr.add(imr).size(iml.getWidth(), iml.getHeight());
         stage.addActor(tabr);
 
+        Image HomeButton = new Image(Assets.manager.get(Assets.homeButton));
+        HomeButton.setPosition(Gdx.graphics.getWidth() - 74, Gdx.graphics.getHeight()-74);
+        HomeButton.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                homePresed = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                homePresed = false;
+            }
+        });
+        stage.addActor(HomeButton);
     }
 
     public void draw() {
@@ -118,8 +134,8 @@ public class Controller {
         return rightPressed;
     }
 
-    public boolean isResetPressed() {
-        return resetPressed;
+    public boolean isHomePresed() {
+        return homePresed;
     }
 
     public void dispose() {
