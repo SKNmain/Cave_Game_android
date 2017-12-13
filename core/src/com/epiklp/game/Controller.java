@@ -18,29 +18,7 @@ public class Controller {
     public Controller() {
         stage = new Stage(new ExtendViewport(Cave.WIDTH, Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
-
-
-        Table tabTopLeft = new Table();
-        tabTopLeft.top().right();
-        Image imuR = new Image(Assets.manager.get(Assets.upButton));
-        imuR.setSize(imuR.getWidth(), imuR.getWidth());
-        imuR.addListener(new InputListener() {
-
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                resetPressed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                resetPressed = false;
-            }
-        });
-        tabTopLeft.debug();
-        tabTopLeft.add(imuR).size(BUTTON_SIZE, BUTTON_SIZE);
-        stage.addActor(tabTopLeft);
-
+        
         Table tabl = new Table();
         tabl.bottom().left();
         Image imu = new Image(Assets.manager.get(Assets.upButton));
