@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.epiklp.game.Assets;
 import com.epiklp.game.Cave;
 import com.epiklp.game.TheBox;
+import com.epiklp.game.actors.characters.GameCharacter;
 
 import box2dLight.PointLight;
 
@@ -15,9 +16,9 @@ import box2dLight.PointLight;
 public class FireBall extends Bullet {
     private float time;
 
-    public FireBall(float x, float y, int hitPoint, boolean turn)
+    public FireBall(float x, float y, int hitPoint, GameCharacter gameCharacterRef, boolean turn)
     {
-        super(new Sprite(Assets.manager.get(Assets.FireBall)), hitPoint);
+        super(new Sprite(Assets.manager.get(Assets.FireBall)), hitPoint, gameCharacterRef);
         body = TheBox.createBox(0, 0,32f,32f,false, TheBox.CATEGORY_BULLET, TheBox.MASK_BULLET);
         sprite.setSize(0.7f * Cave.PPM * Cave.SCALE, 0.7f * Cave.PPM * Cave.SCALE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
@@ -28,7 +29,6 @@ public class FireBall extends Bullet {
         body.setUserData(this);
 
         body.setBullet(true);
-        active = true;
         time = 5f;
 
         light = TheBox.createPointLight(body, 64, Color.FOREST, 5, 0, 0 );
@@ -44,7 +44,6 @@ public class FireBall extends Bullet {
         if(time < 0)
         {
             setToDelete();
-            active = false;
         }
     }
 

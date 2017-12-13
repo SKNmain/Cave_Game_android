@@ -32,8 +32,10 @@ public abstract class GameCharacter extends GameObject {
     }
 
     public abstract void initStats();
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        sprite.setFlip(!turn, false);
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
     }
@@ -82,9 +84,9 @@ public abstract class GameCharacter extends GameObject {
         this.attackSpeed = attackSpeed;
     }
 
-    public void setTurn(boolean a)
+    public void setTurn(boolean turn)
     {
-        turn = a;
+        this.turn = turn;
     }
 
     public boolean getTurn()

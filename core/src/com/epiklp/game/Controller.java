@@ -13,16 +13,37 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 public class Controller {
     private static final float BUTTON_SIZE = Cave.WIDTH / 10;
     private Stage stage;
-    private boolean upPressed, atackPressed, leftPressed, rightPressed;
-    private Table tabr;
+    private boolean upPressed, atackPressed, leftPressed, rightPressed, resetPressed;
 
     public Controller() {
         stage = new Stage(new ExtendViewport(Cave.WIDTH, Cave.HEIGHT));
         Gdx.input.setInputProcessor(stage);
 
+
+        Table tabTopLeft = new Table();
+        tabTopLeft.top().right();
+        Image imuR = new Image(Assets.manager.get(Assets.upButton));
+        imuR.setSize(imuR.getWidth(), imuR.getWidth());
+        imuR.addListener(new InputListener() {
+
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                resetPressed = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                resetPressed = false;
+            }
+        });
+        tabTopLeft.debug();
+        tabTopLeft.add(imuR).size(BUTTON_SIZE, BUTTON_SIZE);
+        stage.addActor(tabTopLeft);
+
         Table tabl = new Table();
         tabl.bottom().left();
-        Image imu = new Image(new Texture("button/Up.png"));
+        Image imu = new Image(Assets.manager.get(Assets.upButton));
         imu.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imu.addListener(new InputListener() {
 
@@ -38,7 +59,7 @@ public class Controller {
             }
         });
 
-        Image iml = new Image(new Texture("button/Left.png"));
+        Image iml = new Image(Assets.manager.get(Assets.leftButton));
         iml.setSize(BUTTON_SIZE, BUTTON_SIZE);
         iml.addListener(new InputListener() {
 
@@ -58,9 +79,9 @@ public class Controller {
         tabl.add(iml).size(iml.getWidth(), iml.getHeight());
         stage.addActor(tabl);
 
-        tabr = new Table();
+        Table tabr = new Table();
         tabr.setPosition(Cave.WIDTH - (Cave.WIDTH / 10) / 2, (Cave.WIDTH / 10));
-        Image imr = new Image(new Texture("button/Right.png"));
+        Image imr = new Image(Assets.manager.get(Assets.rightButton));
         imr.setSize(BUTTON_SIZE, BUTTON_SIZE);
         imr.addListener(new InputListener() {
 
@@ -76,7 +97,7 @@ public class Controller {
             }
         });
 
-        Image ime = new Image(new Texture("button/Attack.png"));
+        Image ime = new Image(Assets.manager.get(Assets.rightButton));
         ime.setSize(BUTTON_SIZE, BUTTON_SIZE);
         ime.addListener(new InputListener() {
 
@@ -95,6 +116,7 @@ public class Controller {
         tabr.row().padBottom(10);
         tabr.add(imr).size(iml.getWidth(), iml.getHeight());
         stage.addActor(tabr);
+
     }
 
     public void draw() {
@@ -116,6 +138,10 @@ public class Controller {
 
     public boolean isRightPressed() {
         return rightPressed;
+    }
+
+    public boolean isResetPressed() {
+        return resetPressed;
     }
 
     public void dispose() {

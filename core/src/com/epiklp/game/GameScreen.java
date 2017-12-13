@@ -145,12 +145,10 @@ class GameScreen implements Screen {
 
         if (Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
-                hero.getSprite().setFlip(true, false);
                 hero.setTurn(false);
                 if (horizontalForce > -(hero.getSpeedWalk()))
                     horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
-                hero.getSprite().setFlip(false, false);
                 hero.setTurn(true);
                 if (horizontalForce < (hero.getSpeedWalk()))
                     horizontalForce += 0.4f;
@@ -171,6 +169,11 @@ class GameScreen implements Screen {
 
         if (controller.isAttackPressed()) {
             hero.shoot();
+        }
+
+        //to jest do bardzo szybkiej zmiany!!!!
+        if(controller.isResetPressed()){
+            cave.setScreen(new GameScreen(cave));
         }
     }
 
