@@ -29,6 +29,14 @@ public class Assets {
     public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("button/home2.png", Texture.class);
 
 
+    public static final AssetDescriptor<Texture> pauseWindow = new AssetDescriptor<Texture>("PauseMenu/window.png", Texture.class);
+    public static final AssetDescriptor<Texture> backButton = new AssetDescriptor<Texture>("MenuButtons/button_back.png", Texture.class);
+    public static final AssetDescriptor<Texture> playButton = new AssetDescriptor<Texture>("MenuButtons/button_play.png", Texture.class);
+    public static final AssetDescriptor<Texture> quitButton = new AssetDescriptor<Texture>("MenuButtons/button_quit.png", Texture.class);
+    public static final AssetDescriptor<Texture> continueButton = new AssetDescriptor<Texture>("MenuButtons/button_continue.png", Texture.class);
+    public static final AssetDescriptor<Texture> creditButton = new AssetDescriptor<Texture>("MenuButtons/button_credit.png", Texture.class);
+
+
     public static void load() {
         manager.load(player);
         manager.load(flameDemon);
@@ -40,6 +48,12 @@ public class Assets {
         manager.load(attackButton);
         manager.load(homeButton);
 
+        manager.load(pauseWindow);
+        manager.load(backButton);
+        manager.load(quitButton);
+        manager.load(playButton);
+        manager.load(continueButton);
+        manager.load(creditButton);
 
 
         String tmp = "";

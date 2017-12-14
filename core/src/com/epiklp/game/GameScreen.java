@@ -35,6 +35,9 @@ import java.util.Iterator;
 class GameScreen implements Screen {
     final Cave cave;
 
+    private boolean PAUSE;
+
+
     private Stage stage;
 
     private OrthographicCamera camera;
@@ -58,10 +61,10 @@ class GameScreen implements Screen {
     private Array<Body> mapBodies;
 
     private MyContactListener myContactListener;
-
-    private float tmp =0;
+    private pauseMenu MenuPause;
 
     public GameScreen(Cave cave) {
+        PAUSE = false;
         this.cave = cave;
         TheBox.initWorld();
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
@@ -82,7 +85,7 @@ class GameScreen implements Screen {
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
 
         mapBodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
-
+        MenuPause = new pauseMenu();
     }
 
 
@@ -106,22 +109,40 @@ class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        update(Gdx.graphics.getDeltaTime());
-        TheBox.world.setContactListener(myContactListener);
+        if(PAUSE == false) {
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            update(Gdx.graphics.getDeltaTime());
+            TheBox.world.setContactListener(myContactListener);
+            checkEndGame();
+            tmr.render();
+            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
+            stage.act();
+            stage.draw();
+            TheBox.rayHandler.render();
+            controller.draw();
+            ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+        }
+        else{
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            //tmr.render();
+            //b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
+            //stage.act();
+            //stage.draw();
+            //TheBox.rayHandler.render();
+            //ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+            MenuPause.draw();
+          //  updateMenu(Gdx.graphics.getDeltaTime());
+            if(MenuPause.pressExit)
+            {
+                resume();
+            }
+        }
+    }
 
-        checkEndGame();
-        tmr.render();
-        b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
-
-        stage.act();
-        stage.draw();
-        TheBox.rayHandler.render();
-        controller.draw();
-        ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+    public void updateMenu(float delta)
+    {
 
     }
 
@@ -187,24 +208,12 @@ class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        Texture tmp;
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), Pixmap.Format.RGB888);
-        pixmap.setColor(1, 1, 1, 1);
-        pixmap.fillRectangle(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        tmp = new Texture(pixmap);
-        Image img = new Image(tmp);
-        pixmap.dispose();
-        stage.addActor(img);
-        stage.act();
-        stage.draw();
-        while(!Gdx.input.isTouched()) {
-            img = null;
-        }
+        PAUSE = true;
     }
 
     @Override
     public void resume() {
-
+        PAUSE = false;
     }
 
     @Override

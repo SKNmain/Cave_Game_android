@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -21,6 +22,7 @@ public class UI {
     private Texture lifeTexture, magicTexture;
     private SpriteBatch batch;
 
+
     public UI() {
         batch = new SpriteBatch();
         bitmapFont = new BitmapFont();
@@ -31,6 +33,8 @@ public class UI {
         stage.addActor(text);
         lifeTexture = CreateTexture(100, 32, 1, 0, 0, 1);
         magicTexture = CreateTexture(100, 32, 0, 0, 1, 1);
+
+
     }
 
     private Texture CreateTexture(int width, int hight, int r, int g, int b, int a) {

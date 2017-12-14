@@ -93,7 +93,7 @@ class Menu implements Screen {
             stage = new Stage();
             Gdx.input.setInputProcessor(stage);
             playPress = creditPress = continuePress = quitPress = false;
-            playImage = new Image(new Texture("MenuButtons/button_play.png"));
+            playImage = new Image(Assets.manager.get(Assets.playButton));
             playImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -106,7 +106,7 @@ class Menu implements Screen {
                     playPress = false;
                 }
             });
-            continueImage = new Image(new Texture("MenuButtons/button_continue.png"));
+            continueImage = new Image(Assets.manager.get(Assets.continueButton));
             continueImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -119,7 +119,7 @@ class Menu implements Screen {
                     continuePress = false;
                 }
             });
-            creditImage = new Image(new Texture("MenuButtons/button_credit.png"));
+            creditImage = new Image(Assets.manager.get(Assets.creditButton));
             creditImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -132,7 +132,7 @@ class Menu implements Screen {
                     creditPress = false;
                 }
             });
-            quitImage = new Image(new Texture("MenuButtons/button_quit.png"));
+            quitImage = new Image(Assets.manager.get(Assets.quitButton));
             quitImage.addListener(new InputListener() {
                 @Override
                 public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
