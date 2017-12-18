@@ -16,7 +16,11 @@ public abstract class Enemy extends GameCharacter {
     protected float   chanceOfDrop;
     protected float   attackRange;
     protected float   watchRange;
+
     protected boolean following;
+
+    protected boolean attacked;
+
     protected Vector2 heroPos;
 
     public Enemy(Sprite sprite) {
@@ -28,22 +32,25 @@ public abstract class Enemy extends GameCharacter {
     public void act(float delta) {
         super.act(delta);
         moving();
+        setTurnFromVel();
+    }
 
-//        if(body.getLinearVelocity().x > 0)
-//            sprite.flip(true, false);
-//        else if(body.getLinearVelocity().x < 0)
-//           sprite.flip(false, false);
-
+    protected void setTurnFromVel(){
+        if(body.getLinearVelocity().x > 0)
+            setTurn(false);
+        else if(body.getLinearVelocity().x < 0)
+            setTurn(true);
     }
 
 
     protected void moving(){
-        if(following){
+        if(following || attacked){
             followHero();
         }else{
             watching();
         }
     }
+
     float pos = 0;
     protected void watching(){
         pos += speedWalk/100;
@@ -57,7 +64,7 @@ public abstract class Enemy extends GameCharacter {
             body.setLinearVelocity(0,0);
         }else if (heroPos.x > body.getPosition().x - 5f) {
             body.setLinearVelocity(speedWalk, 0);
-        }else if (heroPos.x < body.getPosition().x) {
+        }else if (heroPos.x < body.getPosition().x + 5f) {
             body.setLinearVelocity(-speedWalk, 0);
         }
     }
@@ -65,6 +72,11 @@ public abstract class Enemy extends GameCharacter {
     //return this, only for shorter record in MyContactListener
     public Enemy setFollowing(boolean following) {
         this.following = following;
+        return this;
+    }
+
+    public Enemy setAttacked(boolean attacked) {
+        this.attacked = attacked;
         return this;
     }
 

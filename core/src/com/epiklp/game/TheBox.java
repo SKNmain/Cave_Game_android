@@ -122,7 +122,7 @@ public class TheBox {
     public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y){
         PointLight pointLight  = new PointLight(rayHandler, rays, color, 10, -2,-2);
         pointLight.attachToBody(body);
-        pointLight.setXray(false);
+        pointLight.setXray(true);
         pointLight.setIgnoreAttachedBody(true);
         return pointLight;
 
