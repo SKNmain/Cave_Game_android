@@ -51,9 +51,11 @@ public abstract class Enemy extends GameCharacter {
         body.setLinearVelocity(p);
 
     }
-
-    protected void followHero(){
-        if (heroPos.x > body.getPosition().x) {
+    protected void followHero() {
+        float distance = heroPos.x - body.getPosition().x;
+        if((Math.abs(distance) < 5f && Math.abs(distance) > 3f) || (distance > -5f && distance < -3f)){
+            body.setLinearVelocity(0,0);
+        }else if (heroPos.x > body.getPosition().x - 5f) {
             body.setLinearVelocity(speedWalk, 0);
         }else if (heroPos.x < body.getPosition().x) {
             body.setLinearVelocity(-speedWalk, 0);
