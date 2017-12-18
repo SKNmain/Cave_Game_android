@@ -13,8 +13,12 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		config.useGLSurfaceView20API18 = true;
-		initialize(new Game(), config);
+		config.r = 8;
+		config.g = 8;
+		config.b = 8;
+		config.a = 8;
+
+		initialize(new Cave(), config);
 	}
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
