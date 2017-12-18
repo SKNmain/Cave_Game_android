@@ -1,6 +1,7 @@
 package com.epiklp.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -70,9 +71,9 @@ class GameScreen implements Screen {
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.5f , Cave.HEIGHT / 1.5f, camera);
         stage = new Stage(viewport);
-        Gdx.input.setInputProcessor(stage);
         myContactListener = new MyContactListener();
         controller = new Controller();
+        Gdx.input.setInputProcessor(new InputMultiplexer());
         ui = new UI();
 
         b2dr = new Box2DDebugRenderer();
@@ -86,6 +87,10 @@ class GameScreen implements Screen {
 
         mapBodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
         MenuPause = new pauseMenu();
+
+        InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
+        inputMultiplexer.addProcessor(MenuPause);
+        inputMultiplexer.addProcessor(controller);
     }
 
 
@@ -103,6 +108,7 @@ class GameScreen implements Screen {
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
         TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
+        ui.update(hero.getLife(), hero.getMagic());
 
         sweepDeadBodies();
     }
@@ -110,8 +116,6 @@ class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         if(PAUSE == false) {
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             update(Gdx.graphics.getDeltaTime());
             TheBox.world.setContactListener(myContactListener);
             checkEndGame();
@@ -120,31 +124,32 @@ class GameScreen implements Screen {
             stage.draw();
             TheBox.rayHandler.render();
             controller.draw();
-            ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+            ui.draw();
             b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
         }
         else{
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-            //tmr.render();
-            //b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
-            //stage.act();
-            //stage.draw();
-            //TheBox.rayHandler.render();
-            //ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
             MenuPause.draw();
-          //  updateMenu(Gdx.graphics.getDeltaTime());
-            if(MenuPause.pressExit)
-            {
-                resume();
-            }
+            updateMenu(Gdx.graphics.getDeltaTime());
         }
     }
 
     public void updateMenu(float delta)
     {
-
+        if(MenuPause.presssResume)
+        {
+            resume();
+        }
+        if(MenuPause.pressRestart)
+        {
+            dispose();
+            cave.setScreen(new GameScreen(cave));
+        }
+        if(MenuPause.pressExit)
+        {
+            dispose();
+            Gdx.app.exit();
+        }
     }
 
     private void checkEndGame() {
@@ -230,6 +235,7 @@ class GameScreen implements Screen {
         controller.dispose();
         tmr.dispose();
         map.dispose();
+        MenuPause.dispose();
      }
 
     public void sweepDeadBodies() {

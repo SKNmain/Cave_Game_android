@@ -10,16 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 
-public class Controller {
+public class Controller extends Stage {
     private static final float BUTTON_SIZE = Cave.WIDTH / 10;
-    private Stage stage;
     private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed;
     private Table tabr;
 
     public Controller() {
-        stage = new Stage(new ExtendViewport(Cave.WIDTH, Cave.HEIGHT));
-        Gdx.input.setInputProcessor(stage);
-
         Table tabl = new Table();
         tabl.bottom().left();
         Image imu = new Image(Assets.manager.get(Assets.upButton));
@@ -56,7 +52,7 @@ public class Controller {
         tabl.add(imu).size(iml.getWidth(), iml.getHeight());
         tabl.row().padBottom(10);
         tabl.add(iml).size(iml.getWidth(), iml.getHeight());
-        stage.addActor(tabl);
+        addActor(tabl);
 
         tabr = new Table();
         tabr.setPosition(Cave.WIDTH - (Cave.WIDTH / 10) / 2, (Cave.WIDTH / 10));
@@ -94,7 +90,7 @@ public class Controller {
         tabr.add(ime).size(iml.getWidth(), iml.getHeight());
         tabr.row().padBottom(10);
         tabr.add(imr).size(iml.getWidth(), iml.getHeight());
-        stage.addActor(tabr);
+        addActor(tabr);
 
         Image HomeButton = new Image(Assets.manager.get(Assets.homeButton));
         HomeButton.setPosition(Gdx.graphics.getWidth() - 74, Gdx.graphics.getHeight()-74);
@@ -110,13 +106,9 @@ public class Controller {
                 homePresed = false;
             }
         });
-        stage.addActor(HomeButton);
+        addActor(HomeButton);
     }
 
-    public void draw() {
-        stage.act();
-        stage.draw();
-    }
 
     public boolean isUpPressed() {
         return upPressed;
@@ -138,7 +130,4 @@ public class Controller {
         return homePresed;
     }
 
-    public void dispose() {
-        stage.dispose();
-    }
 }

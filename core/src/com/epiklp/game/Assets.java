@@ -30,6 +30,9 @@ public class Assets {
 
 
     public static final AssetDescriptor<Texture> pauseWindow = new AssetDescriptor<Texture>("PauseMenu/window.png", Texture.class);
+    public static final AssetDescriptor<Texture> restartButton = new AssetDescriptor<Texture>("PauseMenu/button_restart.png", Texture.class);
+    public static final AssetDescriptor<Texture> resumeButton = new AssetDescriptor<Texture>("PauseMenu/button_resume.png", Texture.class);
+
     public static final AssetDescriptor<Texture> backButton = new AssetDescriptor<Texture>("MenuButtons/button_back.png", Texture.class);
     public static final AssetDescriptor<Texture> playButton = new AssetDescriptor<Texture>("MenuButtons/button_play.png", Texture.class);
     public static final AssetDescriptor<Texture> quitButton = new AssetDescriptor<Texture>("MenuButtons/button_quit.png", Texture.class);
@@ -41,6 +44,9 @@ public class Assets {
         manager.load(player);
         manager.load(flameDemon);
         manager.load(FireBall);
+
+        manager.load(restartButton);
+        manager.load(resumeButton);
 
         manager.load(leftButton);
         manager.load(rightButton);

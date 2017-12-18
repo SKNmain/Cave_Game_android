@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,27 +15,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 
-public class UI {
+public class UI extends Stage {
     private BitmapFont bitmapFont;
     private Label text;
     private Label.LabelStyle labelStyle;
-    private Stage stage;
-    private Texture lifeTexture, magicTexture;
-    private SpriteBatch batch;
+    private Image lifeTexture, magicTexture;
 
 
     public UI() {
-        batch = new SpriteBatch();
         bitmapFont = new BitmapFont();
         labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
-        text = new Label("FPS:", labelStyle);
-        stage = new Stage();
+        text = new Label("FPS:" + Gdx.graphics.getFramesPerSecond(), labelStyle);
         text.setPosition(0, Cave.HEIGHT - 100);
-        stage.addActor(text);
-        lifeTexture = CreateTexture(100, 32, 1, 0, 0, 1);
-        magicTexture = CreateTexture(100, 32, 0, 0, 1, 1);
-
-
+        addActor(text);
+        lifeTexture = new Image(CreateTexture(100, 32, 1, 0, 0, 1));
+        lifeTexture.setPosition(0, Cave.HEIGHT - 32);
+        magicTexture = new Image(CreateTexture(100, 32, 0, 0, 1, 1));
+        magicTexture.setPosition(0, Cave.HEIGHT - 64);
+        addActor(lifeTexture);
+        addActor(magicTexture);
     }
 
     private Texture CreateTexture(int width, int hight, int r, int g, int b, int a) {
@@ -47,30 +46,12 @@ public class UI {
         return tmp;
     }
 
-    public void draw(int life, int magic, float x, float y) {
-        update(life, magic);
-        batch.begin();
-        batch.draw(lifeTexture, -1, Cave.HEIGHT - 64); // x = -1 is only temporary, to check if all texture will disapper if hero is dead
-        batch.draw(magicTexture, -1, Cave.HEIGHT - 112);;
-        batch.end();
-        text.setText("FPS: " + Gdx.graphics.getFramesPerSecond() + "\n" + "x: " + x + " y: " + y);
-        stage.act();
-        stage.draw();
-    }
 
     public void update(int life, int magic) {
-        lifeTexture.dispose();
-        magicTexture.dispose();
         if (life <= 0) life = 1;
         if (magic <= 0) magic = 1;
-        lifeTexture = CreateTexture(life, 32, 1, 0, 0, 1);
-        magicTexture = CreateTexture(magic, 32, 0, 0, 1, 1);
+        lifeTexture.setX((life*4)-400);
+        magicTexture.setX((magic*4)-400);
+        text.setText("FPS:" + Gdx.graphics.getFramesPerSecond());
     }
-
-    public void dispose() {
-        lifeTexture.dispose();
-        magicTexture.dispose();
-        stage.dispose();
-    }
-
 }

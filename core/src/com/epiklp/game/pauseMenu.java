@@ -5,23 +5,22 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * Created by epiklp on 14.12.17.
  */
 
-public class pauseMenu {
+public class pauseMenu extends Stage {
 
-    private Stage stage;
     private Image pauseWindow, buttonExit, buttonRestart, buttonResume;
-    public boolean pressExit, pressRestart, pressMenu, presssResume;
+    public boolean pressExit, pressRestart, presssResume;
+    private Table tbl;
 
     public pauseMenu()
     {
-        stage = new Stage();
-        //Gdx.input.setInputProcessor(stage);
         pauseWindow = new Image(Assets.manager.get(Assets.pauseWindow));
-        pressExit = pressRestart = pressMenu = presssResume = false;
+        pressExit = pressRestart = presssResume = false;
         buttonExit = new Image(Assets.manager.get(Assets.quitButton));
         buttonExit.addListener(new InputListener(){
             @Override
@@ -37,19 +36,48 @@ public class pauseMenu {
         });
         buttonExit.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
-        stage.addActor(pauseWindow);
-        stage.addActor(buttonExit);
+        buttonResume = new Image(Assets.manager.get(Assets.resumeButton));
+        buttonResume.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                presssResume = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                presssResume = false;
+            }
+        });
+        buttonResume.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2+64);
+
+
+        buttonRestart = new Image(Assets.manager.get(Assets.restartButton));
+        buttonRestart.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                pressRestart = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                pressRestart = false;
+            }
+        });
+        buttonRestart.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2+64);
+
+        tbl = new Table();
+        tbl.bottom().left();
+        tbl.row().padBottom(10);
+        tbl.add(buttonResume).size(buttonResume.getWidth(), buttonResume.getHeight());
+        tbl.row().padBottom(10);
+        tbl.add(buttonRestart).size(buttonResume.getWidth(), buttonResume.getHeight());
+        tbl.row().padBottom(10);
+        tbl.add(buttonExit).size(buttonResume.getWidth(), buttonResume.getHeight());
+
+        addActor(tbl);
     }
 
-    public void draw()
-    {
-        stage.act();
-        stage.draw();
-    }
-
-    public void dispose()
-    {
-        stage.dispose();
-    }
 
 }
