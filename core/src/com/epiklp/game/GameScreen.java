@@ -116,12 +116,13 @@ class GameScreen implements Screen {
             TheBox.world.setContactListener(myContactListener);
             checkEndGame();
             tmr.render();
-            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
             stage.act();
             stage.draw();
             TheBox.rayHandler.render();
             controller.draw();
             ui.draw(hero.getLife(), hero.getMagic(), hero.getBody().getPosition().x, hero.getBody().getPosition().y);
+            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
+
         }
         else{
             Gdx.gl.glClearColor(0, 0, 0, 1);

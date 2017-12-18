@@ -20,7 +20,7 @@ public class FlameDemon extends Enemy {
         TheBox.createBoxSensor(body, 200f, 90f, new Vector2(0,45f));
         body.setUserData(this);
 
-        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, 0.5f), 10, -2,-2);
+        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0,0);
 
 
         initStats();
