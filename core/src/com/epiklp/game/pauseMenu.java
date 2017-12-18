@@ -34,7 +34,6 @@ public class pauseMenu extends Stage {
                 pressExit = false;
             }
         });
-        buttonExit.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 
         buttonResume = new Image(Assets.manager.get(Assets.resumeButton));
         buttonResume.addListener(new InputListener(){
@@ -49,7 +48,6 @@ public class pauseMenu extends Stage {
                 presssResume = false;
             }
         });
-        buttonResume.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2+64);
 
 
         buttonRestart = new Image(Assets.manager.get(Assets.restartButton));
@@ -65,10 +63,9 @@ public class pauseMenu extends Stage {
                 pressRestart = false;
             }
         });
-        buttonRestart.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2+64);
 
         tbl = new Table();
-        tbl.bottom().left();
+        tbl.setPosition(Cave.WIDTH/2, Cave.HEIGHT/2);
         tbl.row().padBottom(10);
         tbl.add(buttonResume).size(buttonResume.getWidth(), buttonResume.getHeight());
         tbl.row().padBottom(10);
@@ -76,6 +73,7 @@ public class pauseMenu extends Stage {
         tbl.row().padBottom(10);
         tbl.add(buttonExit).size(buttonResume.getWidth(), buttonResume.getHeight());
 
+        addActor(pauseWindow);
         addActor(tbl);
     }
 
