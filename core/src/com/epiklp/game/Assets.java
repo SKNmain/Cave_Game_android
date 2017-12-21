@@ -20,7 +20,7 @@ public class Assets {
 
     public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9];
-    public static BitmapFont character;
+    public static BitmapFont character;     //Czcionka
 
     public static final AssetDescriptor<Texture> leftButton = new AssetDescriptor<Texture>("button/Left.png", Texture.class);
     public static final AssetDescriptor<Texture> rightButton = new AssetDescriptor<Texture>("button/Right.png", Texture.class);
