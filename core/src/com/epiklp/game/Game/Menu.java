@@ -82,12 +82,12 @@ public class Menu implements Screen {
         stage.addActor(shop);
         stage.addActor(credit);
         stage.addActor(cave1);
+        TheBox.initWorld(); //Crete WorldBox
         hero = new Hero();  //Hero
         stage.addActor(hero);
         stage.addActor(cave2);
 
-        //Crete WorldBox
-        TheBox.initWorld();
+
         b2dr = new Box2DDebugRenderer();
         TheBox.createBox(0,50,Cave.WIDTH,10,true, (short)0, (short)0);
         creditBody = TheBox.createBox(257, 128, 64,64, true, (short)0, (short)0);

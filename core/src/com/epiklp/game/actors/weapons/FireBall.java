@@ -16,7 +16,7 @@ public class FireBall extends Bullet {
 
     public FireBall(float x, float y, int hitPoint, GameCharacter gameCharacterRef, boolean turn)
     {
-        super(new Sprite(Assets.manager.get(Assets.FireBall)), hitPoint, gameCharacterRef);
+        super(new Sprite(Assets.manager.get(Assets.fireBall)), hitPoint, gameCharacterRef);
         body = TheBox.createBox(5, 0,25f,30f,false, TheBox.CATEGORY_BULLET, TheBox.MASK_BULLET);
         sprite.setSize(0.75f * Cave.PPM * Cave.SCALE, 0.75f * Cave.PPM * Cave.SCALE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
