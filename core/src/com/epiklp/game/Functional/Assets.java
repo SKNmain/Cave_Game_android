@@ -51,6 +51,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> quitButton = new AssetDescriptor<Texture>("MenuButtons/button_quit.png", Texture.class);
     public static final AssetDescriptor<Texture> continueButton = new AssetDescriptor<Texture>("MenuButtons/button_continue.png", Texture.class);
     public static final AssetDescriptor<Texture> creditButton = new AssetDescriptor<Texture>("MenuButtons/button_credit.png", Texture.class);
+    public static final AssetDescriptor<Texture> enterButton = new AssetDescriptor<Texture>("button/E.png", Texture.class);
+
     /*******************************************/
 
     //menu
@@ -92,6 +94,7 @@ public class Assets {
         manager.load(playButton);
         manager.load(continueButton);
         manager.load(creditButton);
+        manager.load(enterButton);
 
         //Menu
         manager.load(menuLayer);

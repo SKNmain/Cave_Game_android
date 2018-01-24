@@ -1,6 +1,8 @@
 package com.epiklp.game.Functional;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,9 +14,9 @@ import com.epiklp.game.Functional.Assets;
 
 public class Controller extends Stage {
     private final float BUTTON_SIZE = Cave.WIDTH / 10;
-    private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed;
+    private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed, enterPresed;
     private Table tabRight, tabLeft;
-    private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome;
+    private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, enter;
 
     public Controller(boolean atack) {
         //Buttons on Left
@@ -115,12 +117,41 @@ public class Controller extends Stage {
         });
         addActor(buttonHome);
         /*******************************************/
+
+        enter = new Image(Assets.manager.get(Assets.goButton));
+        enter.setSize(Cave.WIDTH / 15, Cave.WIDTH / 15);
+
+        enter.addListener(new InputListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                enterPresed = true;
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                enterPresed = false;
+            }
+        });
+    }
+
+    public void enterOn(Vector2 position)
+    {
+        addActor(enter);
+        enter.setPosition(position.x, position.y);
+    }
+
+    public void enterOff()
+    {
+        enter.remove();
     }
 
 
     public boolean isUpPressed() {
         return upPressed;
     }
+
+    public boolean isEnterPresed() {return enterPresed;}
 
     public boolean isAttackPressed() {
         return atackPressed;

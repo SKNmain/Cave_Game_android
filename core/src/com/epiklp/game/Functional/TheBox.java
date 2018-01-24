@@ -66,7 +66,6 @@ public class TheBox {
         return pBody;
     }
 
-
     public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter){
 
         PolygonShape shape = new PolygonShape();

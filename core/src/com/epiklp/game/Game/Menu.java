@@ -2,12 +2,20 @@ package com.epiklp.game.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -39,7 +47,7 @@ public class Menu implements Screen {
     private Image credit;
     private Image cave1;
     private Image cave2;
-    private Image enter;
+    private boolean enterShop, enterCredit;
     private Body creditBody, shopBody, cavBody;
     private Music soundTrack;
 
@@ -50,6 +58,9 @@ public class Menu implements Screen {
     public Menu(Cave cave)
     {
         this.cave = cave;
+
+        enterCredit = false;
+        enterShop = false;
 
         //music
         soundTrack = Assets.manager.get(Assets.menuMusic);
@@ -71,8 +82,6 @@ public class Menu implements Screen {
         cave2 = new Image(Assets.manager.get(Assets.cave2Layer));
         cave2.setSize(400,Cave.HEIGHT);
         cave2.setPosition(Cave.WIDTH-500, 55);
-        enter = new Image(Assets.manager.get(Assets.goButton));
-        enter.setSize(Cave.WIDTH / 10, Cave.WIDTH / 10);
 
         //Create stage
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
@@ -90,18 +99,70 @@ public class Menu implements Screen {
 
         b2dr = new Box2DDebugRenderer();
         TheBox.createBox(0,50,Cave.WIDTH,10,true, (short)0, (short)0);
-        creditBody = TheBox.createBox(257, 128, 64,64, true, (short)0, (short)0);
-        shopBody = TheBox.createBox(600, 154, 86,96, true, (short)0, (short)0);
-
+        creditBody = TheBox.createBox(257, 250, 10,10, true, (short)0, (short)0);
+        creditBody.setUserData("credit");
+        TheBox.createBoxSensor(creditBody, 64,86, new Vector2(0,-98));
+        shopBody = TheBox.createBox(600, 250, 10,10, true, (short)0, (short)0);
+        shopBody.setUserData("shop");
+        TheBox.createBoxSensor(shopBody, 86,86, new Vector2(0,-98));
 
         //Multi Events
         MenuPause = new PauseMenu();
         controller = new Controller(false);
-        myContactListener = new MyContactListener();
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(MenuPause);
         inputMultiplexer.addProcessor(controller);
+
+        TheBox.world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                Body a = contact.getFixtureA().getBody();
+                Body b = contact.getFixtureB().getBody();
+                if(a.getUserData() instanceof Hero && b.getUserData() == "credit")
+                {
+                    controller.enterOn(new Vector2(260, Cave.HEIGHT/3));
+                    enterCredit = true;
+                    return;
+                }
+
+                if(a.getUserData() instanceof Hero && b.getUserData() == "shop")
+                {
+                    controller.enterOn(new Vector2(675, Cave.HEIGHT/3));
+                    enterShop = true;
+                    return;
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+                Body a = contact.getFixtureA().getBody();
+                Body b = contact.getFixtureB().getBody();
+                if(a.getUserData() instanceof Hero && b.getUserData() == "credit")
+                {
+                    controller.enterOff();
+                    enterCredit = false;
+                    return;
+                }
+
+                if(a.getUserData() instanceof Hero && b.getUserData() == "shop")
+                {
+                    controller.enterOff();
+                    enterShop = false;
+                    return;
+                }
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold oldManifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse impulse) {
+
+            }
+        });
     }
 
     @Override
@@ -122,7 +183,7 @@ public class Menu implements Screen {
         }
         else {
             update(Gdx.graphics.getDeltaTime());
-            TheBox.world.setContactListener(myContactListener);
+            //TheBox.world.setContactListener(myContactListener);
         }
     }
 
@@ -130,28 +191,6 @@ public class Menu implements Screen {
     {
         TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();  //Controler
-        /*
-        float x = hero.getBody().getPosition().x;
-        if(x > 180 && x < 330) // credits
-        {
-            stage.addActor(enter);
-            enter.setPosition(180, Cave.HEIGHT/2);
-        }
-        else if(x > 500 && x < 700)
-        {
-            stage.addActor(enter);
-            enter.setPosition(500, Cave.HEIGHT/2);
-        }//shop
-        else if(x > Cave.WIDTH-500)
-        {
-            stage.addActor(enter);
-            enter.setPosition(Cave.WIDTH-500, Cave.HEIGHT/2);
-        }//map
-        else
-        {
-            enter.remove();
-        }
-        */
     }
 
     private void inputUpdate() {
@@ -159,40 +198,32 @@ public class Menu implements Screen {
             if (controller.isLeftPressed()) {
                 hero.getSprite().setFlip(true, false);
                 hero.setTurn(false);
-                if (horizontalForce > -(hero.getSpeedWalk()))
-                    horizontalForce -= 0.4f;
+                if (horizontalForce > -(hero.getSpeedWalk())) horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
                 hero.getSprite().setFlip(false, false);
                 hero.setTurn(true);
-                if (horizontalForce < (hero.getSpeedWalk()))
-                    horizontalForce += 0.4f;
+                if (horizontalForce < (hero.getSpeedWalk())) horizontalForce += 0.4f;
             }
         } else {
-            if (horizontalForce > 0.1) {
-                horizontalForce -= 0.2f;
-            } else if (horizontalForce < -0.1) {
-                horizontalForce += 0.2f;
-            } else {
-                horizontalForce = 0;
-            }
+            if (horizontalForce > 0.1) {horizontalForce -= 0.2f;}
+            else if (horizontalForce < -0.1) {horizontalForce += 0.2f;}
+            else {horizontalForce = 0;}
         }
         hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {
-            hero.setSpeedY(7f);
+        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {hero.setSpeedY(7f);}
+
+        if(controller.isEnterPresed())
+        {
+            if(enterShop) System.out.println("weeee shoping time!!!!!!");
+            else System.out.println("credit or somethink");
         }
 
-        if(controller.isHomePresed())
-        {
-            pause();
-        }
+        if(controller.isHomePresed()) { pause();}
     }
 
     public void updateMenu(float delta)
     {
-        if(MenuPause.presssResume)
-        {
-            resume();
-        }
+        if(MenuPause.presssResume) {resume();}
         if(MenuPause.pressRestart)
         {
             dispose();
@@ -211,24 +242,19 @@ public class Menu implements Screen {
     }
 
     @Override
-    public void pause() {
-        pause = true;
-    }
+    public void pause() {pause = true;}
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() {pause = false;}
 
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     @Override
     public void dispose() {
         stage.dispose();
         controller.dispose();
         hero.destroy();
+        MenuPause.dispose();
     }
 }
