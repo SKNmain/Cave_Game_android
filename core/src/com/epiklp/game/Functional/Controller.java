@@ -119,7 +119,7 @@ public class Controller extends Stage {
         /*******************************************/
 
         enter = new Image(Assets.manager.get(Assets.goButton));
-        enter.setSize(Cave.WIDTH / 15, Cave.WIDTH / 15);
+        enter.setSize(Cave.WIDTH / 10, Cave.WIDTH / 15);
 
         enter.addListener(new InputListener(){
             @Override

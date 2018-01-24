@@ -15,7 +15,7 @@ import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.TextureGame;
 
 
-class CreditsScreen implements Screen {
+class CreditsScreen extends Stage {
     final Cave cave;
     private TextureGame textMenu;
     private Stage stage;
@@ -28,13 +28,11 @@ class CreditsScreen implements Screen {
     public CreditsScreen(Cave cave) {
         this.cave = cave;
         textMenu = new TextureGame();
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
         bitmapFont = new BitmapFont();
         labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
         text = new Label("Autorzy:\n Rafal Rybowski\n Kamil Sykula", labelStyle);
         text.setPosition(0, Cave.HEIGHT / 2);
-        stage.addActor(text);
+        addActor(text);
         backPress = false;
         backImage = new Image(new Texture("MenuButtons/button_back.png"));
         backImage.addListener(new InputListener() {
@@ -44,51 +42,20 @@ class CreditsScreen implements Screen {
                 backPress = true;
                 return true;
             }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                backPress = false;
+            }
+
         });
         backImage.setPosition(Cave.WIDTH - backImage.getWidth(), 0);
-        stage.addActor(backImage);
+        addActor(backImage);
     }
 
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-        if (backPress == true) {
-            dispose();
-            cave.setScreen(new Menu(cave));
-        }
-        textMenu.draw();
-        stage.act();
-        stage.draw();
-    }
-
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
 
     @Override
     public void dispose() {
         textMenu.dispose();
-        stage.dispose();
     }
 }
