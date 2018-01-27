@@ -50,6 +50,8 @@ public class TheBox {
         initRayHandler();
     }
 
+    public static Body createBody()
+
     public static Body createBox(float x, float y, float width, float height, boolean isStatic, short category, short mask) {
         Body pBody;
         BodyDef def = new BodyDef();
