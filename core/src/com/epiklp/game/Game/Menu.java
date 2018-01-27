@@ -2,7 +2,6 @@ package com.epiklp.game.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
@@ -15,8 +14,6 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -24,7 +21,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
 import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.Controller;
-import com.epiklp.game.Functional.MyContactListener;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.actors.characters.Hero;
 
@@ -108,15 +104,20 @@ public class Menu implements Screen {
 
 
         b2dr = new Box2DDebugRenderer();
-        TheBox.createBox(0, 50, Cave.WIDTH, 10, true, (short) 0, (short) 0);
-        creditBody = TheBox.createBox(257, 250, 10, 10, true, (short) 0, (short) 0);
+        Body floor = TheBox.createBody(0, 50, true);
+        TheBox.createBoxShape(floor, Cave.WIDTH, 2, (short) 0, (short) 0);
+        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, (short) 0, (short) 0);
+
+        creditBody = TheBox.createBody(260, 130, true);
+        TheBox.createBoxSensor(creditBody, 60, 50);
         creditBody.setUserData("credit");
-        TheBox.createBoxSensor(creditBody, 64, 86, new Vector2(0, -98));
-        shopBody = TheBox.createBox(600, 250, 10, 10, true, (short) 0, (short) 0);
+
+        shopBody = TheBox.createBody(600, 130, true);
+        TheBox.createBoxSensor(shopBody, 80, 50);
         shopBody.setUserData("shop");
-        TheBox.createBoxSensor(shopBody, 86, 86, new Vector2(0, -98));
-        caveBody = TheBox.createBox(1075, 250, 10, 10, true, (short) 0, (short) 0);
-        TheBox.createBoxSensor(caveBody, 86, 86, new Vector2(0, -98));
+
+        caveBody = TheBox.createBody(1000, 130, true);
+        TheBox.createBoxSensor(caveBody, 60, 50);
         caveBody.setUserData("cave");
 
         //Multi Events
@@ -209,6 +210,8 @@ public class Menu implements Screen {
         } else if (state.equals(STATE.CREDIT)) {
 
         }
+        b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
+
     }
 
     private void update(float delta) {

@@ -50,9 +50,7 @@ public class TheBox {
         initRayHandler();
     }
 
-    public static Body createBody()
-
-    public static Body createBox(float x, float y, float width, float height, boolean isStatic, short category, short mask) {
+    public static Body createBody(float x, float y, boolean isStatic){
         Body pBody;
         BodyDef def = new BodyDef();
         if (isStatic) def.type = BodyDef.BodyType.StaticBody;
@@ -60,16 +58,17 @@ public class TheBox {
         def.position.set(x / Cave.PPM, y / Cave.PPM);
         def.fixedRotation = true;
         pBody = world.createBody(def);
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
-
-        pBody.createFixture(shape, 1);//.setUserData("player");
-        shape.dispose();
         return pBody;
     }
 
-    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter) {
+    public static void createBoxShape(Body body, float width, float height, short category, short mask) {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
+        body.createFixture(shape, 1);//.setUserData("player");
+        shape.dispose();
+    }
 
+    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter) {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
         FixtureDef fixDef = new FixtureDef();
@@ -82,7 +81,19 @@ public class TheBox {
         body.createFixture(fixDef);
         shape.dispose();
     }
-
+    public static void createBoxSensor(Body body, float width, float height) {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = shape;
+        fixDef.density = 0;
+        fixDef.friction = 0;
+        fixDef.isSensor = true;
+        fixDef.filter.categoryBits = CATEGORY_SENSOR;
+        fixDef.filter.maskBits = MASK_SENSOR;
+        body.createFixture(fixDef);
+        shape.dispose();
+    }
     public static void destroyWorld() {
         if (rayHandler != null) {
             rayHandler.dispose();

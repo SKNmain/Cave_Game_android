@@ -16,7 +16,8 @@ public class FlameDemon extends Enemy {
         super(new Sprite(Assets.manager.get(Assets.flameDemon)));
         sprite.setSize(1.4f * Cave.PPM * Cave.SCALE, 1.8f * Cave.PPM * Cave.SCALE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
-        body = TheBox.createBox(1000, 100, 30f, 50f, false, TheBox.CATEGORY_ENEMY, TheBox.MASK_ENEMY);
+        body = TheBox.createBody(100, 100, false);
+        TheBox.createBoxShape(body, 30f, 50f, TheBox.CATEGORY_ENEMY, TheBox.MASK_ENEMY);
         TheBox.createBoxSensor(body, 200f, 90f, new Vector2(0, 45f));
         body.setUserData(this);
 

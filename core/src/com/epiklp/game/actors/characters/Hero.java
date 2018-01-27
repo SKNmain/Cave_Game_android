@@ -22,7 +22,8 @@ public class Hero extends GameCharacter implements Shootable {
         super(new Sprite(Assets.manager.get(Assets.player)));
         sprite.setSize(108 / Cave.SCALE, 192 / Cave.SCALE);
         sprite.setOrigin(108 / 2, 192 / 2);
-        setBody(TheBox.createBox(400, 300, 28f, 48, false, TheBox.CATEGORY_PLAYER, TheBox.MASK_PLAYER));
+        setBody(TheBox.createBody(400, 300, false));
+        TheBox.createBoxShape(body, 28f, 48, TheBox.CATEGORY_PLAYER, TheBox.MASK_PLAYER);
         body.setUserData(this);
         light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, 1f), 10, -2, -2);
         initStats();
