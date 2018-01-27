@@ -13,7 +13,7 @@ import com.epiklp.game.actors.weapons.Bullet;
  * Created by Asmei on 2017-12-02.
  */
 
-public class MyContactListener implements ContactListener {
+public class GameContactListener implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {

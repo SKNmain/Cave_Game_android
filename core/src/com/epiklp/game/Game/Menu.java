@@ -41,7 +41,7 @@ public class Menu implements Screen {
     private Camera camera;
     private Viewport viewport;
     private Stage stage;
-    //    private MyContactListener myContactListener;
+    //    private GameContactListener myContactListener;
     private Controller controller;
     private Hero hero;
     private float horizontalForce = 0;
@@ -60,13 +60,14 @@ public class Menu implements Screen {
 
     private PauseMenu MenuPause;
 
-    public Menu(Cave cave) {
+    public Menu(final Cave cave) {
         state = STATE.GAME;
 
         this.cave = cave;
 
         enterCredit = false;
         enterShop = false;
+        TheBox.initWorld();
 
         //music
         soundTrack = Assets.manager.get(Assets.menuMusic);
@@ -97,7 +98,6 @@ public class Menu implements Screen {
         stage.addActor(shop);
         stage.addActor(credit);
         stage.addActor(cave1);
-        TheBox.initWorld(); //Crete WorldBox
         hero = new Hero();  //Hero
         stage.addActor(hero);
         stage.addActor(cave2);
@@ -105,6 +105,7 @@ public class Menu implements Screen {
 
         b2dr = new Box2DDebugRenderer();
         Body floor = TheBox.createBody(0, 50, true);
+        floor.setUserData("floor");
         TheBox.createBoxShape(floor, Cave.WIDTH, 2, (short) 0, (short) 0);
         TheBox.createBoxShape(floor, 2, Cave.HEIGHT, (short) 0, (short) 0);
 
@@ -116,8 +117,8 @@ public class Menu implements Screen {
         TheBox.createBoxSensor(shopBody, 80, 50);
         shopBody.setUserData("shop");
 
-        caveBody = TheBox.createBody(1000, 130, true);
-        TheBox.createBoxSensor(caveBody, 60, 50);
+        caveBody = TheBox.createBody(1020, 130, true);
+        TheBox.createBoxSensor(caveBody, 40, 50);
         caveBody.setUserData("cave");
 
         //Multi Events
@@ -133,22 +134,22 @@ public class Menu implements Screen {
             public void beginContact(Contact contact) {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
-                if (a.getUserData() instanceof Hero && b.getUserData() == "credit") {
+                if (a.getUserData() instanceof Hero && b.getUserData().equals("credit")) {
                     controller.enterOn(new Vector2(240, 250));
                     enterCredit = true;
-                    return;
+
                 }
 
-                if (a.getUserData() instanceof Hero && b.getUserData() == "shop") {
+                if (a.getUserData() instanceof Hero && b.getUserData().equals("shop")) {
                     controller.enterOn(new Vector2(665, Cave.HEIGHT / 3 + 20));
                     enterShop = true;
-                    return;
+
                 }
 
-                if (a.getUserData() instanceof Hero && b.getUserData() == "cave") {
+                if (a.getUserData() instanceof Hero && b.getUserData().equals("cave")) {
                     controller.enterOn(new Vector2(1140, Cave.HEIGHT / 3 + 20));
                     enterCave = true;
-                    return;
+                    cave.setScreen(new GameScreen(cave) );
                 }
             }
 
@@ -159,19 +160,19 @@ public class Menu implements Screen {
                 if (a.getUserData() instanceof Hero && b.getUserData() == "credit") {
                     controller.enterOff();
                     enterCredit = false;
-                    return;
+
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData() == "shop") {
                     controller.enterOff();
                     enterShop = false;
-                    return;
+
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData() == "cave") {
                     controller.enterOff();
                     enterCave = false;
-                    return;
+
                 }
             }
 
@@ -260,8 +261,8 @@ public class Menu implements Screen {
             resume();
         }
         if (MenuPause.pressRestart) {
-            dispose();
-            cave.setScreen(new GameScreen(cave));
+            //dispose();
+            //cave.setScreen(new Menu(cave));
         }
         if (MenuPause.pressExit) {
             dispose();

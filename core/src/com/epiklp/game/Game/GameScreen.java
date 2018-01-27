@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
 import com.epiklp.game.Functional.Controller;
-import com.epiklp.game.Functional.MyContactListener;
+import com.epiklp.game.Functional.GameContactListener;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.Functional.TiledObject;
 import com.epiklp.game.Functional.UI;
@@ -63,17 +63,17 @@ public class GameScreen implements Screen {
     private Array<Enemy> enemies;
     private Array<Body> mapBodies;
 
-    private MyContactListener myContactListener;
+    private GameContactListener gameContactListener;
     private PauseMenu MenuPause;
 
     public GameScreen(Cave cave) {
         PAUSE = false;
-        this.cave = cave;
-        TheBox.initWorld();
+        this.cave = cave;        TheBox.initWorld();
+
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.5f, Cave.HEIGHT / 1.5f, camera);
         stage = new Stage(viewport);
-        myContactListener = new MyContactListener();
+        gameContactListener = new GameContactListener();
         controller = new Controller(true);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         ui = new UI();
@@ -117,12 +117,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (!PAUSE) {
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             update(Gdx.graphics.getDeltaTime());
-            TheBox.world.setContactListener(myContactListener);
+            TheBox.world.setContactListener(gameContactListener);
             checkEndGame();
             tmr.render();
             stage.act();
@@ -143,8 +142,8 @@ public class GameScreen implements Screen {
             resume();
         }
         if (MenuPause.pressRestart) {
-            dispose();
-            cave.setScreen(new GameScreen(cave));
+            cave.setScreen(new Menu(cave));
+          //  dispose();
         }
         if (MenuPause.pressExit) {
             dispose();
@@ -208,7 +207,6 @@ public class GameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height);
-
     }
 
     @Override

@@ -70,7 +70,7 @@ public abstract class Enemy extends GameCharacter {
         }
     }
 
-    //return this, only for shorter record in MyContactListener
+    //return this, only for shorter record in GameContactListener
     public Enemy setFollowing(boolean following) {
         this.following = following;
         return this;
