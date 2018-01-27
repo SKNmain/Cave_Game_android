@@ -2,14 +2,12 @@ package com.epiklp.game.Functional;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.Assets;
 
 
 public class Controller extends Stage {
@@ -32,6 +30,7 @@ public class Controller extends Stage {
                 rightPressed = true;
                 return true;
             }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 rightPressed = false;
@@ -46,6 +45,7 @@ public class Controller extends Stage {
                 leftPressed = true;
                 return true;
             }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 leftPressed = false;
@@ -59,10 +59,10 @@ public class Controller extends Stage {
         //Buttons on Right
         /*******************************************/
         tabRight = new Table();
-        if(atack == true)
-            tabRight.setPosition(Gdx.graphics.getWidth()- 64, (Cave.WIDTH / 10));
+        if (atack == true)
+            tabRight.setPosition(Gdx.graphics.getWidth() - 64, (Cave.WIDTH / 10));
         else
-            tabRight.setPosition(Gdx.graphics.getWidth()- 64, buttonLeft.getHeight()/2);
+            tabRight.setPosition(Gdx.graphics.getWidth() - 64, buttonLeft.getHeight() / 2);
 
         buttonUp = new Image(Assets.manager.get(Assets.upButton));
         buttonUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -72,12 +72,13 @@ public class Controller extends Stage {
                 upPressed = true;
                 return true;
             }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 upPressed = false;
             }
         });
-        if(atack == true) {
+        if (atack == true) {
             buttonAttack = new Image(Assets.manager.get(Assets.attackButton));
             buttonAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
             buttonAttack.addListener(new InputListener() {
@@ -86,6 +87,7 @@ public class Controller extends Stage {
                     atackPressed = true;
                     return true;
                 }
+
                 @Override
                 public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                     atackPressed = false;
@@ -102,8 +104,8 @@ public class Controller extends Stage {
         //Pause/Menu
         /*******************************************/
         buttonHome = new Image(Assets.manager.get(Assets.homeButton));
-        buttonHome.setPosition(Gdx.graphics.getWidth() - 74, Gdx.graphics.getHeight()-74);
-        buttonHome.addListener(new InputListener(){
+        buttonHome.setPosition(Gdx.graphics.getWidth() - 74, Gdx.graphics.getHeight() - 74);
+        buttonHome.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 homePresed = true;
@@ -121,7 +123,7 @@ public class Controller extends Stage {
         enter = new Image(Assets.manager.get(Assets.goButton));
         enter.setSize(Cave.WIDTH / 10, Cave.WIDTH / 15);
 
-        enter.addListener(new InputListener(){
+        enter.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 enterPresed = true;
@@ -135,14 +137,12 @@ public class Controller extends Stage {
         });
     }
 
-    public void enterOn(Vector2 position)
-    {
+    public void enterOn(Vector2 position) {
         addActor(enter);
         enter.setPosition(position.x, position.y);
     }
 
-    public void enterOff()
-    {
+    public void enterOff() {
         enter.remove();
     }
 
@@ -151,7 +151,9 @@ public class Controller extends Stage {
         return upPressed;
     }
 
-    public boolean isEnterPresed() {return enterPresed;}
+    public boolean isEnterPresed() {
+        return enterPresed;
+    }
 
     public boolean isAttackPressed() {
         return atackPressed;

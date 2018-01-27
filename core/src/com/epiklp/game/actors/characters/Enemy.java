@@ -6,16 +6,16 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Created by epiklp on 19.11.17.
- *
- *
- *
+ * <p>
+ * <p>
+ * <p>
  * Wszystkie wartości dla attackRange oraz watchRange podawac w jednostkach Box2d!
  */
 
 public abstract class Enemy extends GameCharacter {
-    protected float   chanceOfDrop;
-    protected float   attackRange;
-    protected float   watchRange;
+    protected float chanceOfDrop;
+    protected float attackRange;
+    protected float watchRange;
 
     protected boolean following;
 
@@ -35,35 +35,37 @@ public abstract class Enemy extends GameCharacter {
         setTurnFromVel();
     }
 
-    protected void setTurnFromVel(){
-        if(body.getLinearVelocity().x > 0)
+    protected void setTurnFromVel() {
+        if (body.getLinearVelocity().x > 0)
             setTurn(false);
-        else if(body.getLinearVelocity().x < 0)
+        else if (body.getLinearVelocity().x < 0)
             setTurn(true);
     }
 
 
-    protected void moving(){
-        if(following || attacked){
+    protected void moving() {
+        if (following || attacked) {
             followHero();
-        }else{
+        } else {
             watching();
         }
     }
 
     float pos = 0;
-    protected void watching(){
-        pos += speedWalk/100;
-        Vector2 p = new Vector2(watchRange * MathUtils.sin(pos),0);
+
+    protected void watching() {
+        pos += speedWalk / 100;
+        Vector2 p = new Vector2(watchRange * MathUtils.sin(pos), 0);
         body.setLinearVelocity(p);
 
     }
+
     protected void followHero() {
-        if(heroPos.x > body.getPosition().x - 3f && heroPos.x < body.getPosition().x + 3f){
-            body.setLinearVelocity(0,0);
-        }else if (heroPos.x > body.getPosition().x - 3f) {
+        if (heroPos.x > body.getPosition().x - 3f && heroPos.x < body.getPosition().x + 3f) {
+            body.setLinearVelocity(0, 0);
+        } else if (heroPos.x > body.getPosition().x - 3f) {
             body.setLinearVelocity(speedWalk, 0);
-        }else if (heroPos.x < body.getPosition().x + 3f) {
+        } else if (heroPos.x < body.getPosition().x + 3f) {
             body.setLinearVelocity(-speedWalk, 0);
         }
     }
@@ -79,7 +81,7 @@ public abstract class Enemy extends GameCharacter {
         return this;
     }
 
-    public void setHeroPos(Vector2 pos){
+    public void setHeroPos(Vector2 pos) {
         this.heroPos = pos;
     }
 

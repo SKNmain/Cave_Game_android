@@ -5,11 +5,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -51,8 +46,8 @@ public class UI extends Stage {
     public void update(int life, int magic) {
         if (life <= 0) life = 1;
         if (magic <= 0) magic = 1;
-        lifeTexture.setX((life*4)-400);
-        magicTexture.setX((magic*4)-400);
+        lifeTexture.setX((life * 4) - 400);
+        magicTexture.setX((magic * 4) - 400);
         text.setText("FPS:" + Gdx.graphics.getFramesPerSecond());
     }
 }

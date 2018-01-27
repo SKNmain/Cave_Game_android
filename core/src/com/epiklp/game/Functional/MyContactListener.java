@@ -22,14 +22,14 @@ public class MyContactListener implements ContactListener {
         boolean aIsSensor = contact.getFixtureA().isSensor();
         boolean bIsSensor = contact.getFixtureB().isSensor();
 
-        if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && !aIsSensor) {
+        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && !aIsSensor) {
             Hero hero = (Hero) b.getUserData();
             Enemy enemy = (Enemy) a.getUserData();
             hero.setLife(-enemy.getStrengh());
             enemy.setLife(-hero.getStrengh());
             return;
         }
-        if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
+        if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && !bIsSensor) {
             Hero hero = (Hero) a.getUserData();
             Enemy enemy = (Enemy) b.getUserData();
             hero.setLife(-enemy.getStrengh());
@@ -37,13 +37,13 @@ public class MyContactListener implements ContactListener {
             return;
         }
         //sensor
-        if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
+        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
             Hero hero = (Hero) b.getUserData();
             Enemy enemy = (Enemy) a.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
             return;
         }
-        if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
+        if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
             Hero hero = (Hero) a.getUserData();
             Enemy enemy = (Enemy) b.getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
@@ -51,9 +51,9 @@ public class MyContactListener implements ContactListener {
         }
 
         //Shooting
-        if(a.getUserData() instanceof Bullet && b.getUserData() instanceof Enemy && !bIsSensor) {
+        if (a.getUserData() instanceof Bullet && b.getUserData() instanceof Enemy && !bIsSensor) {
             Bullet bullet = (Bullet) a.getUserData();
-            if(bullet.getGameCharacter() instanceof Hero) {
+            if (bullet.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) b.getUserData();
                 enemy.setLife(-bullet.getHitPoint());
                 enemy.setAttacked(true).setHeroPos(bullet.getGameCharacter().getBody().getPosition());
@@ -62,9 +62,9 @@ public class MyContactListener implements ContactListener {
             return;
         }
 
-        if(b.getUserData() instanceof Bullet && a.getUserData() instanceof Enemy && !aIsSensor) {
+        if (b.getUserData() instanceof Bullet && a.getUserData() instanceof Enemy && !aIsSensor) {
             Bullet bullet = (Bullet) b.getUserData();
-            if(bullet.getGameCharacter() instanceof Hero) {
+            if (bullet.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) a.getUserData();
                 enemy.setLife(-bullet.getHitPoint());
                 enemy.setAttacked(true).setHeroPos(bullet.getGameCharacter().getBody().getPosition());
@@ -73,15 +73,13 @@ public class MyContactListener implements ContactListener {
             return;
         }
 
-        if(a.getUserData() instanceof Bullet && b.getUserData().equals("TiledObject"))
-        {
+        if (a.getUserData() instanceof Bullet && b.getUserData().equals("TiledObject")) {
             Bullet bullet = (Bullet) a.getUserData();
             bullet.setToDelete();
             return;
         }
 
-        if(a.getUserData().equals("TiledObject") && b.getUserData() instanceof Bullet)
-        {
+        if (a.getUserData().equals("TiledObject") && b.getUserData() instanceof Bullet) {
             Bullet bullet = (Bullet) b.getUserData();
             bullet.setToDelete();
             return;
@@ -96,11 +94,11 @@ public class MyContactListener implements ContactListener {
         boolean aIsSensor = contact.getFixtureA().isSensor();
         boolean bIsSensor = contact.getFixtureB().isSensor();
         //sensor
-        if(a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
+        if (a.getUserData() instanceof Enemy && b.getUserData() instanceof Hero && aIsSensor) {
             Enemy enemy = (Enemy) a.getUserData();
             enemy.setFollowing(false);
         }
-        if(b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
+        if (b.getUserData() instanceof Enemy && a.getUserData() instanceof Hero && bIsSensor) {
             Enemy enemy = (Enemy) b.getUserData();
             enemy.setFollowing(false);
         }

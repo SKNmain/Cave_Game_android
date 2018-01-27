@@ -5,13 +5,11 @@ package com.epiklp.game.Functional;
  */
 
 public class JsonFunction {
-    public static void Create()
-    {
+    public static void Create() {
 
     }
 
-    public static boolean Read()
-    {
+    public static boolean Read() {
 
         return false;
     }

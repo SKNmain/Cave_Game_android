@@ -27,6 +27,7 @@ public abstract class GameCharacter extends GameObject {
     }
 
     public abstract void initStats();
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
@@ -35,7 +36,7 @@ public abstract class GameCharacter extends GameObject {
 
 
     @Override
-    public void act(float delta){
+    public void act(float delta) {
         attackDelta += delta;
     }
 
@@ -61,7 +62,7 @@ public abstract class GameCharacter extends GameObject {
 
     public void setLife(int life) {
         this.life += life;
-        if(isDead())
+        if (isDead())
             setToDelete();
     }
 
@@ -77,13 +78,11 @@ public abstract class GameCharacter extends GameObject {
         this.attackSpeed = attackSpeed;
     }
 
-    public void setTurn(boolean a)
-    {
+    public void setTurn(boolean a) {
         turn = a;
     }
 
-    public boolean getTurn()
-    {
+    public boolean getTurn() {
         return turn;
     }
 }

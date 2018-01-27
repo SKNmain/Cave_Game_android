@@ -2,8 +2,8 @@ package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Cave;
+import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.actors.weapons.Shootable;
@@ -24,17 +24,17 @@ public class Hero extends GameCharacter implements Shootable {
         sprite.setOrigin(108 / 2, 192 / 2);
         setBody(TheBox.createBox(400, 300, 28f, 48, false, TheBox.CATEGORY_PLAYER, TheBox.MASK_PLAYER));
         body.setUserData(this);
-        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, 1f), 10, -2,-2);
+        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, 1f), 10, -2, -2);
         initStats();
     }
 
     @Override
     public void initStats() {
-        this.life        = 100;
-        this.magic       = 100;
+        this.life = 100;
+        this.magic = 100;
         this.attackSpeed = 0.7f;
-        this.speedWalk   = 3f;
-        this.strengh     = 10;
+        this.speedWalk = 3f;
+        this.strengh = 10;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void shoot() {
-        if(getMagic() > 10 && attackSpeed <= attackDelta) {
+        if (getMagic() > 10 && attackSpeed <= attackDelta) {
             setMagic(-10);
             FireBall fireBall = new FireBall(body.getPosition().x, body.getPosition().y, strengh, this, getTurn());
             this.getStage().addActor(fireBall);

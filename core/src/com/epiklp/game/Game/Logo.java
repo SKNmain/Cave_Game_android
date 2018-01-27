@@ -36,8 +36,7 @@ public class Logo implements Screen {
         stage.act();
         stage.draw();
         time += delta;
-        if(time > 5)
-        {
+        if (time > 5) {
             dispose();
             cave.setScreen(new Menu(cave));
         }

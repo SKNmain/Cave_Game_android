@@ -25,20 +25,23 @@ public abstract class GameObject extends Actor {
     }
 
     public abstract void initStats();
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
     }
 
-    public void destroy(){
-        if(light != null)
+    public void destroy() {
+        if (light != null)
             light.remove();
         TheBox.destroyBody(body);
         this.remove();
     }
 
-    public void setToDelete(){TheBox.addToDeleteArray(this);}
+    public void setToDelete() {
+        TheBox.addToDeleteArray(this);
+    }
 
     public Sprite getSprite() {
         return sprite;

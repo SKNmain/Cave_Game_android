@@ -25,16 +25,16 @@ public class TheBox {
 
 
     public static final short CATEGORY_PLAYER = 0x0001;
-    public static final short CATEGORY_ENEMY  = 0x0002;
-    public static final short CATEGORY_MAP    = 0x0004;
-    public static final short CATEGORY_ITEM   = 0x0008;
+    public static final short CATEGORY_ENEMY = 0x0002;
+    public static final short CATEGORY_MAP = 0x0004;
+    public static final short CATEGORY_ITEM = 0x0008;
     public static final short CATEGORY_SENSOR = 0x0016;
     public static final short CATEGORY_BULLET = 0x0032;
-    public static final short CATEGORY_LIGHT  = 0x0064;
+    public static final short CATEGORY_LIGHT = 0x0064;
 
     public static final short MASK_PLAYER = -1;
-    public static final short MASK_ENEMY  = CATEGORY_MAP | CATEGORY_SENSOR | CATEGORY_PLAYER | CATEGORY_BULLET;
-    public static final short MASK_LIGHT  = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_LIGHT | CATEGORY_BULLET;
+    public static final short MASK_ENEMY = CATEGORY_MAP | CATEGORY_SENSOR | CATEGORY_PLAYER | CATEGORY_BULLET;
+    public static final short MASK_LIGHT = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_LIGHT | CATEGORY_BULLET;
     public static final short MASK_SENSOR = CATEGORY_PLAYER;
     public static final short MASK_BULLET = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY;
 
@@ -66,22 +66,23 @@ public class TheBox {
         return pBody;
     }
 
-    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter){
+    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter) {
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width/Cave.PPM,height/Cave.PPM, new Vector2(shiftFromCenter.x/Cave.PPM,shiftFromCenter.y/Cave.PPM), 0);
+        shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
         fixDef.density = 0;
         fixDef.friction = 0;
         fixDef.isSensor = true;
         fixDef.filter.categoryBits = CATEGORY_SENSOR;
-        fixDef.filter.maskBits     = MASK_SENSOR;
+        fixDef.filter.maskBits = MASK_SENSOR;
         body.createFixture(fixDef);
         shape.dispose();
     }
+
     public static void destroyWorld() {
-        if(rayHandler!= null) {
+        if (rayHandler != null) {
             rayHandler.dispose();
         }
         if (world != null) {
@@ -89,6 +90,7 @@ public class TheBox {
         }
 
     }
+
     public static void initRayHandler() {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
@@ -99,23 +101,25 @@ public class TheBox {
         Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
     }
 
-    public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y){
-        PointLight pointLight  = new PointLight(rayHandler, rays, color, 10, -2,-2);
+    public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y) {
+        PointLight pointLight = new PointLight(rayHandler, rays, color, 10, -2, -2);
         pointLight.attachToBody(body);
         pointLight.setXray(true);
         pointLight.setIgnoreAttachedBody(true);
         return pointLight;
 
     }
+
     //It should be check world.isLocket before you use it
-    public static void destroyBody(Body body){
+    public static void destroyBody(Body body) {
         world.destroyBody(body);
     }
 
-    public static void addToDeleteArray(GameObject gameObject){
+    public static void addToDeleteArray(GameObject gameObject) {
         deleteArray.add(gameObject);
     }
-    public static Iterator<GameObject> getDeleteArrayIter(){
+
+    public static Iterator<GameObject> getDeleteArrayIter() {
         return deleteArray.iterator();
     }
 }

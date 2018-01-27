@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -22,9 +21,9 @@ import com.epiklp.game.Functional.MyContactListener;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.Functional.TiledObject;
 import com.epiklp.game.Functional.UI;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.FlameDemon;
-import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Hero;
 
 import java.util.Iterator;
@@ -71,7 +70,7 @@ public class GameScreen implements Screen {
         this.cave = cave;
         TheBox.initWorld();
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
-        viewport = new ExtendViewport(Cave.WIDTH / 1.5f , Cave.HEIGHT / 1.5f, camera);
+        viewport = new ExtendViewport(Cave.WIDTH / 1.5f, Cave.HEIGHT / 1.5f, camera);
         stage = new Stage(viewport);
         myContactListener = new MyContactListener();
         controller = new Controller(true);
@@ -118,7 +117,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        if(PAUSE == false) {
+        if (PAUSE == false) {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             update(Gdx.graphics.getDeltaTime());
@@ -132,26 +131,21 @@ public class GameScreen implements Screen {
             ui.draw();
             b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
-        }
-        else{
+        } else {
             MenuPause.draw();
             updateMenu(Gdx.graphics.getDeltaTime());
         }
     }
 
-    public void updateMenu(float delta)
-    {
-        if(MenuPause.presssResume)
-        {
+    public void updateMenu(float delta) {
+        if (MenuPause.presssResume) {
             resume();
         }
-        if(MenuPause.pressRestart)
-        {
+        if (MenuPause.pressRestart) {
             dispose();
             cave.setScreen(new GameScreen(cave));
         }
-        if(MenuPause.pressExit)
-        {
+        if (MenuPause.pressExit) {
             dispose();
             Gdx.app.exit();
         }
@@ -205,8 +199,7 @@ public class GameScreen implements Screen {
             hero.shoot();
         }
 
-        if(controller.isHomePresed())
-        {
+        if (controller.isHomePresed()) {
             pause();
         }
     }
@@ -241,7 +234,7 @@ public class GameScreen implements Screen {
         tmr.dispose();
         map.dispose();
         MenuPause.dispose();
-     }
+    }
 
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {

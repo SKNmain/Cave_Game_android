@@ -18,13 +18,12 @@ public class PauseMenu extends Stage {
     public boolean pressExit, pressRestart, presssResume;
     private Table tbl;
 
-    public PauseMenu()
-    {
+    public PauseMenu() {
         pauseWindow = new Image(Assets.manager.get(Assets.pauseWindow));
         pauseWindow.setScale(.8f);
         pressExit = pressRestart = presssResume = false;
         buttonExit = new Image(Assets.manager.get(Assets.quitButton));
-        buttonExit.addListener(new InputListener(){
+        buttonExit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 pressExit = true;
@@ -36,10 +35,10 @@ public class PauseMenu extends Stage {
                 pressExit = false;
             }
         });
-        buttonExit.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+        buttonExit.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
 
         buttonResume = new Image(Assets.manager.get(Assets.resumeButton));
-        buttonResume.addListener(new InputListener(){
+        buttonResume.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 presssResume = true;
@@ -51,11 +50,11 @@ public class PauseMenu extends Stage {
                 presssResume = false;
             }
         });
-        buttonResume.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2+64);
+        buttonResume.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 64);
 
 
         buttonRestart = new Image(Assets.manager.get(Assets.restartButton));
-        buttonRestart.addListener(new InputListener(){
+        buttonRestart.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 pressRestart = true;
@@ -67,7 +66,7 @@ public class PauseMenu extends Stage {
                 pressRestart = false;
             }
         });
-        buttonRestart.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2+64);
+        buttonRestart.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 64);
 
         tbl = new Table();
         tbl.bottom().left();
