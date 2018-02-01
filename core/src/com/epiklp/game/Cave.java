@@ -1,7 +1,9 @@
 package com.epiklp.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.epiklp.game.Functional.Assets;
+import com.epiklp.game.Functional.JsonFunction;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.Game.Logo;
 
@@ -17,12 +19,20 @@ public class Cave extends Game {
 
     @Override
     public void create() {
+
+        JsonFunction.Create();
+
         Assets.load();
         //Assets.manager.finishLoading();
         //this.setScreen(new Logo(this));
         //z tego bedzie mozna zrobic pasek ładowania gdy bedzie wincej assetów
         while (!Assets.manager.update()) {
             System.out.println(Assets.manager.getProgress() * 100 + "%");
+        }
+
+        if(Gdx.files.isLocalStorageAvailable())
+        {
+
         }
 
         this.setScreen(new Logo(this));
