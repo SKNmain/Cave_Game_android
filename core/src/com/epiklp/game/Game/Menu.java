@@ -32,9 +32,7 @@ import com.epiklp.game.actors.characters.Hero;
 public class Menu implements Screen {
     private enum STATE {
         OPTION, GAME, CREDIT, SHOP
-    }
-
-    ;
+    };
 
 
     final Cave cave;
@@ -64,6 +62,8 @@ public class Menu implements Screen {
         state = STATE.GAME;
 
         this.cave = cave;
+
+        creditsScreen = new CreditsScreen();
 
         enterCredit = false;
         enterShop = false;
@@ -128,6 +128,7 @@ public class Menu implements Screen {
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(MenuPause);
         inputMultiplexer.addProcessor(controller);
+        inputMultiplexer.addProcessor(creditsScreen);
 
         TheBox.world.setContactListener(new ContactListener() {
             @Override
@@ -202,17 +203,22 @@ public class Menu implements Screen {
             MenuPause.draw();
             updateMenu(Gdx.graphics.getDeltaTime());
         } else if (state.equals(STATE.GAME)) {
-            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
             stage.act();
             stage.draw();
             controller.draw();
             update(Gdx.graphics.getDeltaTime());
-            //TheBox.world.setContactListener(myContactListener);
+            //TheBox.world.setContactListener(myContactListner);
         } else if (state.equals(STATE.CREDIT)) {
-
+            creditsScreen.draw();
+            creditsScreenUpdate();
         }
         b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
+    }
+
+    private void creditsScreenUpdate() {
+        if(creditsScreen.isBackPress())
+            state = STATE.GAME;
     }
 
     private void update(float delta) {
@@ -247,7 +253,7 @@ public class Menu implements Screen {
 
         if (controller.isEnterPresed()) {
             if (enterShop) System.out.println("weeee shoping time!!!!!!");
-            else if (enterCredit) System.out.println("credit or somethink");
+            else if (enterCredit) state = STATE.CREDIT;
             else if (enterCave) System.out.println("map");
         }
 

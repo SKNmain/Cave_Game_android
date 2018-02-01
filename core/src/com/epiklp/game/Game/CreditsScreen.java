@@ -1,8 +1,11 @@
 package com.epiklp.game.Game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,22 +17,18 @@ import com.epiklp.game.TextureGame;
 
 
 class CreditsScreen extends Stage {
-    final Cave cave;
-    private TextureGame textMenu;
-    private Stage stage;
-    private BitmapFont bitmapFont;
     private Label text;
     private Label.LabelStyle labelStyle;
-    private Image backImage;
+    private Image backImage, Layer;
     private Boolean backPress;
 
-    public CreditsScreen(Cave cave) {
-        this.cave = cave;
-        textMenu = new TextureGame();
-        bitmapFont = new BitmapFont();
+    public CreditsScreen() {
         labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
-        text = new Label("Autorzy:\n Rafal Rybowski\n Kamil Sykula", labelStyle);
+        text = new Label("Autors:\nRafal Rybowski\nKamil Sykula", labelStyle);
         text.setPosition(0, Cave.HEIGHT / 2);
+        Layer = new Image(Assets.manager.get(Assets.menuLayer));
+        Layer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        addActor(Layer);
         addActor(text);
         backPress = false;
         backImage = new Image(new Texture("MenuButtons/button_back.png"));
@@ -47,13 +46,16 @@ class CreditsScreen extends Stage {
             }
 
         });
-        backImage.setPosition(Cave.WIDTH - backImage.getWidth(), 0);
+        backImage.setPosition(Cave.WIDTH/2 - backImage.getWidth()/2, 0);
         addActor(backImage);
     }
 
 
+    public boolean isBackPress() {return backPress;}
+
+
     @Override
     public void dispose() {
-        textMenu.dispose();
+
     }
 }
