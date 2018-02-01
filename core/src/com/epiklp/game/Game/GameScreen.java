@@ -60,6 +60,7 @@ public class GameScreen implements Screen {
     //hero
     private Hero hero;
     private GameObject enemy;
+    private GameObject enemy2;
     private Array<Enemy> enemies;
     private Array<Body> mapBodies;
 
@@ -68,10 +69,11 @@ public class GameScreen implements Screen {
 
     public GameScreen(Cave cave) {
         PAUSE = false;
-        this.cave = cave;        TheBox.initWorld();
+        this.cave = cave;
+        TheBox.initWorld();
 
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
-        viewport = new ExtendViewport(Cave.WIDTH / 1.5f, Cave.HEIGHT / 1.5f, camera);
+        viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
         stage = new Stage(viewport);
         gameContactListener = new GameContactListener();
         controller = new Controller(true);
@@ -80,8 +82,12 @@ public class GameScreen implements Screen {
 
         b2dr = new Box2DDebugRenderer();
 
-        enemy = new FlameDemon();
+        enemy = new FlameDemon(200, 50);
+        enemy2 = new FlameDemon(300, 50);
+
+        stage.addActor(enemy2);
         stage.addActor(enemy);
+
         hero = new Hero();
         stage.addActor(hero);
         map = new TmxMapLoader().load("Map/map.tmx");
@@ -192,7 +198,7 @@ public class GameScreen implements Screen {
         }
         hero.setSpeedX(horizontalForce);
         if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {
-            hero.setSpeedY(7f);
+            hero.jump();
         }
 
         if (controller.isAttackPressed()) {

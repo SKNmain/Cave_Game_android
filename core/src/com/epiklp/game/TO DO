@@ -17,3 +17,9 @@ tych samych obiektów - chociazby klasa bohatera.
 Ogólnie, myślę że dobrą sprawą prowadzić takie zapiski - są w jednym miejscu i później, jeśli chce się sprawdzić dlaczego np jest w kodzie tak
 a nie inaczej, nie trzeba szukać albo zastanawiać się, tylko przejrzeć jeden plik.
 ============================================================================================================================================
+
+
+//30.01.18 - Kamil
+Dodane masy, zmieniłem grawitację, żeby skok był "płynny",
+Bardzo zastanwiam się nad ustwianiem masek i filtrów kolizji - bo w zasadzie jedyne zastosowanie mają w przypadku potworów - reszta powinna ze
+sobą kolidować.

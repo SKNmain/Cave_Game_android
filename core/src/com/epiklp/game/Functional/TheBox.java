@@ -31,8 +31,10 @@ public class TheBox {
     public static final short CATEGORY_SENSOR = 0x0016;
     public static final short CATEGORY_BULLET = 0x0032;
     public static final short CATEGORY_LIGHT = 0x0064;
+    public static final short CATEGORY_WALL = 0x0128;
 
-    public static final short MASK_PLAYER = -1;
+    public static final short MASK_PLAYER = 1;
+    public static final short MASK_WALL = 1;
     public static final short MASK_ENEMY = CATEGORY_MAP | CATEGORY_SENSOR | CATEGORY_PLAYER | CATEGORY_BULLET;
     public static final short MASK_LIGHT = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_LIGHT | CATEGORY_BULLET;
     public static final short MASK_SENSOR = CATEGORY_PLAYER;
@@ -46,7 +48,7 @@ public class TheBox {
     private static Array<GameObject> deleteArray = new Array<GameObject>();
 
     public static void initWorld() {
-        world = new World(new Vector2(0, -10f), true);
+        world = new World(new Vector2(0, -25f), true);
         initRayHandler();
     }
 
@@ -61,36 +63,38 @@ public class TheBox {
         return pBody;
     }
 
-    public static void createBoxShape(Body body, float width, float height, short category, short mask) {
-        PolygonShape shape = new PolygonShape();
+    public static void createBoxShape(Body body, float width, float height, float density, short category, short mask) {
+        PolygonShape shape  = new PolygonShape();
+        FixtureDef   fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
-        body.createFixture(shape, 1);//.setUserData("player");
+        fixDef.shape = shape;
+        fixDef.density = density;
+        fixDef.friction = 1;
+        fixDef.isSensor = false;
+
+        body.createFixture(fixDef);
         shape.dispose();
     }
 
     public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter) {
-        PolygonShape shape = new PolygonShape();
+        PolygonShape shape  = new PolygonShape();
+        FixtureDef   fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
-        FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
         fixDef.density = 0;
         fixDef.friction = 0;
         fixDef.isSensor = true;
-        fixDef.filter.categoryBits = CATEGORY_SENSOR;
-        fixDef.filter.maskBits = MASK_SENSOR;
         body.createFixture(fixDef);
         shape.dispose();
     }
     public static void createBoxSensor(Body body, float width, float height) {
-        PolygonShape shape = new PolygonShape();
+        PolygonShape shape  = new PolygonShape();
+        FixtureDef   fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
-        FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
         fixDef.density = 0;
         fixDef.friction = 0;
         fixDef.isSensor = true;
-        fixDef.filter.categoryBits = CATEGORY_SENSOR;
-        fixDef.filter.maskBits = MASK_SENSOR;
         body.createFixture(fixDef);
         shape.dispose();
     }

@@ -2,6 +2,7 @@ package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.epiklp.game.Cave;
 import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.TheBox;
@@ -23,7 +24,7 @@ public class Hero extends GameCharacter implements Shootable {
         sprite.setSize(108 / Cave.SCALE, 192 / Cave.SCALE);
         sprite.setOrigin(108 / 2, 192 / 2);
         setBody(TheBox.createBody(400, 300, false));
-        TheBox.createBoxShape(body, 28f, 48, TheBox.CATEGORY_PLAYER, TheBox.MASK_PLAYER);
+        TheBox.createBoxShape(body, 28f, 48, 0.8f,  TheBox.CATEGORY_PLAYER, TheBox.MASK_PLAYER);
         body.setUserData(this);
         light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, 1f), 10, -2, -2);
         initStats();
@@ -61,6 +62,10 @@ public class Hero extends GameCharacter implements Shootable {
 
     public void setSpeedX(float speedX) {
         body.setLinearVelocity(speedX, body.getLinearVelocity().y);
+    }
+
+    public void jump(){
+        body.setLinearVelocity(0, body.getMass()*3.3f);
     }
 
     public void setSpeedY(float speedY) {

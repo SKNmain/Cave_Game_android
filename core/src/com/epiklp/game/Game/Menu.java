@@ -106,8 +106,8 @@ public class Menu implements Screen {
         b2dr = new Box2DDebugRenderer();
         Body floor = TheBox.createBody(0, 50, true);
         floor.setUserData("floor");
-        TheBox.createBoxShape(floor, Cave.WIDTH, 2, (short) 0, (short) 0);
-        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, (short) 0, (short) 0);
+        TheBox.createBoxShape(floor, Cave.WIDTH, 2, 0, TheBox.CATEGORY_WALL, TheBox.MASK_WALL);
+        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, 0, TheBox.CATEGORY_WALL, TheBox.MASK_WALL);
 
         creditBody = TheBox.createBody(260, 130, true);
         TheBox.createBoxSensor(creditBody, 60, 50);
