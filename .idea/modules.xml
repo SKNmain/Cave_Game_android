@@ -3,7 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Cave_Game.iml" filepath="$PROJECT_DIR$/Cave_Game.iml" />
+<<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/Cave_Game_android.iml" filepath="$PROJECT_DIR$/Cave_Game_android.iml" />
+=======
+>>>>>>> Stashed changes
       <module fileurl="file://D:\Programowanie\Android\Cave_Game\Cave_Game_android.iml" filepath="D:\Programowanie\Android\Cave_Game\Cave_Game_android.iml" />
       <module fileurl="file://$PROJECT_DIR$/android/android.iml" filepath="$PROJECT_DIR$/android/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />

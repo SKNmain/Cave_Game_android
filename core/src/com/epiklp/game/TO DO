@@ -1,7 +1,20 @@
 TODO LIST
 
 - Przerobić Credits screen, endscreen itp na klasy dziedziczące po jednym screenie i już (może maszyna stanów?)
-- Dodać wykrywanie kolizji dla potworków
+- Dodać wykrywanie kolizji dla potworków - zrobione
+
+=======================
+LISTA:
+- Pociski będą się odbijać albo z fizyką od Boxa, albo z własną (licząc kąt odbicia i wgl), wtedy można dodać jakieś iskry czy cos)
+- Magia będzie zależeć od "mocy" im większa tym będzie bardziej się świecić, jak spotka inną, to wtedy ta z większą przejdzie dalej, z mniejszą
+energią + mniejszym świeceniem. Ta druga zniknie
+- Przepisać i zrobić menadżer poziomów
+- Dźwięki
+- ANIMACJE KURWA
+- 
+
+
+=======================
 
 
 //28.01.18 - Kamil
