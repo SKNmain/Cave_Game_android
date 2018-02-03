@@ -70,8 +70,6 @@ public class GameScreen implements Screen {
     public GameScreen(Cave cave) {
         PAUSE = false;
         this.cave = cave;
-        TheBox.initWorld();
-
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
         stage = new Stage(viewport);
@@ -82,10 +80,8 @@ public class GameScreen implements Screen {
 
         b2dr = new Box2DDebugRenderer();
 
-        enemy = new FlameDemon(200, 50);
-        enemy2 = new FlameDemon(300, 50);
+        enemy = new FlameDemon(600, 50);
 
-        stage.addActor(enemy2);
         stage.addActor(enemy);
 
         hero = new Hero();
@@ -100,7 +96,6 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(MenuPause);
         inputMultiplexer.addProcessor(controller);
     }
-
 
     @Override
     public void show() {
@@ -148,6 +143,7 @@ public class GameScreen implements Screen {
             resume();
         }
         if (MenuPause.pressRestart) {
+            TheBox.cleanWorld();
             cave.setScreen(new Menu(cave));
           //  dispose();
         }

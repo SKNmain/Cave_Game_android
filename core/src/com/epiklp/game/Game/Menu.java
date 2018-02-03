@@ -150,6 +150,7 @@ public class Menu implements Screen {
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("cave")) {
                     controller.enterOn(new Vector2(1140, Cave.HEIGHT / 3 + 20));
                     enterCave = true;
+                    TheBox.cleanWorld();
                     cave.setScreen(new GameScreen(cave) );
                 }
             }

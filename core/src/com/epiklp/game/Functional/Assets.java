@@ -20,7 +20,7 @@ public class Assets {
 
     //player
     /*******************************************/
-    public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/1.png", Texture.class);
+    public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/test.png", Texture.class);
     public static final AssetDescriptor<Texture> fireBall = new AssetDescriptor<Texture>("character/fireball.png", Texture.class);
     /*******************************************/
 

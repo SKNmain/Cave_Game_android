@@ -127,6 +127,13 @@ public class TheBox {
 
     }
 
+    //chamska metoda, do zmiany, jak wymyślę lepszą....
+    //Jednak sama deklaracja raczej zostanie
+    public static void cleanWorld(){
+        world = new World(new Vector2(0, -25f), true);
+        initRayHandler();
+    }
+
     //It should be check world.isLocket before you use it
     public static void destroyBody(Body body) {
         world.destroyBody(body);

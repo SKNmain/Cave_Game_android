@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.JsonFunction;
 import com.epiklp.game.Functional.TheBox;
+import com.epiklp.game.Game.GameScreen;
 import com.epiklp.game.Game.Logo;
 
 
@@ -34,10 +35,13 @@ public class Cave extends Game {
         {
 
         }
+        //Create physics
+        TheBox.initWorld();
 
-        this.setScreen(new Logo(this));
+
+        //this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        //this.setScreen(new GameScreen(this));
+        this.setScreen(new GameScreen(this));
 
     }
 
