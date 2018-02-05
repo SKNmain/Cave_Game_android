@@ -18,16 +18,15 @@ public class FireBall extends Bullet {
         super(new Sprite(Assets.manager.get(Assets.fireBall)), hitPoint, gameCharacterRef);
 
         body = TheBox.createBody(5, 0, false);
-        TheBox.createBoxShape(body, 25f, 30f, 0.1f, TheBox.CATEGORY_BULLET, TheBox.MASK_BULLET);
+        TheBox.createBoxShape(body, 25f, 30f, 0.1f, 0);
 
         sprite.setSize(0.75f * Cave.PPM * Cave.SCALE, 0.75f * Cave.PPM * Cave.SCALE);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2 + 1.f);
-        body.setTransform(x + (turn ? 2 : -2), y, 0);
         sprite.setFlip(!turn, false);
+        body.setTransform(x + (turn ? 2 : -2), y, 0);
         body.setGravityScale(0);
         body.setUserData(this);
         body.setBullet(true);
-
         time = 5f;
         light = TheBox.createPointLight(body, 64, Color.FOREST, 5, 0, 0);
 
@@ -45,6 +44,5 @@ public class FireBall extends Bullet {
 
     @Override
     public void initStats() {
-
     }
 }

@@ -106,8 +106,9 @@ public class Menu implements Screen {
         b2dr = new Box2DDebugRenderer();
         Body floor = TheBox.createBody(0, 50, true);
         floor.setUserData("floor");
-        TheBox.createBoxShape(floor, Cave.WIDTH, 2, 0, TheBox.CATEGORY_WALL, TheBox.MASK_WALL);
-        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, 0, TheBox.CATEGORY_WALL, TheBox.MASK_WALL);
+        //Zmieniłem funkcję do tworzenia BoxShape - musiałem dodać tarcie, wywaliłem tymczasowo maski, w sumie skróciło się
+        TheBox.createBoxShape(floor, Cave.WIDTH, 2, 0, 0);
+        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, 0,0);
 
         creditBody = TheBox.createBody(260, 130, true);
         TheBox.createBoxSensor(creditBody, 60, 50);
@@ -226,26 +227,19 @@ public class Menu implements Screen {
         TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();  //Controler
     }
+    // po tym, jak wyrzuciłem z GameScreen te obliczenia prędkości z metody sterowania do hero, tutaj też musiałem Ci zmienić, żeby się nie sypało
 
     private void inputUpdate() {
         if (Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
-                hero.getSprite().setFlip(true, false);
+                hero.setState(Hero.STATE.RUNNING);
                 hero.setTurn(false);
-                if (horizontalForce > -(hero.getSpeedWalk())) horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
-                hero.getSprite().setFlip(false, false);
+                hero.setState(Hero.STATE.RUNNING);
                 hero.setTurn(true);
-                if (horizontalForce < (hero.getSpeedWalk())) horizontalForce += 0.4f;
             }
         } else {
-            if (horizontalForce > 0.1) {
-                horizontalForce -= 0.2f;
-            } else if (horizontalForce < -0.1) {
-                horizontalForce += 0.2f;
-            } else {
-                horizontalForce = 0;
-            }
+            hero.setState(Hero.STATE.STANDING);
         }
         hero.setSpeedX(horizontalForce);
         if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {

@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -22,9 +21,9 @@ import com.epiklp.game.Functional.GameContactListener;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.Functional.TiledObject;
 import com.epiklp.game.Functional.UI;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.FlameDemon;
-import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Hero;
 
 import java.util.Iterator;
@@ -80,7 +79,7 @@ public class GameScreen implements Screen {
 
         b2dr = new Box2DDebugRenderer();
 
-        enemy = new FlameDemon(600, 50);
+        enemy = new FlameDemon(800, 50);
 
         stage.addActor(enemy);
 
@@ -145,7 +144,7 @@ public class GameScreen implements Screen {
         if (MenuPause.pressRestart) {
             TheBox.cleanWorld();
             cave.setScreen(new Menu(cave));
-          //  dispose();
+            //  dispose();
         }
         if (MenuPause.pressExit) {
             dispose();
@@ -173,28 +172,22 @@ public class GameScreen implements Screen {
 
         if (Gdx.input.isTouched()) {
             if (controller.isLeftPressed()) {
-                hero.getSprite().setFlip(true, false);
+                hero.setState(Hero.STATE.RUNNING);
                 hero.setTurn(false);
-                if (horizontalForce > -(hero.getSpeedWalk()))
-                    horizontalForce -= 0.4f;
             } else if (controller.isRightPressed()) {
-                hero.getSprite().setFlip(false, false);
+                hero.setState(Hero.STATE.RUNNING);
                 hero.setTurn(true);
-                if (horizontalForce < (hero.getSpeedWalk()))
-                    horizontalForce += 0.4f;
             }
         } else {
-            if (horizontalForce > 0.1) {
-                horizontalForce -= 0.2f;
-            } else if (horizontalForce < -0.1) {
-                horizontalForce += 0.2f;
-            } else {
-                horizontalForce = 0;
-            }
+            hero.setState(Hero.STATE.STANDING);
         }
         hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {
+        if (controller.isUpPressed()) {
             hero.jump();
+        }
+
+        if (controller.isUpPressed() && hero.getState() == Hero.STATE.CLIMBING) {
+            hero.climb();
         }
 
         if (controller.isAttackPressed()) {

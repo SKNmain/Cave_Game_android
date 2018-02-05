@@ -12,7 +12,15 @@ import com.badlogic.gdx.math.Vector2;
  * Wszystkie wartości dla attackRange oraz watchRange podawac w jednostkach Box2d!
  */
 
+
 public abstract class Enemy extends GameCharacter {
+
+    enum ENEMY_STATE {
+        FOLLOWING, WARDING
+    }
+
+    public static final String WARD_SENSOR = "WARD_SEN";
+
     protected float chanceOfDrop;
     protected float attackRange;
     protected float watchRange;
