@@ -37,14 +37,14 @@ public class GameContactListener implements ContactListener {
             return;
         }
         //Enemy sensor and hero touch (enemy is in following mode)
-        if (!bIsSen && aIsSen && a.getUserData().equals(Enemy.WARD_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.WARD_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) b.getBody().getUserData();
             Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
             return;
-        } else if (!aIsSen && bIsSen && b.getUserData().equals(Enemy.WARD_SENSOR) && a.getBody().getUserData() instanceof Hero) {
-            Hero hero = (Hero) a.getUserData();
-            Enemy enemy = (Enemy) b.getUserData();
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.WARD_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+            Hero hero = (Hero) a.getBody().getUserData();
+            Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
             return;
         }
@@ -70,22 +70,27 @@ public class GameContactListener implements ContactListener {
             return;
         }
         //Missile gets wall
-        if (a.getBody().getUserData() instanceof Bullet && b.getBody().getUserData().equals("TiledObject")) {
+        if (a.getBody().getUserData() instanceof Bullet && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Bullet bullet = (Bullet) a.getBody().getUserData();
             bullet.setToDelete();
-        } else if (a.getBody().getUserData().equals("TiledObject") && b.getBody().getUserData() instanceof Bullet) {
+            return;
+        } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Bullet) {
             Bullet bullet = (Bullet) b.getBody().getUserData();
             bullet.setToDelete();
+            return;
         }
 
         //Can I jump?
-        if (aIsSen && !bIsSen && a.getUserData().equals(Hero.JUMP_SENSOR) && b.getBody().getUserData().equals("TiledObject")) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.onGround();
-        } else if (!aIsSen && bIsSen && a.getBody().getUserData().equals(Hero.JUMP_SENSOR) && b.getUserData().equals(Hero.JUMP_SENSOR)) {
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), Hero.JUMP_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.onGround();
+            return;
         }
+
     }
 
     @Override
@@ -96,23 +101,25 @@ public class GameContactListener implements ContactListener {
         boolean bIsSen = b.isSensor();
         boolean aIsSen = a.isSensor();
         //Enemy warding sensor and hero
-        if (aIsSen && !bIsSen && a.getUserData().equals(Enemy.WARD_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.WARD_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setFollowing(false);
             return;
-        } else if (bIsSen && !aIsSen && b.getUserData().equals(Enemy.WARD_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.WARD_SENSOR) && a.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setFollowing(false);
             return;
         }
 
         //I can't jump?
-        if (aIsSen && !bIsSen && a.getUserData().equals(Hero.JUMP_SENSOR) && b.getBody().getUserData().equals("TiledObject")) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.outGround();
-        } else if (!bIsSen && aIsSen && a.getBody().getUserData().equals("TiledObject") && b.getUserData().equals(Hero.JUMP_SENSOR)) {
+            return;
+        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), Hero.JUMP_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.outGround();
+            return;
         }
     }
 

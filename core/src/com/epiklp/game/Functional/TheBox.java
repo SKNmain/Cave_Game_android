@@ -72,6 +72,7 @@ public class TheBox {
         fixDef.density = density;
         fixDef.friction = friction;
         fixDef.isSensor = false;
+
         body.createFixture(fixDef);
         shape.dispose();
     }
@@ -125,7 +126,7 @@ public class TheBox {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
         rayHandler = new RayHandler(TheBox.world);
-        rayHandler.setAmbientLight(.2f);
+        rayHandler.setAmbientLight(1);
         rayHandler.setCulling(true);
         rayHandler.setShadows(true);
         Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
@@ -149,6 +150,7 @@ public class TheBox {
 
     //It should be check world.isLocket before you use it
     public static void destroyBody(Body body) {
+        if(!world.isLocked())
         world.destroyBody(body);
     }
 

@@ -18,8 +18,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
 import com.epiklp.game.Functional.Controller;
 import com.epiklp.game.Functional.GameContactListener;
+import com.epiklp.game.Functional.MapBuilder;
 import com.epiklp.game.Functional.TheBox;
-import com.epiklp.game.Functional.TiledObject;
 import com.epiklp.game.Functional.UI;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
@@ -58,8 +58,7 @@ public class GameScreen implements Screen {
     private Viewport viewport;
     //hero
     private Hero hero;
-    private GameObject enemy;
-    private GameObject enemy2;
+
     private Array<Enemy> enemies;
     private Array<Body> mapBodies;
 
@@ -78,17 +77,17 @@ public class GameScreen implements Screen {
         ui = new UI();
 
         b2dr = new Box2DDebugRenderer();
+        map = new TmxMapLoader().load("Map/map_big.tmx");
 
-        enemy = new FlameDemon(800, 50);
-
-        stage.addActor(enemy);
-
-        hero = new Hero();
-        stage.addActor(hero);
-        map = new TmxMapLoader().load("Map/map.tmx");
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
-
-        mapBodies = TiledObject.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
+        mapBodies = MapBuilder.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
+        hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
+        stage.addActor(hero);
+        enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
+        for(Enemy ac : enemies){
+            System.out.println("DUPA");
+            stage.addActor(ac);
+        }
         MenuPause = new PauseMenu();
 
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();

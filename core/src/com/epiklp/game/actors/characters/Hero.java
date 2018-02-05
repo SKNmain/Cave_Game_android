@@ -33,11 +33,11 @@ public class Hero extends GameCharacter implements Shootable {
     private float jumpTimeout = 0;
     private float climbingTimeout = 0;
 
-    public Hero() {
+    public Hero(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.player)));
         sprite.setSize(85 / Cave.SCALE, 192 / Cave.SCALE);
         sprite.setOrigin(80 / 2, 192 / 2);
-        setBody(TheBox.createBody(400, 300, false));
+        setBody(TheBox.createBody(x, y, false));
         TheBox.createBoxShape(body, 25f, 48, 0.8f, 1f);
         TheBox.createBoxSensor(body, 10f, 10f, new Vector2(0, -46f), JUMP_SENSOR);
         TheBox.createBoxSensor(body, 35f, 30f, new Vector2(0, 0), CLIMB_SEN);
@@ -60,6 +60,8 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void act(float delta) {
+       // System.out.println(getBody().getPosition().x + "        " + getBody().getPosition().y);
+
         attackDelta += delta;
         jumpTimeout--;
         climbingTimeout--;

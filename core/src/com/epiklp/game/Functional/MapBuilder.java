@@ -1,7 +1,9 @@
 package com.epiklp.game.Functional;
 
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -14,9 +16,34 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
+import com.epiklp.game.actors.characters.Enemy;
+import com.epiklp.game.actors.characters.FlameDemon;
+import com.epiklp.game.actors.characters.Hero;
 
 
-public class TiledObject {
+public class MapBuilder {
+    public static Hero parseHeroFromObjectLayer(MapObjects objects){
+        MapObject hero = objects.get("hero");
+        if (hero instanceof RectangleMapObject) {
+            RectangleMapObject rect = ((RectangleMapObject) hero);
+            return new Hero(rect.getRectangle().x* Cave.SCALE, rect.getRectangle().y* Cave.SCALE);
+        }
+        return new Hero(0, 0);
+    }
+
+    public static Array<Enemy> parseEnemiesFromObjectLayer(MapObjects objects){
+        Array<Enemy> enemies = new Array<Enemy>();
+        for(MapObject object : objects){
+            if(object instanceof RectangleMapObject){
+                RectangleMapObject en = ((RectangleMapObject) object);
+                if(Utils.equalsWithNulls(object.getName(), "FlameDemon")){
+                    enemies.add(new FlameDemon(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
+                }
+            }
+
+        }
+        return enemies;
+    }
     public static Array<Body> parseTiledObjectLayer(World world, MapObjects objects) {
         Array<Body> bodies = new Array<Body>();
         for (MapObject object : objects) {
@@ -33,7 +60,7 @@ public class TiledObject {
             bdef.type = BodyDef.BodyType.StaticBody;
             body = world.createBody(bdef);
             body.createFixture(shape, 1);
-            body.setUserData(TiledObject.class.getSimpleName());
+            body.setUserData(MapBuilder.class.getSimpleName());
             bodies.add(body);
             shape.dispose();
         }
@@ -46,8 +73,8 @@ public class TiledObject {
         Vector2[] worldVerticle = new Vector2[verticle.length / 2];
         for (int i = 0; i < verticle.length / 2; ++i) {
             worldVerticle[i] = new Vector2();
-            worldVerticle[i].x = verticle[i * 2] / Cave.PPM;
-            worldVerticle[i].y = verticle[i * 2 + 1] / Cave.PPM;
+            worldVerticle[i].x = verticle[i * 2] / Cave.PPM * Cave.SCALE;
+            worldVerticle[i].y = verticle[i * 2 + 1] / Cave.PPM * Cave.SCALE;
         }
 
         ChainShape cs = new ChainShape();
@@ -58,10 +85,10 @@ public class TiledObject {
     private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
         Rectangle rectangle = rectangleObject.getRectangle();
         PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / Cave.PPM * 2,
-                (rectangle.y + rectangle.height * 0.5f) / Cave.PPM * 2);
-        polygon.setAsBox(rectangle.width * 0.5f / Cave.PPM * 2,
-                rectangle.height * 0.5f / Cave.PPM * 2,
+        Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) / Cave.PPM * Cave.SCALE,
+                (rectangle.y + rectangle.height * 0.5f) / Cave.PPM * Cave.SCALE);
+        polygon.setAsBox(rectangle.width * 0.5f / Cave.PPM * Cave.SCALE,
+                rectangle.height * 0.5f / Cave.PPM * Cave.SCALE,
                 size,
                 0.0f);
         return polygon;
