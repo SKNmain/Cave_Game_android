@@ -85,7 +85,6 @@ public class GameScreen implements Screen {
         stage.addActor(hero);
         enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
         for(Enemy ac : enemies){
-            System.out.println("DUPA"); // prosimy nie robic cegos takiego :D
             stage.addActor(ac);
         }
         MenuPause = new PauseMenu();
