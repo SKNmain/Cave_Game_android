@@ -72,7 +72,7 @@ public class GameScreen implements Screen {
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
         stage = new Stage(viewport);
         gameContactListener = new GameContactListener();
-        controller = new Controller(true);
+        controller = new Controller(false);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         ui = new UI();
 

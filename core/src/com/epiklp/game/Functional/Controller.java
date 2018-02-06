@@ -16,7 +16,7 @@ public class Controller extends Stage {
     private Table tabRight, tabLeft;
     private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, enter;
 
-    public Controller(boolean atack) {
+    public Controller(boolean menu) {
         //Buttons on Left
         /*******************************************/
         tabLeft = new Table();
@@ -58,27 +58,24 @@ public class Controller extends Stage {
 
         //Buttons on Right
         /*******************************************/
-        tabRight = new Table();
-        if (atack == true)
+        if (menu == false) {
+            tabRight = new Table();
             tabRight.setPosition(Gdx.graphics.getWidth() - 64, (Cave.WIDTH / 10));
-        else
-            tabRight.setPosition(Gdx.graphics.getWidth() - 64, buttonLeft.getHeight() / 2);
+            buttonUp = new Image(Assets.manager.get(Assets.upButton));
+            buttonUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
+            buttonUp.addListener(new InputListener() {
+                @Override
+                public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                    upPressed = true;
+                    return true;
+                }
 
-        buttonUp = new Image(Assets.manager.get(Assets.upButton));
-        buttonUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
-        buttonUp.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                upPressed = true;
-                return true;
-            }
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                    upPressed = false;
+                }
+            });
 
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                upPressed = false;
-            }
-        });
-        if (atack == true) {
             buttonAttack = new Image(Assets.manager.get(Assets.attackButton));
             buttonAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
             buttonAttack.addListener(new InputListener() {
@@ -95,9 +92,10 @@ public class Controller extends Stage {
             });
             tabRight.add(buttonAttack).size(buttonAttack.getWidth(), buttonAttack.getHeight());
             tabRight.row().padBottom(10);
+            tabRight.add(buttonUp).size(buttonUp.getWidth(), buttonUp.getHeight());
+            addActor(tabRight);
         }
-        tabRight.add(buttonUp).size(buttonUp.getWidth(), buttonUp.getHeight());
-        addActor(tabRight);
+
         /*******************************************/
 
 
@@ -121,7 +119,8 @@ public class Controller extends Stage {
         /*******************************************/
 
         enter = new Image(Assets.manager.get(Assets.goButton));
-        enter.setSize(Cave.WIDTH / 10, Cave.WIDTH / 15);
+        enter.setSize(buttonLeft.getWidth()*2, buttonLeft.getWidth());
+        enter.setPosition(Cave.WIDTH-enter.getWidth(),0);
 
         enter.addListener(new InputListener() {
             @Override
@@ -139,7 +138,6 @@ public class Controller extends Stage {
 
     public void enterOn(Vector2 position) {
         addActor(enter);
-        enter.setPosition(position.x, position.y);
     }
 
     public void enterOff() {

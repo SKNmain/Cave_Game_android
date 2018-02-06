@@ -127,7 +127,7 @@ public class Menu implements Screen {
 
         //Multi Events
         MenuPause = new PauseMenu();
-        controller = new Controller(false);
+        controller = new Controller(true);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(MenuPause);
@@ -144,13 +144,13 @@ public class Menu implements Screen {
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("credit")) {
                     controller.enterOn(new Vector2(240, 250));
                     enterCredit = true;
-
+                    return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("shop")) {
                     controller.enterOn(new Vector2(665, Cave.HEIGHT / 3 + 20));
                     enterShop = true;
-
+                    return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("cave")) {
@@ -168,13 +168,13 @@ public class Menu implements Screen {
                 if (a.getUserData() instanceof Hero && b.getUserData() == "credit") {
                     controller.enterOff();
                     enterCredit = false;
-
+                    return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData() == "shop") {
                     controller.enterOff();
                     enterShop = false;
-
+                    return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData() == "cave") {
@@ -248,9 +248,6 @@ public class Menu implements Screen {
             hero.setState(Hero.STATE.STANDING);
         }
         hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed() && hero.getBody().getLinearVelocity().y == 0) {
-            hero.setSpeedY(7f);
-        }
 
         if (controller.isEnterPresed()) {
             if (enterShop) System.out.println("weeee shoping time!!!!!!");
