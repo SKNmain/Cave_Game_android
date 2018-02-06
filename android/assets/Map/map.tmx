@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="48" tileheight="48" nextobjectid="34">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="48" tileheight="48" nextobjectid="31">
  <tileset firstgid="1" source="untitled.tsx"/>
  <layer name="Tile Layer 1" width="12" height="12">
   <data encoding="csv">
@@ -19,18 +19,12 @@
  </layer>
  <objectgroup name="collision">
   <object id="19" x="48" y="528" width="480" height="48"/>
+  <object id="20" x="0" y="48" width="48" height="480"/>
+  <object id="21" x="48" y="433.5" width="142.75" height="43.5"/>
+  <object id="22" x="288" y="338" width="240" height="44.5"/>
   <object id="24" x="528" y="48" width="48" height="480"/>
+  <object id="25" x="48" y="193.5" width="192" height="45"/>
+  <object id="26" x="240" y="241" width="96" height="44.75"/>
   <object id="29" x="50" y="0" width="476" height="48"/>
-  <object id="31" x="46" y="51">
-   <polyline points="0,0 1,471"/>
-  </object>
- </objectgroup>
- <objectgroup name="characters">
-  <object id="33" name="hero" x="432" y="144" width="48" height="48">
-   <properties>
-    <property name="x" type="float" value="480"/>
-    <property name="y" type="float" value="360"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>
