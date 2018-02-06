@@ -30,23 +30,18 @@ import java.util.Iterator;
 
 /**
  * Created by epiklp on 27.11.17.
- * <p>
- * Stage dla controllera
+ * Created by epiklp on 27.11.17.
  */
 
 public class GameScreen implements Screen {
     final Cave cave;
 
     private boolean PAUSE;
-
-
     private Stage stage;
 
     private OrthographicCamera camera;
     private Controller controller;
-//	private TextureGame textureGame;
 
-    //physic world 2D
     private Box2DDebugRenderer b2dr;
 
     private float horizontalForce = 0;
@@ -101,6 +96,7 @@ public class GameScreen implements Screen {
 
     public void update(float delta) {
         TheBox.world.step(1 / 60f, 6, 2);
+        sweepDeadBodies();
 
         TheBox.rayHandler.update();
         inputUpdate();
@@ -110,7 +106,6 @@ public class GameScreen implements Screen {
         TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
         ui.update(hero.getLife(), hero.getMagic());
 
-        sweepDeadBodies();
     }
 
     @Override
@@ -180,13 +175,13 @@ public class GameScreen implements Screen {
             hero.setState(Hero.STATE.STANDING);
         }
         hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed()) {
-            hero.jump();
+        if (controller.isUpPressed() && hero.canClimbing() ) {
+            hero.setState(Hero.STATE.CLIMBING);
+        }
+        else if (controller.isUpPressed()) {
+            hero.setState(Hero.STATE.JUMPING);
         }
 
-        if (controller.isUpPressed() && hero.getState() == Hero.STATE.CLIMBING) {
-            hero.climb();
-        }
 
         if (controller.isAttackPressed()) {
             hero.shoot();
@@ -227,7 +222,6 @@ public class GameScreen implements Screen {
         map.dispose();
         MenuPause.dispose();
     }
-
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {
             Iterator<GameObject> i = TheBox.getDeleteArrayIter();

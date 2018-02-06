@@ -33,10 +33,15 @@ public abstract class GameObject extends Actor {
     }
 
     public void destroy() {
-        if (light != null)
+        if (light != null) {
             light.remove();
-        TheBox.destroyBody(body);
-        this.remove();
+            light = null;
+        }
+        if(body != null){
+            TheBox.destroyBody(body);
+            body = null;
+            this.remove();
+        }
     }
 
     public void setToDelete() {

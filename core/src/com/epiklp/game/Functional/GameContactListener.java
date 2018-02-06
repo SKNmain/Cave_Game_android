@@ -73,14 +73,16 @@ public class GameContactListener implements ContactListener {
         if (a.getBody().getUserData() instanceof Bullet && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Bullet bullet = (Bullet) a.getBody().getUserData();
             bullet.setToDelete();
+            bullet.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
             return;
         } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Bullet) {
             Bullet bullet = (Bullet) b.getBody().getUserData();
             bullet.setToDelete();
+            bullet.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
             return;
         }
 
-        //Can I jump?
+        //Can I JUMP?
         if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.onGround();
@@ -91,6 +93,17 @@ public class GameContactListener implements ContactListener {
             return;
         }
 
+        //Can I CLIMB?
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
+            Hero hero = (Hero) a.getBody().getUserData();
+            hero.setCanClimb(true);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), Hero.CLIMB_SENSOR)) {
+            a.setFriction(1);
+            Hero hero = (Hero) b.getBody().getUserData();
+            hero.setCanClimb(true);
+            return;
+        }
     }
 
     @Override
@@ -116,11 +129,22 @@ public class GameContactListener implements ContactListener {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.outGround();
             return;
-        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), Hero.JUMP_SENSOR)) {
+        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), Hero.JUMP_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.outGround();
             return;
         }
+        //I can't climb
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
+            Hero hero = (Hero) a.getBody().getUserData();
+            hero.setCanClimb(false);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), Hero.CLIMB_SENSOR)) {
+            Hero hero = (Hero) b.getBody().getUserData();
+            hero.setCanClimb(false);
+            return;
+        }
+
     }
 
     @Override
