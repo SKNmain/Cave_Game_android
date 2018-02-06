@@ -18,29 +18,31 @@ public class Hero extends GameCharacter implements Shootable {
 
 
     public static final String JUMP_SENSOR = "JUMP_SEN";
-    public static final String CLIMB_SEN = "CLIMB_SEN";
+    public static final String CLIMB_SENSOR = "CLIMB_SEN";
+
+    private boolean canClimb;
 
     public enum STATE {
         CLIMBING, RUNNING, STANDING, JUMPING;
+
     }
 
     private int magic;
-
     private float climbingSpeed;
+
     private STATE state = STATE.STANDING;
 
     private int onGround = 0;
     private float jumpTimeout = 0;
-    private float climbingTimeout = 0;
 
     public Hero(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.player)));
-        sprite.setSize(64*Cave.SCALE, 64*Cave.SCALE);
-        sprite.setOrigin(64*Cave.SCALE, 64*Cave.SCALE);
+        sprite.setSize(64 * Cave.SCALE, 64 * Cave.SCALE);
+        sprite.setOrigin(64 * Cave.SCALE, 64 * Cave.SCALE);
         setBody(TheBox.createBody(x, y, false));
-        TheBox.createBoxShape(body, 28, 60, 0.8f, 1f); //zmieniona postac ma 64x64 wiec zostałoa zmieniona wilkosc boxa i obraka
+        TheBox.createBoxShape(body, 28, 60, 1f, 0); //zmieniona postac ma 64x64 wiec zostałoa zmieniona wilkosc boxa i obraka
         TheBox.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), JUMP_SENSOR);
-        TheBox.createBoxSensor(body, 35f, 30f, new Vector2(0, 0), CLIMB_SEN);
+        TheBox.createBoxSensor(body, 35f, 45f, new Vector2(0, -5), CLIMB_SENSOR);
         body.setUserData(this);
         light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .7f), 10, -2, -2);
         initStats();
@@ -60,11 +62,10 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void act(float delta) {
-       // System.out.println(getBody().getPosition().x + "        " + getBody().getPosition().y);
+        // System.out.println(getBody().getPosition().x + "        " + getBody().getPosition().y);
 
         attackDelta += delta;
         jumpTimeout--;
-        climbingTimeout--;
 
         if (turn) sprite.setFlip(false, false);
         else sprite.setFlip(true, false);
@@ -86,10 +87,15 @@ public class Hero extends GameCharacter implements Shootable {
             } else {
                 hor = 0;
             }
-            setSpeedX(hor);
         } else if (state == STATE.CLIMBING) {
             climb();
+        } else if (state == STATE.JUMPING) {
+            jump();
         }
+        if (state == STATE.STANDING && canClimbing())
+            setSpeedY(-0.5f);
+
+        setSpeedX(hor);
     }
 
     @Override
@@ -126,9 +132,15 @@ public class Hero extends GameCharacter implements Shootable {
     }
 
     public void climb() {
-        if (climbingTimeout <= 0) {
-            body.setLinearVelocity(0, body.getMass() * 2f);
-        }
+        body.setLinearVelocity(0, body.getMass() * 0.8f);
+    }
+
+    public boolean canClimbing() {
+        return canClimb;
+    }
+
+    public void setCanClimb(boolean canClimb) {
+        this.canClimb = canClimb;
     }
 
     public STATE getState() {
@@ -138,8 +150,8 @@ public class Hero extends GameCharacter implements Shootable {
     public void jump() {
         if (jumpTimeout <= 0) {
             if (onGround > 0) {
-                body.setLinearVelocity(0, body.getMass() * 3.3f);
-                jumpTimeout = 70f;
+                body.setLinearVelocity(0, body.getMass() * 2.7f);
+                jumpTimeout = 60f;
             }
         }
     }

@@ -52,16 +52,16 @@ public class MapBuilder {
                 shape = createPolyLine((PolylineMapObject) object);
             } else if (object instanceof RectangleMapObject) {
                 shape = getRectangle((RectangleMapObject) object);
+                if(Utils.equalsWithNulls(object.getName(), "CLIMBING_WALL")){
+                    bodies.add(TheBox.createStaticBodyForMapBuild(shape, "CLIMBING_WALL"));
+                    shape.dispose();
+                    continue;
+                }
             } else {
                 continue;
             }
-            Body body;
-            BodyDef bdef = new BodyDef();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            body = world.createBody(bdef);
-            body.createFixture(shape, 1);
-            body.setUserData(MapBuilder.class.getSimpleName());
-            bodies.add(body);
+
+            bodies.add(TheBox.createStaticBodyForMapBuild(shape, MapBuilder.class.getSimpleName()));
             shape.dispose();
         }
         return bodies;

@@ -6,7 +6,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
@@ -46,10 +48,11 @@ public class TheBox {
     public static RayHandler rayHandler;
 
 
-    private static Array<GameObject> deleteArray = new Array<GameObject>();
+    private static Array<GameObject> deleteArrayGameObjects = new Array<GameObject>();
+    private static Array<Joint> deleteArrayJoints = new Array<Joint>();
 
     public static void initWorld() {
-        world = new World(new Vector2(0, -25f), true);
+        world = new World(new Vector2(0, -30f), true);
         initRayHandler();
     }
 
@@ -61,6 +64,17 @@ public class TheBox {
         def.position.set(x / Cave.PPM, y / Cave.PPM);
         def.fixedRotation = true;
         pBody = world.createBody(def);
+        return pBody;
+    }
+
+    public static Body createStaticBodyForMapBuild(Shape shape, Object userData){
+        Body pBody;
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.StaticBody;
+        def.fixedRotation = true;
+        pBody = world.createBody(def);
+        pBody.createFixture(shape, 1);
+        pBody.setUserData(userData);
         return pBody;
     }
 
@@ -155,10 +169,15 @@ public class TheBox {
     }
 
     public static void addToDeleteArray(GameObject gameObject) {
-        deleteArray.add(gameObject);
+        deleteArrayGameObjects.add(gameObject);
     }
-
     public static Iterator<GameObject> getDeleteArrayIter() {
-        return deleteArray.iterator();
+        return deleteArrayGameObjects.iterator();
+    }
+    public static void addToDeleteArrayJoints(Joint joint) {
+        deleteArrayJoints.add(joint);
+    }
+    public static Iterator<Joint> getDeleteArrayIterJoins() {
+        return deleteArrayJoints.iterator();
     }
 }
