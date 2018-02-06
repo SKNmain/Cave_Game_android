@@ -93,7 +93,7 @@ public class Hero extends GameCharacter implements Shootable {
     }
 
     @Override
-    public float getSpeedWalk() { 
+    public float getSpeedWalk() {
         return speedWalk + life * 0.03f;
     }
 
