@@ -35,11 +35,11 @@ public class Hero extends GameCharacter implements Shootable {
 
     public Hero(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.player)));
-        sprite.setSize(85 / Cave.SCALE, 192 / Cave.SCALE);
-        sprite.setOrigin(80 / 2, 192 / 2);
+        sprite.setSize(64*Cave.SCALE, 64*Cave.SCALE);
+        sprite.setOrigin(64*Cave.SCALE, 64*Cave.SCALE);
         setBody(TheBox.createBody(x, y, false));
-        TheBox.createBoxShape(body, 25f, 48, 0.8f, 1f);
-        TheBox.createBoxSensor(body, 10f, 10f, new Vector2(0, -46f), JUMP_SENSOR);
+        TheBox.createBoxShape(body, 28, 60, 0.8f, 1f); //zmieniona postac ma 64x64 wiec zostałoa zmieniona wilkosc boxa i obraka
+        TheBox.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), JUMP_SENSOR);
         TheBox.createBoxSensor(body, 35f, 30f, new Vector2(0, 0), CLIMB_SEN);
         body.setUserData(this);
         light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .7f), 10, -2, -2);

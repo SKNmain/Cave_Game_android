@@ -22,6 +22,7 @@ import com.epiklp.game.Cave;
 import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.Controller;
 import com.epiklp.game.Functional.TheBox;
+import com.epiklp.game.Functional.UI;
 import com.epiklp.game.actors.characters.Hero;
 
 
@@ -57,6 +58,8 @@ public class Menu implements Screen {
     private STATE state;
 
     private PauseMenu MenuPause;
+
+    private UI ui;
 
     public Menu(final Cave cave) {
         state = STATE.GAME;
@@ -130,6 +133,8 @@ public class Menu implements Screen {
         inputMultiplexer.addProcessor(MenuPause);
         inputMultiplexer.addProcessor(controller);
         inputMultiplexer.addProcessor(creditsScreen);
+
+        ui = new UI();
 
         TheBox.world.setContactListener(new ContactListener() {
             @Override
@@ -208,6 +213,7 @@ public class Menu implements Screen {
             stage.act();
             stage.draw();
             controller.draw();
+            ui.draw();
             update(Gdx.graphics.getDeltaTime());
             //TheBox.world.setContactListener(myContactListner);
         } else if (state.equals(STATE.CREDIT)) {

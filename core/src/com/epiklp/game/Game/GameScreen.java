@@ -77,7 +77,7 @@ public class GameScreen implements Screen {
         ui = new UI();
 
         b2dr = new Box2DDebugRenderer();
-        map = new TmxMapLoader().load("Map/map_big.tmx");
+        map = new TmxMapLoader().load("Map/tmp.tmx"); //mapa  odpowiednimi wymiarami mieniona 32x32
 
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
         mapBodies = MapBuilder.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
@@ -85,7 +85,7 @@ public class GameScreen implements Screen {
         stage.addActor(hero);
         enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
         for(Enemy ac : enemies){
-            System.out.println("DUPA");
+            System.out.println("DUPA"); // prosimy nie robic cegos takiego :D
             stage.addActor(ac);
         }
         MenuPause = new PauseMenu();

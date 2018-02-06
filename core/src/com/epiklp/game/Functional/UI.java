@@ -16,6 +16,7 @@ public class UI extends Stage {
     private Label text;
     private Label.LabelStyle labelStyle;
     private Image lifeTexture, magicTexture;
+    private Image statusBelt;
 
 
     public UI() {
@@ -30,6 +31,10 @@ public class UI extends Stage {
         magicTexture.setPosition(0, Cave.HEIGHT - 64);
         addActor(lifeTexture);
         addActor(magicTexture);
+        statusBelt = new Image(Assets.manager.get(Assets.statusBelt));
+        statusBelt.setScale(Cave.SCALE);
+        statusBelt.setPosition(0, Cave.HEIGHT-statusBelt.getHeight()*2);
+        addActor(statusBelt);
     }
 
     private Texture CreateTexture(int width, int hight, int r, int g, int b, int a) {

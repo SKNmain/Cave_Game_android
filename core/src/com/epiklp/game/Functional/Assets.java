@@ -20,7 +20,7 @@ public class Assets {
 
     //player
     /*******************************************/
-    public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/test.png", Texture.class);
+    public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/hero64.png", Texture.class);
     public static final AssetDescriptor<Texture> fireBall = new AssetDescriptor<Texture>("character/fireball.png", Texture.class);
     /*******************************************/
 
@@ -61,6 +61,15 @@ public class Assets {
     public static final AssetDescriptor<Texture> cave2Layer = new AssetDescriptor<Texture>("menu/cave2.png", Texture.class);
     /*******************************************/
 
+    //UI
+    /*******************************************/
+    public static final AssetDescriptor<Texture> statusBelt = new AssetDescriptor<Texture>("UI/status_belt.png", Texture.class);
+    public static final AssetDescriptor<Texture> statusHp = new AssetDescriptor<Texture>("UI/status_hp.png", Texture.class);
+    public static final AssetDescriptor<Texture> statusMana = new AssetDescriptor<Texture>("UI/status_mana.png", Texture.class);
+    public static final AssetDescriptor<Texture> statusTime = new AssetDescriptor<Texture>("UI/status_time.png", Texture.class);
+    /*******************************************/
+
+
     public static BitmapFont Font; //Font
 
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9]; // GameOver
@@ -99,6 +108,12 @@ public class Assets {
         manager.load(cave2Layer);
         manager.load(menuMap);
         manager.load(menuMusic);
+
+        //UI
+        manager.load(statusBelt);
+        manager.load(statusHp);
+        manager.load(statusMana);
+        manager.load(statusTime);
 
 
         String tmp = "";
