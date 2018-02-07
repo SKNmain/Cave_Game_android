@@ -2,6 +2,7 @@ package com.epiklp.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.JsonFunction;
 import com.epiklp.game.Functional.TheBox;
@@ -12,6 +13,7 @@ import com.epiklp.game.Game.Logo;
 public class Cave extends Game {
     public static boolean MUSIC = true;
     public static boolean EFFECTS = true;
+    public static String LANGUAGE = "en";
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
     public static final int PPM = 32;
@@ -19,8 +21,12 @@ public class Cave extends Game {
 
     @Override
     public void create() {
-
-        JsonFunction.Create();
+        JsonFunction.initzialie();
+        FileHandle file = Gdx.files.local("option.json");
+        if(!file.exists())
+            JsonFunction.Create(file);
+        else
+            JsonFunction.Read(file);
 
         Assets.load();
         //Assets.manager.finishLoading();
