@@ -23,7 +23,6 @@ import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.Functional.UI;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
-import com.epiklp.game.actors.characters.FlameDemon;
 import com.epiklp.game.actors.characters.Hero;
 
 import java.util.Iterator;
@@ -79,7 +78,7 @@ public class GameScreen implements Screen {
         hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
         stage.addActor(hero);
         enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
-        for(Enemy ac : enemies){
+        for (Enemy ac : enemies) {
             stage.addActor(ac);
         }
         MenuPause = new PauseMenu();
@@ -104,7 +103,7 @@ public class GameScreen implements Screen {
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
         TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
-        ui.update(hero.getLife(), hero.getMagic());
+        ui.update(hero.actLife(), hero.actMagic());
 
     }
 
@@ -164,24 +163,19 @@ public class GameScreen implements Screen {
     private void inputUpdate() {
 
         if (Gdx.input.isTouched()) {
-            if (controller.isLeftPressed()) {
-                hero.setState(Hero.STATE.RUNNING);
-                hero.setTurn(false);
-            } else if (controller.isRightPressed()) {
-                hero.setState(Hero.STATE.RUNNING);
-                hero.setTurn(true);
-            }
-        } else {
-            hero.setState(Hero.STATE.STANDING);
-        }
-        hero.setSpeedX(horizontalForce);
-        if (controller.isUpPressed() && hero.canClimbing() ) {
-            hero.setState(Hero.STATE.CLIMBING);
-        }
-        else if (controller.isUpPressed()) {
-            hero.setCanJump(true);
-        }
+            if (controller.isLeftPressed())
+                hero.wantToMoveLeft();
+            else if (controller.isRightPressed())
+                hero.wantToMoveRight();
+        } else
+            hero.wantToIdle();
 
+
+        if (controller.isUpPressed() && hero.canClimbing()) {
+            hero.wantToClimb();
+        } else if (controller.isUpPressed()) {
+            hero.wantToJump();
+        }
 
         if (controller.isAttackPressed()) {
             hero.shoot();
@@ -222,6 +216,7 @@ public class GameScreen implements Screen {
         map.dispose();
         MenuPause.dispose();
     }
+
     public void sweepDeadBodies() {
         if (!TheBox.world.isLocked()) {
             Iterator<GameObject> i = TheBox.getDeleteArrayIter();

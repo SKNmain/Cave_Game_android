@@ -1,8 +1,6 @@
 package com.epiklp.game.actors.characters;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
 
 /**
@@ -11,41 +9,32 @@ import com.epiklp.game.actors.GameObject;
 
 public abstract class GameCharacter extends GameObject {
 
+    public int actLife;
+    public int maxLife;
+
     protected int strengh;
-    protected int life;
-
-    protected boolean turn = true;
-
-    protected float speedWalk;
+    protected float runSpeed;
     protected float attackSpeed;
     protected float attackDelta;
 
 
-    public GameCharacter(Sprite sprite) {
-        super(sprite);
-        this.sprite = sprite;
-    }
-
     public abstract void initStats();
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
-        sprite.draw(batch);
+    public GameCharacter(Sprite sprite, float sizeX, float sizeY) {
+        super(sprite, sizeX, sizeY);
     }
-
 
     @Override
     public void act(float delta) {
         attackDelta += delta;
     }
 
-    public float getSpeedWalk() {
-        return speedWalk;
+    public float getRunSpeed() {
+        return runSpeed;
     }
 
-    public void setSpeedWalk(float speedWalk) {
-        this.speedWalk = speedWalk;
+    public void setRunSpeed(float runSpeed) {
+        this.runSpeed = runSpeed;
     }
 
     public int getStrengh() {
@@ -56,18 +45,15 @@ public abstract class GameCharacter extends GameObject {
         this.strengh = strengh;
     }
 
-    public int getLife() {
-        return life;
-    }
-
-    public void setLife(int life) {
-        this.life += life;
+    public void setActLife(int actLife) {
+        this.actLife += actLife;
+        if(this.actLife > maxLife) this.actLife = maxLife;
         if (isDead())
             setToDelete();
     }
 
     public boolean isDead() {
-        return (life <= 0);
+        return (actLife <= 0);
     }
 
     public float getAttackSpeed() {
@@ -78,12 +64,17 @@ public abstract class GameCharacter extends GameObject {
         this.attackSpeed = attackSpeed;
     }
 
-    public void setTurn(boolean a) {
-        turn = a;
+    protected void setState(GameCharacter.STATE state) {
+        this.state = state;
     }
 
-    public boolean getTurn() {
-        return turn;
+    protected void setSpeedY(float speedY) {
+        body.setLinearVelocity(0, speedY);
     }
+
+    protected void setSpeedX(float speedX) {
+        body.setLinearVelocity(speedX, body.getLinearVelocity().y);
+    }
+
 }
 

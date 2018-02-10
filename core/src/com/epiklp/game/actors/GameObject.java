@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.epiklp.game.Cave;
+import com.epiklp.game.Functional.AnimationCore;
 import com.epiklp.game.Functional.TheBox;
 
 import box2dLight.Light;
@@ -14,22 +15,39 @@ import box2dLight.Light;
  */
 
 public abstract class GameObject extends Actor {
+    public enum STATE {
+        CLIMBING, IDLE, ATTACKING, RUNNING, ITEM
+    }
 
+    protected STATE state;
+
+    //true - "watching" to right side of screen
+    protected boolean turn = true;
+    protected float elapsedTime = 0;
     protected Body body;
     protected Sprite sprite;
+    protected AnimationCore animator;
     protected Light light;
-
-
-    public GameObject(Sprite sprite) {
-        this.sprite = sprite;
-    }
 
     public abstract void initStats();
 
+    public GameObject(Sprite sprite, float sizeX, float sizeY) {
+        this.sprite = sprite;
+        sprite.setSize(sizeX * Cave.SCALE, sizeY * Cave.SCALE);
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+        animator = new AnimationCore(sizeX, sizeY);
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        sprite.setFlip(!turn, false);
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
     }
 
     public void destroy() {
@@ -37,7 +55,7 @@ public abstract class GameObject extends Actor {
             light.remove();
             light = null;
         }
-        if(body != null){
+        if (body != null) {
             TheBox.destroyBody(body);
             body = null;
             this.remove();
@@ -48,16 +66,19 @@ public abstract class GameObject extends Actor {
         TheBox.addToDeleteArray(this);
     }
 
-    public Sprite getSprite() {
-        return sprite;
+    public boolean getTurn() {
+        return turn;
     }
 
     public Body getBody() {
         return body;
     }
 
-    public void setBody(Body body) {
-        this.body = body;
+    //if you want to start animating something, you must add frames to animator and call this function in act
+    protected void animate(float delta, STATE state){
+        elapsedTime += delta;
+        sprite = animator.getFrame(elapsedTime, turn, state);
     }
+
 }
 

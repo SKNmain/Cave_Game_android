@@ -26,26 +26,26 @@ public class GameContactListener implements ContactListener {
         if (!aIsSen && !bIsSen && a.getBody().getUserData() instanceof Enemy && b.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) b.getBody().getUserData();
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            hero.setLife(-enemy.getStrengh());
-            enemy.setLife(-hero.getStrengh());
+            hero.setActLife(-enemy.getStrengh());
+            enemy.setActLife(-hero.getStrengh());
             return;
         } else if (!aIsSen && !bIsSen && b.getBody().getUserData() instanceof Enemy && a.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) a.getBody().getUserData();
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            hero.setLife(-enemy.getStrengh());
-            enemy.setLife(-hero.getStrengh());
+            hero.setActLife(-enemy.getStrengh());
+            enemy.setActLife(-hero.getStrengh());
             return;
         }
         //Enemy sensor and hero touch (enemy is in following mode)
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.WARD_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.PATROL_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) b.getBody().getUserData();
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
+            enemy.setFollowing(true).setHeroLastPos(hero.getBody().getPosition());
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.WARD_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.PATROL_SENSOR) && a.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) a.getBody().getUserData();
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setFollowing(true).setHeroPos(hero.getBody().getPosition());
+            enemy.setFollowing(true).setHeroLastPos(hero.getBody().getPosition());
             return;
         }
 
@@ -54,8 +54,8 @@ public class GameContactListener implements ContactListener {
             Bullet bullet = (Bullet) a.getBody().getUserData();
             if (bullet.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) b.getBody().getUserData();
-                enemy.setLife(-bullet.getHitPoint());
-                enemy.setAttacked(true).setHeroPos(bullet.getGameCharacter().getBody().getPosition());
+                enemy.setActLife(-bullet.getHitPoint());
+                enemy.setAttacked(true).setHeroLastPos(bullet.getGameCharacter().getBody().getPosition());
                 bullet.setToDelete();
             }
             return;
@@ -63,8 +63,8 @@ public class GameContactListener implements ContactListener {
             Bullet bullet = (Bullet) b.getBody().getUserData();
             if (bullet.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) a.getBody().getUserData();
-                enemy.setLife(-bullet.getHitPoint());
-                enemy.setAttacked(true).setHeroPos(bullet.getGameCharacter().getBody().getPosition());
+                enemy.setActLife(-bullet.getHitPoint());
+                enemy.setAttacked(true).setHeroLastPos(bullet.getGameCharacter().getBody().getPosition());
                 bullet.setToDelete();
             }
             return;
@@ -99,7 +99,6 @@ public class GameContactListener implements ContactListener {
             hero.setCanClimb(true);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), Hero.CLIMB_SENSOR)) {
-            a.setFriction(1);
             Hero hero = (Hero) b.getBody().getUserData();
             hero.setCanClimb(true);
             return;
@@ -114,11 +113,11 @@ public class GameContactListener implements ContactListener {
         boolean bIsSen = b.isSensor();
         boolean aIsSen = a.isSensor();
         //Enemy warding sensor and hero
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.WARD_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.PATROL_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setFollowing(false);
             return;
-        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.WARD_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.PATROL_SENSOR) && a.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setFollowing(false);
             return;

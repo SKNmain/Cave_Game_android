@@ -13,11 +13,10 @@ public abstract class Bullet extends GameObject {
     protected GameCharacter gameCharacter;
     protected int hitPoint;
 
-    public Bullet(Sprite sprite, int hitPoint, GameCharacter gameCharacterRef) {
-        super(sprite);
+    public Bullet(Sprite sprite, float sizeX, float sizeY, int hitPoint, GameCharacter gameCharacterRef) {
+        super(sprite, sizeX, sizeY);
         this.hitPoint = hitPoint;
         this.gameCharacter = gameCharacterRef;
-
     }
 
     public int getHitPoint() {

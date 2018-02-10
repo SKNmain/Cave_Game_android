@@ -38,9 +38,7 @@ public class MapBuilder {
         for(MapObject object : objects){
             if(object instanceof RectangleMapObject){
                 RectangleMapObject en = ((RectangleMapObject) object);
-                if(Utils.equalsWithNulls(object.getName(), FlameDemon.class.getSimpleName())){
-                    enemies.add(new FlameDemon(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
-                }else if(Utils.equalsWithNulls(object.getName(), Rat.class.getSimpleName())){
+                if(Utils.equalsWithNulls(object.getName(), Rat.class.getSimpleName())){
                     enemies.add(new Rat(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
                 }else if(Utils.equalsWithNulls(object.getName(), Spider.class.getSimpleName())){
                     enemies.add(new Spider(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
@@ -66,7 +64,6 @@ public class MapBuilder {
             } else {
                 continue;
             }
-
             bodies.add(TheBox.createStaticBodyForMapBuild(shape, MapBuilder.class.getSimpleName()));
             shape.dispose();
         }
@@ -75,16 +72,16 @@ public class MapBuilder {
 
 
     private static ChainShape createPolyLine(PolylineMapObject polyline) {
-        float[] verticle = polyline.getPolyline().getTransformedVertices();
-        Vector2[] worldVerticle = new Vector2[verticle.length / 2];
-        for (int i = 0; i < verticle.length / 2; ++i) {
-            worldVerticle[i] = new Vector2();
-            worldVerticle[i].x = verticle[i * 2] / Cave.PPM * Cave.SCALE;
-            worldVerticle[i].y = verticle[i * 2 + 1] / Cave.PPM * Cave.SCALE;
+        float[] verticles = polyline.getPolyline().getTransformedVertices();
+        Vector2[] worldVerticles = new Vector2[verticles.length / 2];
+        for (int i = 0; i < verticles.length / 2; ++i) {
+            worldVerticles[i] = new Vector2();
+            worldVerticles[i].x = verticles[i * 2] / Cave.PPM * Cave.SCALE;
+            worldVerticles[i].y = verticles[i * 2 + 1] / Cave.PPM * Cave.SCALE;
         }
 
         ChainShape cs = new ChainShape();
-        cs.createChain(worldVerticle);
+        cs.createChain(worldVerticles);
         return cs;
     }
 

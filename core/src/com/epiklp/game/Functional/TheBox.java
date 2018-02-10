@@ -140,7 +140,7 @@ public class TheBox {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
         rayHandler = new RayHandler(TheBox.world);
-        rayHandler.setAmbientLight(.2f);
+        rayHandler.setAmbientLight(1); //0.2f
         rayHandler.setCulling(true);
         rayHandler.setShadows(true);
         Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);

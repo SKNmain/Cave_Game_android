@@ -33,7 +33,9 @@ import com.epiklp.game.actors.characters.Hero;
 public class Menu implements Screen {
     private enum STATE {
         OPTION, GAME, CREDIT, SHOP
-    };
+    }
+
+    ;
 
 
     final Cave cave;
@@ -111,7 +113,7 @@ public class Menu implements Screen {
         floor.setUserData("floor");
         //Zmieniłem funkcję do tworzenia BoxShape - musiałem dodać tarcie, wywaliłem tymczasowo maski, w sumie skróciło się
         TheBox.createBoxShape(floor, Cave.WIDTH, 2, 0, 0);
-        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, 0,0);
+        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, 0, 0);
 
         creditBody = TheBox.createBody(260, 130, true);
         TheBox.createBoxSensor(creditBody, 60, 50);
@@ -157,7 +159,7 @@ public class Menu implements Screen {
                     controller.enterOn(new Vector2(1140, Cave.HEIGHT / 3 + 20));
                     enterCave = true;
                     TheBox.cleanWorld();
-                    cave.setScreen(new GameScreen(cave) );
+                    cave.setScreen(new GameScreen(cave));
                 }
             }
 
@@ -225,7 +227,7 @@ public class Menu implements Screen {
     }
 
     private void creditsScreenUpdate() {
-        if(creditsScreen.isBackPress())
+        if (creditsScreen.isBackPress())
             state = STATE.GAME;
     }
 
@@ -237,17 +239,13 @@ public class Menu implements Screen {
 
     private void inputUpdate() {
         if (Gdx.input.isTouched()) {
-            if (controller.isLeftPressed()) {
-                hero.setState(Hero.STATE.RUNNING);
-                hero.setTurn(false);
-            } else if (controller.isRightPressed()) {
-                hero.setState(Hero.STATE.RUNNING);
-                hero.setTurn(true);
-            }
+            if (controller.isLeftPressed())
+                hero.wantToMoveLeft();
+            else if (controller.isRightPressed())
+                hero.wantToMoveRight();
         } else {
-            hero.setState(Hero.STATE.STANDING);
+            hero.wantToIdle();
         }
-        hero.setSpeedX(horizontalForce);
 
         if (controller.isEnterPresed()) {
             if (enterShop) System.out.println("weeee shoping time!!!!!!");

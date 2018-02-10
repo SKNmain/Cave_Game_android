@@ -1,81 +1,52 @@
 package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.epiklp.game.Functional.AnimationCore;
 
 /**
  * Created by epiklp on 19.11.17.
  * <p>
  * <p>
  * <p>
- * Wszystkie wartości dla attackRange oraz watchRange podawac w jednostkach Box2d!
+ * Wszystkie wartości dla attackRange oraz patrolRange podawac w jednostkach Box2d!
  */
 
 
 public abstract class Enemy extends GameCharacter {
 
-    enum ENEMY_STATE {
-        FOLLOWING, WARDING
+    public enum AI_STATE {
+        PATROLING, ATTACKED, FOLLOWING,
     }
 
-    public static final String WARD_SENSOR = "WARD_SEN";
+    public static final String PATROL_SENSOR = "PATROL_SEN";
 
     protected float chanceOfDrop;
     protected float attackRange;
-    protected float watchRange;
+    protected float patrolRange;
+    protected Vector2 leftPatrolPoints;
+    protected Vector2 rightPatrolPoints;
 
     protected boolean following;
-
     protected boolean attacked;
 
-    protected Vector2 heroPos;
+    protected Vector2 heroLastPos;
+    float elapsed_time = 0;
 
-    public Enemy(Sprite sprite) {
-        super(sprite);
-        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+
+    public Enemy(Sprite sprite, float sizeX, float sizeY) {
+        super(sprite, sizeX, sizeY);
+        leftPatrolPoints = new Vector2();
+        rightPatrolPoints = new Vector2();
+        state = STATE.RUNNING;
     }
+
+
 
     @Override
     public void act(float delta) {
         super.act(delta);
         moving();
-        setTurnFromVel();
-    }
-
-    protected void setTurnFromVel() {
-        if (body.getLinearVelocity().x > 0)
-            setTurn(false);
-        else if (body.getLinearVelocity().x < 0)
-            setTurn(true);
-    }
-
-
-    protected void moving() {
-        if (following || attacked) {
-            followHero();
-        } else {
-            watching();
-        }
-    }
-
-    float pos = 0;
-
-    protected void watching() {
-        pos += speedWalk / 100;
-        Vector2 p = new Vector2(watchRange * MathUtils.sin(pos), 0);
-        body.setLinearVelocity(p);
-
-    }
-
-    protected void followHero() {
-        if (heroPos.x > body.getPosition().x - 3f && heroPos.x < body.getPosition().x + 3f) {
-            body.setLinearVelocity(0, 0);
-        } else if (heroPos.x > body.getPosition().x - 3f) {
-            body.setLinearVelocity(speedWalk, 0);
-        } else if (heroPos.x < body.getPosition().x + 3f) {
-            body.setLinearVelocity(-speedWalk, 0);
-        }
     }
 
     //return this, only for shorter record in GameContactListener
@@ -89,13 +60,61 @@ public abstract class Enemy extends GameCharacter {
         return this;
     }
 
-    public void setHeroPos(Vector2 pos) {
-        this.heroPos = pos;
+    public void setHeroLastPos(Vector2 pos) {
+        this.heroLastPos = pos;
     }
-
 
     public float getChanceOfDrop() {
         return chanceOfDrop;
+    }
+
+
+    //call it AFTER create body
+    protected void setPatrolPoints() {
+        Vector2 actualPosX = body.getPosition();
+
+        leftPatrolPoints.x = actualPosX.x - patrolRange;
+        leftPatrolPoints.y = actualPosX.y;
+        rightPatrolPoints.x = actualPosX.x + patrolRange;
+        rightPatrolPoints.y = actualPosX.y;
+    }
+
+
+    protected void patroling() {
+        if (state == STATE.RUNNING) {
+            if (turn) {
+                setSpeedX(runSpeed);
+                float distance = body.getPosition().x - rightPatrolPoints.x;
+                if (distance >= 0) {
+                    turn = false;
+                }
+            } else {
+                setSpeedX(-runSpeed);
+                float distance = body.getPosition().x - leftPatrolPoints.x;
+                if (distance <= 0) {
+                    turn = true;
+                }
+            }
+        }
+    }
+
+    protected void moving() {
+        if (following || attacked) {
+            followHero();
+            setPatrolPoints();
+        } else {
+            patroling();
+        }
+    }
+
+    protected void followHero() {
+        if (heroLastPos.x > body.getPosition().x - 3f && heroLastPos.x < body.getPosition().x + 3f) {
+            body.setLinearVelocity(0, 0);
+        } else if (heroLastPos.x > body.getPosition().x - 3f) {
+            body.setLinearVelocity(runSpeed, 0);
+        } else if (heroLastPos.x < body.getPosition().x + 3f) {
+            body.setLinearVelocity(-runSpeed, 0);
+        }
     }
 
 }

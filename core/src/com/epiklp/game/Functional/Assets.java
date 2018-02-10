@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 /**
@@ -16,19 +17,20 @@ public class Assets {
 
     //Asset
     public static final AssetManager manager = new AssetManager();
-    public static final AssetDescriptor<Texture> logo = new AssetDescriptor<Texture>("logo.png", Texture.class);
 
-    //player
+    public static final AssetDescriptor<TextureAtlas> textureAtlas = new AssetDescriptor<TextureAtlas>("enemies/enemies.atlas", TextureAtlas.class);
+
     /*******************************************/
     public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/hero64.png", Texture.class);
-    public static final AssetDescriptor<Texture> fireBall = new AssetDescriptor<Texture>("character/fireball.png", Texture.class);
+
+
+    //player
+    public static final AssetDescriptor<Texture> logo = new AssetDescriptor<Texture>("logo.png", Texture.class);
     /*******************************************/
 
     //Enemy
     /*******************************************/
     public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
-    public static final AssetDescriptor<Texture> rat = new AssetDescriptor<Texture>("enemies/rat.png", Texture.class);
-    public static final AssetDescriptor<Texture> spider = new AssetDescriptor<Texture>("enemies/spider.png", Texture.class);
     /*******************************************/
 
 
@@ -80,12 +82,10 @@ public class Assets {
 
         manager.load(logo);
 
+        manager.load(textureAtlas);
 
         manager.load(player);
         manager.load(flameDemon);
-        manager.load(rat);
-        manager.load(spider);
-        manager.load(fireBall);
 
 
         //Buttons
@@ -142,4 +142,6 @@ public class Assets {
     public static void dispose() {
         manager.dispose();
     }
+
+
 }
