@@ -19,6 +19,8 @@ import com.epiklp.game.Cave;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.FlameDemon;
 import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.actors.characters.Rat;
+import com.epiklp.game.actors.characters.Spider;
 
 
 public class MapBuilder {
@@ -36,8 +38,12 @@ public class MapBuilder {
         for(MapObject object : objects){
             if(object instanceof RectangleMapObject){
                 RectangleMapObject en = ((RectangleMapObject) object);
-                if(Utils.equalsWithNulls(object.getName(), "FlameDemon")){
+                if(Utils.equalsWithNulls(object.getName(), FlameDemon.class.getSimpleName())){
                     enemies.add(new FlameDemon(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
+                }else if(Utils.equalsWithNulls(object.getName(), Rat.class.getSimpleName())){
+                    enemies.add(new Rat(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
+                }else if(Utils.equalsWithNulls(object.getName(), Spider.class.getSimpleName())){
+                    enemies.add(new Spider(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
                 }
             }
 

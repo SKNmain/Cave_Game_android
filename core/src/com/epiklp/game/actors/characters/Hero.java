@@ -21,17 +21,17 @@ public class Hero extends GameCharacter implements Shootable {
     public static final String CLIMB_SENSOR = "CLIMB_SEN";
 
     private boolean canClimb;
+    private boolean canJump;
 
     public enum STATE {
         CLIMBING, RUNNING, STANDING, JUMPING;
 
     }
-
     private int magic;
+
     private float climbingSpeed;
 
     private STATE state = STATE.STANDING;
-
     private int onGround = 0;
     private float jumpTimeout = 0;
 
@@ -44,7 +44,7 @@ public class Hero extends GameCharacter implements Shootable {
         TheBox.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), JUMP_SENSOR);
         TheBox.createBoxSensor(body, 35f, 45f, new Vector2(0, -5), CLIMB_SENSOR);
         body.setUserData(this);
-        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .7f), 10, -2, -2);
+        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 10, -2, -2);
         initStats();
     }
 
@@ -62,7 +62,6 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void act(float delta) {
-        // System.out.println(getBody().getPosition().x + "        " + getBody().getPosition().y);
 
         attackDelta += delta;
         jumpTimeout--;
@@ -87,15 +86,18 @@ public class Hero extends GameCharacter implements Shootable {
             } else {
                 hor = 0;
             }
-        } else if (state == STATE.CLIMBING) {
-            climb();
-        } else if (state == STATE.JUMPING) {
-            jump();
         }
-        if (state == STATE.STANDING && canClimbing())
-            setSpeedY(-0.5f);
-
         setSpeedX(hor);
+        if (state == STATE.CLIMBING) {
+            climb();
+        } else if (canJump) {
+            jump();
+            canJump = false;
+        }
+        if (state == STATE.STANDING && canClimbing()) {
+            setSpeedY(-0.5f);
+        }
+
     }
 
     @Override
@@ -142,7 +144,9 @@ public class Hero extends GameCharacter implements Shootable {
     public void setCanClimb(boolean canClimb) {
         this.canClimb = canClimb;
     }
-
+    public void setCanJump(boolean canJump) {
+        this.canJump = canJump;
+    }
     public STATE getState() {
         return state;
     }

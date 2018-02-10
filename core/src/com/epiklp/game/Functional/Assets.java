@@ -27,6 +27,8 @@ public class Assets {
     //Enemy
     /*******************************************/
     public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
+    public static final AssetDescriptor<Texture> rat = new AssetDescriptor<Texture>("enemies/rat.png", Texture.class);
+    public static final AssetDescriptor<Texture> spider = new AssetDescriptor<Texture>("enemies/spider.png", Texture.class);
     /*******************************************/
 
 
@@ -81,7 +83,10 @@ public class Assets {
 
         manager.load(player);
         manager.load(flameDemon);
+        manager.load(rat);
+        manager.load(spider);
         manager.load(fireBall);
+
 
         //Buttons
         manager.load(restartButton);
