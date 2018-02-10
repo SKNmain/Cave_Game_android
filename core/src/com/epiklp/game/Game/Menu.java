@@ -54,7 +54,6 @@ public class Menu implements Screen {
     private Image cave2;
     private boolean enterShop, enterCredit, enterCave;
     private Body creditBody, shopBody, caveBody;
-    private Music soundTrack;
     private CreditsScreen creditsScreen;
 
     private STATE state;
@@ -72,12 +71,6 @@ public class Menu implements Screen {
 
         enterCredit = false;
         enterShop = false;
-        TheBox.initWorld();
-
-        //music
-        soundTrack = Assets.manager.get(Assets.menuMusic);
-        soundTrack.setLooping(true);
-        soundTrack.play();
 
         //Download Assets
         image = new Image(Assets.manager.get(Assets.menuLayer));

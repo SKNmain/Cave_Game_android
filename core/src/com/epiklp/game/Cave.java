@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.epiklp.game.Functional.Assets;
 import com.epiklp.game.Functional.JsonFunction;
+import com.epiklp.game.Functional.Sound;
 import com.epiklp.game.Functional.TheBox;
 import com.epiklp.game.Game.GameScreen;
 import com.epiklp.game.Game.Logo;
@@ -18,15 +19,12 @@ public class Cave extends Game {
     public static final int HEIGHT = 720;
     public static final int PPM = 32;
     public static final float SCALE = 2;
+    public static FileHandle FILE;
 
     @Override
     public void create() {
-        JsonFunction.initzialie();
-        FileHandle file = Gdx.files.local("option.json");
-        if(!file.exists())
-            JsonFunction.Create(file);
-        else
-            JsonFunction.Read(file);
+
+
 
         Assets.load();
         //Assets.manager.finishLoading();
@@ -35,18 +33,23 @@ public class Cave extends Game {
         while (!Assets.manager.update()) {
             System.out.println(Assets.manager.getProgress() * 100 + "%");
         }
-
-        if(Gdx.files.isLocalStorageAvailable())
-        {
-
-        }
+        Sound.initialize();
+        JsonFunction.initzialie();
+        FILE = Gdx.files.local("option.json");
+        if(!FILE.exists())
+            JsonFunction.Create();
+        else
+            JsonFunction.Read();
+        JsonFunction.edit("Music");
+        Sound.play("menuMusic");
+        JsonFunction.updateJSON();
         //Create physics
         TheBox.initWorld();
 
 
-        //this.setScreen(new Logo(this));
+        this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        this.setScreen(new GameScreen(this));
+        //this.setScreen(new GameScreen(this));
 
     }
 
