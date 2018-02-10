@@ -174,7 +174,6 @@ public class GameScreen implements Screen {
         } else {
             hero.setState(Hero.STATE.STANDING);
         }
-        hero.setSpeedX(horizontalForce);
         if (controller.isUpPressed() && hero.canClimbing() ) {
             hero.setState(Hero.STATE.CLIMBING);
         }
