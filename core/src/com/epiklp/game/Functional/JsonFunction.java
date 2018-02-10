@@ -67,7 +67,7 @@ class One
 
 class Game
 {
-    boolean music = true;
+    boolean music = false;
     boolean effect = true;
     String language = "en";
 }

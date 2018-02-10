@@ -40,8 +40,9 @@ public class Cave extends Game {
             JsonFunction.Create();
         else
             JsonFunction.Read();
+        JsonFunction.edit("Music");
         Sound.play("menuMusic");
-
+        JsonFunction.updateJSON();
         //Create physics
         TheBox.initWorld();
 
