@@ -56,80 +56,6 @@ public class TheBox {
         initRayHandler();
     }
 
-    //it need a position in PIXEL not in meter from box2d!
-    //so if you want to create a Body with position from body.getPosition, you must multiply it by (* Cave.PPM / Cave.SCALE)
-    public static Body createBody(float x, float y, boolean isStatic) {
-        Body pBody;
-        BodyDef def = new BodyDef();
-        if (isStatic) def.type = BodyDef.BodyType.StaticBody;
-        else def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(x / Cave.PPM * Cave.SCALE, y / Cave.PPM * Cave.SCALE);
-        def.fixedRotation = true;
-        pBody = world.createBody(def);
-        return pBody;
-    }
-
-    public static Body createStaticBodyForMapBuild(Shape shape, Object userData) {
-        Body pBody;
-        BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
-        def.fixedRotation = true;
-        pBody = world.createBody(def);
-        pBody.createFixture(shape, 1);
-        pBody.setUserData(userData);
-        return pBody;
-    }
-
-    public static void createBoxShape(Body body, float width, float height, float density, float friction) {
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixDef = new FixtureDef();
-        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
-        fixDef.shape = shape;
-        fixDef.density = density;
-        fixDef.friction = friction;
-        fixDef.isSensor = false;
-
-        body.createFixture(fixDef);
-        shape.dispose();
-    }
-
-    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter) {
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixDef = new FixtureDef();
-        shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
-        fixDef.shape = shape;
-        fixDef.density = 0;
-        fixDef.friction = 0;
-        fixDef.isSensor = true;
-        body.createFixture(fixDef);
-        shape.dispose();
-    }
-
-    public static void createBoxSensor(Body body, float width, float height) {
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixDef = new FixtureDef();
-        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
-        fixDef.shape = shape;
-        fixDef.density = 0;
-        fixDef.friction = 0;
-        fixDef.isSensor = true;
-        body.createFixture(fixDef);
-        shape.dispose();
-    }
-
-    public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter, Object userData) {
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixDef = new FixtureDef();
-        shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
-        fixDef.shape = shape;
-        fixDef.density = 0;
-        fixDef.friction = 0;
-        fixDef.isSensor = true;
-        Fixture fix = body.createFixture(fixDef);
-        fix.setUserData(userData);
-        shape.dispose();
-    }
-
     public static void destroyWorld() {
         if (rayHandler != null) {
             rayHandler.dispose();
@@ -143,11 +69,11 @@ public class TheBox {
     public static void initRayHandler() {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
-        rayHandler = new RayHandler(BodyCreator.TheBox.world);
+        rayHandler = new RayHandler(TheBox.world);
         rayHandler.setAmbientLight(1); //0.2f
         rayHandler.setCulling(true);
         rayHandler.setShadows(true);
-        Light.setGlobalContactFilter(BodyCreator.TheBox.CATEGORY_LIGHT, (short) 0, BodyCreator.TheBox.MASK_LIGHT);
+        Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
     }
 
     public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y) {
@@ -191,12 +117,12 @@ public class TheBox {
 
     public static void sweepDeadBodies() {
         if (!world.isLocked()) {
-            Iterator<Joint> j = BodyCreator.TheBox.getDeleteArrayIterJoins();
+            Iterator<Joint> j = TheBox.getDeleteArrayIterJoins();
             while (j.hasNext()) {
                 world.destroyJoint(j.next());
                 j.remove();
             }
-            Iterator<GameObject> i = BodyCreator.TheBox.getDeleteArrayIter();
+            Iterator<GameObject> i = TheBox.getDeleteArrayIter();
             while (i.hasNext()) {
                 i.next().destroy();
                 i.remove();
