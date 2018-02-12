@@ -41,7 +41,7 @@ public class Hero extends GameCharacter implements Shootable {
         BodyCreator.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), JUMP_SENSOR);
         BodyCreator.createBoxSensor(body, 32f, 45f, new Vector2(0, -5), CLIMB_SENSOR);
         body.setUserData(this);
-        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 10, -2, -2);
+       // light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 10, -2, -2);
         initStats();
 
     }

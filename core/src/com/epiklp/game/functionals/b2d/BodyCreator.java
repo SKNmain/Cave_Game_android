@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.epiklp.game.Cave;
 
+import sun.security.provider.SHA;
+
 /**
  * Created by Asmei on 2018-02-12.
  */
@@ -55,6 +57,16 @@ public class BodyCreator {
         shape.dispose();
     }
 
+    public static void createShape(Body body, float density, float friction, Vector2 ... verticles) {
+        PolygonShape shape = new PolygonShape();
+        shape.set(verticles);
+        fixDef.shape = shape;
+        fixDef.density = density;
+        fixDef.friction = friction;
+        fixDef.isSensor = false;
+        body.createFixture(fixDef);
+        shape.dispose();
+    }
     //UserData is null
     public static void createBoxShape(Body body, float width, float height, float density, float friction) {
         createBoxShape(body, width, height, density, friction, null);

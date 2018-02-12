@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="24">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="28">
  <tileset firstgid="1" source="new.tsx"/>
  <layer name="BG TILE" width="50" height="50">
   <data encoding="csv">
@@ -128,4 +128,9 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
+ <objectgroup name="items">
+  <object id="24" name="Torch" x="768" y="672" width="32" height="32"/>
+  <object id="26" name="Torch" x="896" y="992" width="32" height="32"/>
+  <object id="27" name="Torch" x="1056" y="992" width="32" height="32"/>
+ </objectgroup>
 </map>

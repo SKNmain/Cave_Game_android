@@ -13,10 +13,12 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.characters.Rat;
 import com.epiklp.game.actors.characters.Spider;
+import com.epiklp.game.actors.items.Torch;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 
 
@@ -45,7 +47,20 @@ public class MapBuilder {
         }
         return enemies;
     }
-    public static Array<Body> parseTiledObjectLayer(World world, MapObjects objects) {
+
+    public static Array<GameObject> parseItemsAndObjectFromObjectLayer(MapObjects objects){
+        Array<GameObject> items = new Array<GameObject>();
+        for (MapObject object : objects) {
+            if (object instanceof RectangleMapObject) {
+                RectangleMapObject en = ((RectangleMapObject) object);
+                if(Utils.equalsWithNulls(object.getName(), Torch.class.getSimpleName())){
+                    items.add(new Torch(en.getRectangle().x, en.getRectangle().y));
+                }
+            }
+        }
+        return items;
+    }
+    public static Array<Body> parseTiledObjectLayer(MapObjects objects) {
         Array<Body> bodies = new Array<Body>();
         for (MapObject object : objects) {
             Shape shape;

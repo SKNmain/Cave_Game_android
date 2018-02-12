@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
@@ -51,6 +53,7 @@ public class GameScreen implements Screen {
     private Hero hero;
 
     private Array<Enemy> enemies;
+    private Array<GameObject> items;
     private Array<Body> mapBodies;
 
     private GameContactListener gameContactListener;
@@ -71,12 +74,16 @@ public class GameScreen implements Screen {
         map = new TmxMapLoader().load("Map/tmp.tmx"); //mapa  odpowiednimi wymiarami mieniona 32x32
 
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
-        mapBodies = MapBuilder.parseTiledObjectLayer(TheBox.world, map.getLayers().get("collision").getObjects());
+        mapBodies = MapBuilder.parseTiledObjectLayer(map.getLayers().get("collision").getObjects());
         hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
+        items = MapBuilder.parseItemsAndObjectFromObjectLayer(map.getLayers().get("items").getObjects());
         stage.addActor(hero);
         enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
         for (Enemy ac : enemies) {
             stage.addActor(ac);
+        }
+        for (GameObject i : items) {
+            stage.addActor(i);
         }
         MenuPause = new PauseMenu();
 

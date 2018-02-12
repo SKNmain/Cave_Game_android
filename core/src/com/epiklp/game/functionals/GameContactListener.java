@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.actors.weapons.Weapon;
 
 /**
@@ -70,15 +71,20 @@ public class GameContactListener implements ContactListener {
             return;
         }
         //Missile gets wall
+        //If inside is only temporarry
         if (a.getBody().getUserData() instanceof Weapon && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Weapon weapon = (Weapon) a.getBody().getUserData();
-            weapon.setToDelete();
-            weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
+            if (weapon instanceof FireBall) {
+                weapon.setToDelete();
+                weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
+            }
             return;
         } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Weapon) {
             Weapon weapon = (Weapon) b.getBody().getUserData();
-            weapon.setToDelete();
-            weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
+            if (weapon instanceof FireBall) {
+                weapon.setToDelete();
+                weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
+            }
             return;
         }
 

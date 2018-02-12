@@ -6,169 +6,253 @@ filter: Nearest,Nearest
 repeat: none
 fireball
   rotate: false
-  xy: 308, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
-fireball
-  rotate: false
-  xy: 342, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 2
-fireball
-  rotate: false
-  xy: 376, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 3
-fireball
-  rotate: false
-  xy: 410, 2
+  xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
-fireball
-  rotate: false
-  xy: 444, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
 fireball
   rotate: false
   xy: 478, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 6
+  index: 1
 fireball
   rotate: false
   xy: 512, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 7
+  index: 2
 fireball
   rotate: false
   xy: 546, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 8
-rat
+  index: 3
+fireball
   rotate: false
-  xy: 2, 2
+  xy: 614, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
+fireball
+  rotate: false
+  xy: 648, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
+fireball
+  rotate: false
+  xy: 682, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+fireball
+  rotate: false
+  xy: 988, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
 rat
   rotate: false
-  xy: 614, 2
+  xy: 750, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 rat
   rotate: false
-  xy: 614, 2
+  xy: 750, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 rat
   rotate: false
-  xy: 648, 2
+  xy: 784, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 rat
   rotate: false
-  xy: 682, 2
+  xy: 818, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 rat
   rotate: false
-  xy: 716, 2
+  xy: 852, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
+rat
+  rotate: false
+  xy: 886, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
 sejminar
   rotate: false
-  xy: 36, 2
+  xy: 716, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
-spider
-  rotate: false
-  xy: 70, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 0
-spider
-  rotate: false
-  xy: 70, 2
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 1
 spider
   rotate: false
   xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 2
+  index: 0
+spider
+  rotate: false
+  xy: 104, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
 spider
   rotate: false
   xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
+  index: 2
 spider
   rotate: false
   xy: 172, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 4
+  index: 3
 spider
   rotate: false
   xy: 206, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 5
+  index: 4
 spider
   rotate: false
   xy: 240, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 6
+  index: 5
 spider
   rotate: false
   xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
+  index: 6
+spider
+  rotate: false
+  xy: 308, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
   index: 7
+staff
+  rotate: false
+  xy: 954, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 sword
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+torch
+  rotate: false
+  xy: 70, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 6
+torch
+  rotate: false
+  xy: 342, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 0
+torch
+  rotate: false
+  xy: 376, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+torch
+  rotate: false
+  xy: 376, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 10
+torch
+  rotate: false
+  xy: 410, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+torch
+  rotate: false
+  xy: 410, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 9
+torch
+  rotate: false
+  xy: 444, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+torch
   rotate: false
   xy: 580, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
+  index: 4
+torch
+  rotate: false
+  xy: 580, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 8
+torch
+  rotate: false
+  xy: 920, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+torch
+  rotate: false
+  xy: 920, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 7
