@@ -1,4 +1,4 @@
-package com.epiklp.game.Functional;
+package com.epiklp.game.functionals.b2d;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -56,18 +56,20 @@ public class TheBox {
         initRayHandler();
     }
 
-    public static Body createBody(float x, float y, boolean isStatic){
+    //it need a position in PIXEL not in meter from box2d!
+    //so if you want to create a Body with position from body.getPosition, you must multiply it by (* Cave.PPM / Cave.SCALE)
+    public static Body createBody(float x, float y, boolean isStatic) {
         Body pBody;
         BodyDef def = new BodyDef();
         if (isStatic) def.type = BodyDef.BodyType.StaticBody;
         else def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(x / Cave.PPM, y / Cave.PPM);
+        def.position.set(x / Cave.PPM * Cave.SCALE, y / Cave.PPM * Cave.SCALE);
         def.fixedRotation = true;
         pBody = world.createBody(def);
         return pBody;
     }
 
-    public static Body createStaticBodyForMapBuild(Shape shape, Object userData){
+    public static Body createStaticBodyForMapBuild(Shape shape, Object userData) {
         Body pBody;
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.StaticBody;
@@ -79,8 +81,8 @@ public class TheBox {
     }
 
     public static void createBoxShape(Body body, float width, float height, float density, float friction) {
-        PolygonShape shape  = new PolygonShape();
-        FixtureDef   fixDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
         fixDef.shape = shape;
         fixDef.density = density;
@@ -92,8 +94,8 @@ public class TheBox {
     }
 
     public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter) {
-        PolygonShape shape  = new PolygonShape();
-        FixtureDef   fixDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
         fixDef.shape = shape;
         fixDef.density = 0;
@@ -104,8 +106,8 @@ public class TheBox {
     }
 
     public static void createBoxSensor(Body body, float width, float height) {
-        PolygonShape shape  = new PolygonShape();
-        FixtureDef   fixDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
         fixDef.shape = shape;
         fixDef.density = 0;
@@ -114,9 +116,10 @@ public class TheBox {
         body.createFixture(fixDef);
         shape.dispose();
     }
+
     public static void createBoxSensor(Body body, float width, float height, Vector2 shiftFromCenter, Object userData) {
-        PolygonShape shape  = new PolygonShape();
-        FixtureDef   fixDef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fixDef = new FixtureDef();
         shape.setAsBox(width / Cave.PPM, height / Cave.PPM, new Vector2(shiftFromCenter.x / Cave.PPM, shiftFromCenter.y / Cave.PPM), 0);
         fixDef.shape = shape;
         fixDef.density = 0;
@@ -126,6 +129,7 @@ public class TheBox {
         fix.setUserData(userData);
         shape.dispose();
     }
+
     public static void destroyWorld() {
         if (rayHandler != null) {
             rayHandler.dispose();
@@ -139,11 +143,11 @@ public class TheBox {
     public static void initRayHandler() {
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
-        rayHandler = new RayHandler(TheBox.world);
+        rayHandler = new RayHandler(BodyCreator.TheBox.world);
         rayHandler.setAmbientLight(1); //0.2f
         rayHandler.setCulling(true);
         rayHandler.setShadows(true);
-        Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
+        Light.setGlobalContactFilter(BodyCreator.TheBox.CATEGORY_LIGHT, (short) 0, BodyCreator.TheBox.MASK_LIGHT);
     }
 
     public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y) {
@@ -157,27 +161,46 @@ public class TheBox {
 
     //chamska metoda, do zmiany, jak wymyślę lepszą....
     //Jednak sama deklaracja raczej zostanie
-    public static void cleanWorld(){
+    public static void cleanWorld() {
         world = new World(new Vector2(0, -25f), true);
         initRayHandler();
     }
 
     //It should be check world.isLocket before you use it
     public static void destroyBody(Body body) {
-        if(!world.isLocked())
-        world.destroyBody(body);
+        if (!world.isLocked())
+            world.destroyBody(body);
     }
 
     public static void addToDeleteArray(GameObject gameObject) {
         deleteArrayGameObjects.add(gameObject);
     }
+
     public static Iterator<GameObject> getDeleteArrayIter() {
         return deleteArrayGameObjects.iterator();
     }
+
     public static void addToDeleteArrayJoints(Joint joint) {
         deleteArrayJoints.add(joint);
     }
+
     public static Iterator<Joint> getDeleteArrayIterJoins() {
         return deleteArrayJoints.iterator();
+    }
+
+
+    public static void sweepDeadBodies() {
+        if (!world.isLocked()) {
+            Iterator<Joint> j = BodyCreator.TheBox.getDeleteArrayIterJoins();
+            while (j.hasNext()) {
+                world.destroyJoint(j.next());
+                j.remove();
+            }
+            Iterator<GameObject> i = BodyCreator.TheBox.getDeleteArrayIter();
+            while (i.hasNext()) {
+                i.next().destroy();
+                i.remove();
+            }
+        }
     }
 }

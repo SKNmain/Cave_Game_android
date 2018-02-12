@@ -1,4 +1,4 @@
-package com.epiklp.game.Functional;
+package com.epiklp.game.functionals;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
-import com.epiklp.game.actors.weapons.Bullet;
+import com.epiklp.game.actors.weapons.Weapon;
 
 /**
  * Created by Asmei on 2017-12-02.
@@ -50,35 +50,35 @@ public class GameContactListener implements ContactListener {
         }
 
         //Shooting
-        if (!bIsSen && a.getBody().getUserData() instanceof Bullet && b.getBody().getUserData() instanceof Enemy) {
-            Bullet bullet = (Bullet) a.getBody().getUserData();
-            if (bullet.getGameCharacter() instanceof Hero) {
+        if (!bIsSen && a.getBody().getUserData() instanceof Weapon && b.getBody().getUserData() instanceof Enemy) {
+            Weapon weapon = (Weapon) a.getBody().getUserData();
+            if (weapon.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) b.getBody().getUserData();
-                enemy.setActLife(-bullet.getHitPoint());
-                enemy.setAttacked(true).setHeroLastPos(bullet.getGameCharacter().getBody().getPosition());
-                bullet.setToDelete();
+                enemy.setActLife(-weapon.getHitPoint());
+                enemy.setAttacked(true).setHeroLastPos(weapon.getGameCharacter().getBody().getPosition());
+                weapon.setToDelete();
             }
             return;
-        } else if (!aIsSen && b.getBody().getUserData() instanceof Bullet && a.getBody().getUserData() instanceof Enemy) {
-            Bullet bullet = (Bullet) b.getBody().getUserData();
-            if (bullet.getGameCharacter() instanceof Hero) {
+        } else if (!aIsSen && b.getBody().getUserData() instanceof Weapon && a.getBody().getUserData() instanceof Enemy) {
+            Weapon weapon = (Weapon) b.getBody().getUserData();
+            if (weapon.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) a.getBody().getUserData();
-                enemy.setActLife(-bullet.getHitPoint());
-                enemy.setAttacked(true).setHeroLastPos(bullet.getGameCharacter().getBody().getPosition());
-                bullet.setToDelete();
+                enemy.setActLife(-weapon.getHitPoint());
+                enemy.setAttacked(true).setHeroLastPos(weapon.getGameCharacter().getBody().getPosition());
+                weapon.setToDelete();
             }
             return;
         }
         //Missile gets wall
-        if (a.getBody().getUserData() instanceof Bullet && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
-            Bullet bullet = (Bullet) a.getBody().getUserData();
-            bullet.setToDelete();
-            bullet.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
+        if (a.getBody().getUserData() instanceof Weapon && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
+            Weapon weapon = (Weapon) a.getBody().getUserData();
+            weapon.setToDelete();
+            weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
             return;
-        } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Bullet) {
-            Bullet bullet = (Bullet) b.getBody().getUserData();
-            bullet.setToDelete();
-            bullet.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
+        } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Weapon) {
+            Weapon weapon = (Weapon) b.getBody().getUserData();
+            weapon.setToDelete();
+            weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short)0;
             return;
         }
 

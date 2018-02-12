@@ -1,4 +1,4 @@
-package com.epiklp.game.Game;
+package com.epiklp.game.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -16,16 +16,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.Controller;
-import com.epiklp.game.Functional.GameContactListener;
-import com.epiklp.game.Functional.MapBuilder;
-import com.epiklp.game.Functional.TheBox;
-import com.epiklp.game.Functional.UI;
-import com.epiklp.game.actors.GameObject;
+import com.epiklp.game.functionals.Controller;
+import com.epiklp.game.functionals.GameContactListener;
+import com.epiklp.game.functionals.MapBuilder;
+import com.epiklp.game.functionals.b2d.TheBox;
+import com.epiklp.game.functionals.UI;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
-
-import java.util.Iterator;
 
 /**
  * Created by epiklp on 27.11.17.
@@ -95,7 +92,7 @@ public class GameScreen implements Screen {
 
     public void update(float delta) {
         TheBox.world.step(1 / 60f, 6, 2);
-        sweepDeadBodies();
+        TheBox.sweepDeadBodies();
 
         TheBox.rayHandler.update();
         inputUpdate();
@@ -103,7 +100,7 @@ public class GameScreen implements Screen {
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
         TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
-        ui.update(hero.actLife(), hero.actMagic());
+        ui.update(hero.actLife, hero.actMana);
 
     }
 
@@ -178,7 +175,8 @@ public class GameScreen implements Screen {
         }
 
         if (controller.isAttackPressed()) {
-            hero.shoot();
+            //hero.shoot();
+            hero.meleeAttack();
         }
 
         if (controller.isHomePresed()) {
@@ -217,13 +215,5 @@ public class GameScreen implements Screen {
         MenuPause.dispose();
     }
 
-    public void sweepDeadBodies() {
-        if (!TheBox.world.isLocked()) {
-            Iterator<GameObject> i = TheBox.getDeleteArrayIter();
-            while (i.hasNext()) {
-                i.next().destroy();
-                i.remove();
-            }
-        }
-    }
+
 }

@@ -1,15 +1,12 @@
-package com.epiklp.game.Functional;
+package com.epiklp.game.functionals;
 
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -17,10 +14,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
 import com.epiklp.game.actors.characters.Enemy;
-import com.epiklp.game.actors.characters.FlameDemon;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.characters.Rat;
 import com.epiklp.game.actors.characters.Spider;
+import com.epiklp.game.functionals.b2d.BodyCreator;
 
 
 public class MapBuilder {
@@ -28,7 +25,7 @@ public class MapBuilder {
         MapObject hero = objects.get("hero");
         if (hero instanceof RectangleMapObject) {
             RectangleMapObject rect = ((RectangleMapObject) hero);
-            return new Hero(rect.getRectangle().x* Cave.SCALE, rect.getRectangle().y* Cave.SCALE);
+            return new Hero(rect.getRectangle().x, rect.getRectangle().y);
         }
         return new Hero(0, 0);
     }
@@ -39,9 +36,9 @@ public class MapBuilder {
             if(object instanceof RectangleMapObject){
                 RectangleMapObject en = ((RectangleMapObject) object);
                 if(Utils.equalsWithNulls(object.getName(), Rat.class.getSimpleName())){
-                    enemies.add(new Rat(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
+                    enemies.add(new Rat(en.getRectangle().x, en.getRectangle().y));
                 }else if(Utils.equalsWithNulls(object.getName(), Spider.class.getSimpleName())){
-                    enemies.add(new Spider(en.getRectangle().x* Cave.SCALE, en.getRectangle().y* Cave.SCALE));
+                    enemies.add(new Spider(en.getRectangle().x , en.getRectangle().y));
                 }
             }
 
@@ -57,14 +54,14 @@ public class MapBuilder {
             } else if (object instanceof RectangleMapObject) {
                 shape = getRectangle((RectangleMapObject) object);
                 if(Utils.equalsWithNulls(object.getName(), "CLIMBING_WALL")){
-                    bodies.add(TheBox.createStaticBodyForMapBuild(shape, "CLIMBING_WALL"));
+                    bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "CLIMBING_WALL"));
                     shape.dispose();
                     continue;
                 }
             } else {
                 continue;
             }
-            bodies.add(TheBox.createStaticBodyForMapBuild(shape, MapBuilder.class.getSimpleName()));
+            bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, MapBuilder.class.getSimpleName()));
             shape.dispose();
         }
         return bodies;

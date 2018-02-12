@@ -1,19 +1,15 @@
-package com.epiklp.game.Game;
+package com.epiklp.game.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.Assets;
-import com.epiklp.game.TextureGame;
+import com.epiklp.game.functionals.Assets;
 
 
 class CreditsScreen extends Stage {

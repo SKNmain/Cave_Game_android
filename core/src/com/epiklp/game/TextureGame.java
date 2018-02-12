@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.epiklp.game.Functional.Assets;
+import com.epiklp.game.functionals.Assets;
 
 /**
  * Created by epiklp on 18.11.17.

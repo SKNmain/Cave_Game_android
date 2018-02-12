@@ -3,8 +3,9 @@ package com.epiklp.game.actors.characters;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.epiklp.game.Functional.Assets;
-import com.epiklp.game.Functional.TheBox;
+import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.b2d.BodyCreator;
+import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
  * Created by Asmei on 2017-11-29.
@@ -13,9 +14,9 @@ import com.epiklp.game.Functional.TheBox;
 public class FlameDemon extends Enemy {
     public FlameDemon(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.flameDemon)), 44, 57);
-        body = TheBox.createBody(x, y, false);
-        TheBox.createBoxShape(body, 30f, 50f, 25f, 0);
-        TheBox.createBoxSensor(body, 200f, 90f, new Vector2(0, 45f), PATROL_SENSOR);
+        body = BodyCreator.createBody(x, y, false);
+        BodyCreator.createBoxShape(body, 30f, 50f, 25f, 0);
+        BodyCreator.createBoxSensor(body, 200f, 90f, new Vector2(0, 45f), PATROL_SENSOR);
         body.setUserData(this);
         body.setGravityScale(50f);
 

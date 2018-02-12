@@ -1,9 +1,8 @@
-package com.epiklp.game.Game;
+package com.epiklp.game.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,10 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.Assets;
-import com.epiklp.game.Functional.Controller;
-import com.epiklp.game.Functional.TheBox;
-import com.epiklp.game.Functional.UI;
+import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.Controller;
+import com.epiklp.game.functionals.b2d.BodyCreator;
+import com.epiklp.game.functionals.b2d.TheBox;
+import com.epiklp.game.functionals.UI;
 import com.epiklp.game.actors.characters.Hero;
 
 
@@ -102,22 +102,22 @@ public class Menu implements Screen {
 
 
         b2dr = new Box2DDebugRenderer();
-        Body floor = TheBox.createBody(0, 50, true);
+        Body floor = BodyCreator.createBody(0, 50, true);
         floor.setUserData("floor");
         //Zmieniłem funkcję do tworzenia BoxShape - musiałem dodać tarcie, wywaliłem tymczasowo maski, w sumie skróciło się
-        TheBox.createBoxShape(floor, Cave.WIDTH, 2, 0, 0);
-        TheBox.createBoxShape(floor, 2, Cave.HEIGHT, 0, 0);
+        BodyCreator.createBoxShape(floor, Cave.WIDTH, 2, 0, 0);
+        BodyCreator.createBoxShape(floor, 2, Cave.HEIGHT, 0, 0);
 
-        creditBody = TheBox.createBody(260, 130, true);
-        TheBox.createBoxSensor(creditBody, 60, 50);
+        creditBody = BodyCreator.createBody(260, 130, true);
+        BodyCreator.createBoxSensor(creditBody, 60, 50);
         creditBody.setUserData("credit");
 
-        shopBody = TheBox.createBody(600, 130, true);
-        TheBox.createBoxSensor(shopBody, 80, 50);
+        shopBody = BodyCreator.createBody(600, 130, true);
+        BodyCreator.createBoxSensor(shopBody, 80, 50);
         shopBody.setUserData("shop");
 
-        caveBody = TheBox.createBody(1020, 130, true);
-        TheBox.createBoxSensor(caveBody, 40, 50);
+        caveBody = BodyCreator.createBody(1020, 130, true);
+        BodyCreator.createBoxSensor(caveBody, 40, 50);
         caveBody.setUserData("cave");
 
         //Multi Events

@@ -5,25 +5,27 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.Assets;
-import com.epiklp.game.Functional.TheBox;
+import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.b2d.BodyCreator;
+import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.actors.characters.GameCharacter;
 
 /**
  * Created by epiklp on 29.11.17.
  */
 
-public class FireBall extends Bullet {
-    private float time;
+public class FireBall extends Weapon {
 
-    public FireBall(float x, float y, int hitPoint, GameCharacter gameCharacterRef, boolean turn) {
-        super(new Sprite(Assets.manager.get(Assets.textureAtlas).createSprite("fireball")), 25, 30, hitPoint, gameCharacterRef);
+    public FireBall(GameCharacter gameCharacterRef, int hitPoints, boolean turn) {
+        super(Assets.manager.get(Assets.textureAtlas).createSprite("fireball"), 25, 30, hitPoints, gameCharacterRef);
         this.turn = turn;
         time = 5f;
+        float x = gameCharacterRef.getBody().getPosition().x * Cave.PPM / Cave.SCALE;
+        float y = gameCharacterRef.getBody().getPosition().y * Cave.PPM / Cave.SCALE;
 
-        body = TheBox.createBody(5, 0, false);
-        TheBox.createBoxShape(body, 25f, 30f, 0.1f, 0);
-        body.setTransform(x + (turn ? 2 : -2), y, 0);
+        body = BodyCreator.createBody((x + (turn ? 14 : -14)), y, false);
+        BodyCreator.createBoxShape(body, 25f, 30f, 0.1f, 0);
+        //body.setTransform(x + (turn ? 2 : -2), y, 0);
         body.setGravityScale(0);
         body.setUserData(this);
         body.setBullet(true);
@@ -37,11 +39,8 @@ public class FireBall extends Bullet {
 
     @Override
     public void act(float delta) {
-        time -= delta;
+        super.act(delta);
         animate(delta, STATE.ITEM);
-        if (time < 0) {
-            setToDelete();
-        }
     }
 
     @Override

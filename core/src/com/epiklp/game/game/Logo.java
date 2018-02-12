@@ -1,11 +1,11 @@
-package com.epiklp.game.Game;
+package com.epiklp.game.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.Assets;
+import com.epiklp.game.functionals.Assets;
 
 /**
  * Created by epiklp on 08.01.18.

@@ -8,17 +8,26 @@ import com.epiklp.game.actors.characters.GameCharacter;
  * Created by Asmei on 2017-12-04.
  */
 
-public abstract class Bullet extends GameObject {
+public abstract class Weapon extends GameObject {
 
+    protected float time;
     protected GameCharacter gameCharacter;
     protected int hitPoint;
 
-    public Bullet(Sprite sprite, float sizeX, float sizeY, int hitPoint, GameCharacter gameCharacterRef) {
+    public Weapon(Sprite sprite, float sizeX, float sizeY, int hitPoint, GameCharacter gameCharacterRef) {
         super(sprite, sizeX, sizeY);
         this.hitPoint = hitPoint;
         this.gameCharacter = gameCharacterRef;
     }
 
+    @Override
+    public void act(float delta){
+        super.act(delta);
+        time -= delta;
+        if (time < 0) {
+            setToDelete();
+        }
+    }
     public int getHitPoint() {
         return hitPoint;
     }

@@ -2,7 +2,6 @@ package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.epiklp.game.Functional.AnimationCore;
 
 /**
  * Created by epiklp on 19.11.17.

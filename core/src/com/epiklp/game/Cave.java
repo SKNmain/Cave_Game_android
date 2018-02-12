@@ -3,12 +3,11 @@ package com.epiklp.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.epiklp.game.Functional.Assets;
-import com.epiklp.game.Functional.JsonFunction;
-import com.epiklp.game.Functional.Sound;
-import com.epiklp.game.Functional.TheBox;
-import com.epiklp.game.Game.GameScreen;
-import com.epiklp.game.Game.Logo;
+import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.JsonFunction;
+import com.epiklp.game.functionals.Sound;
+import com.epiklp.game.functionals.b2d.TheBox;
+import com.epiklp.game.game.GameScreen;
 
 
 public class Cave extends Game {
@@ -36,7 +35,7 @@ public class Cave extends Game {
         Sound.initialize();
         JsonFunction.initzialie();
         FILE = Gdx.files.local("option.json");
-        if(!FILE.exists())
+        if(FILE.exists())
             JsonFunction.Create();
         else
             JsonFunction.Read();
@@ -47,9 +46,9 @@ public class Cave extends Game {
         TheBox.initWorld();
 
 
-        this.setScreen(new Logo(this));
+        //this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        //this.setScreen(new GameScreen(this));
+        this.setScreen(new GameScreen(this));
 
     }
 
@@ -75,7 +74,7 @@ public class Cave extends Game {
 
     @Override
     public void dispose() {
-        super.dispose();
         Assets.dispose();
+        super.dispose();
     }
 }

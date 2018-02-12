@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.epiklp.game.Cave;
-import com.epiklp.game.Functional.AnimationCore;
-import com.epiklp.game.Functional.TheBox;
+import com.epiklp.game.functionals.AnimationCore;
+import com.epiklp.game.functionals.b2d.TheBox;
 
 import box2dLight.Light;
 
@@ -24,6 +24,7 @@ public abstract class GameObject extends Actor {
     //true - "watching" to right side of screen
     protected boolean turn = true;
     protected float elapsedTime = 0;
+
     protected Body body;
     protected Sprite sprite;
     protected AnimationCore animator;
@@ -41,6 +42,7 @@ public abstract class GameObject extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         sprite.setFlip(!turn, false);
+        sprite.setRotation((float)Math.toDegrees(body.getAngle()));
         sprite.setPosition(body.getPosition().x * Cave.PPM - sprite.getWidth() / 2, body.getPosition().y * Cave.PPM - sprite.getHeight() / 2);
         sprite.draw(batch);
     }

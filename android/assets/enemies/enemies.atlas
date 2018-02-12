@@ -1,61 +1,61 @@
 
 enemies.png
-size: 128,256
+size: 1024,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 fireball
   rotate: false
-  xy: 36, 138
+  xy: 308, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 fireball
   rotate: false
-  xy: 70, 172
+  xy: 342, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 fireball
   rotate: false
-  xy: 2, 70
+  xy: 376, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 fireball
   rotate: false
-  xy: 36, 104
+  xy: 410, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 fireball
   rotate: false
-  xy: 70, 138
+  xy: 444, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 fireball
   rotate: false
-  xy: 2, 36
+  xy: 478, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 fireball
   rotate: false
-  xy: 36, 70
+  xy: 512, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 fireball
   rotate: false
-  xy: 70, 104
+  xy: 546, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -66,95 +66,109 @@ rat
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
+  index: 5
+rat
+  rotate: false
+  xy: 614, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
   index: 0
 rat
   rotate: false
-  xy: 2, 2
+  xy: 614, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 rat
   rotate: false
-  xy: 36, 36
+  xy: 648, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 rat
   rotate: false
-  xy: 70, 70
+  xy: 682, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 rat
+  rotate: false
+  xy: 716, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+sejminar
   rotate: false
   xy: 36, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: 3
-rat
-  rotate: false
-  xy: 70, 36
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
+  index: -1
 spider
   rotate: false
-  xy: 2, 206
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 spider
   rotate: false
-  xy: 2, 206
+  xy: 70, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 spider
   rotate: false
-  xy: 2, 172
+  xy: 104, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 spider
   rotate: false
-  xy: 36, 206
+  xy: 138, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 spider
   rotate: false
-  xy: 2, 138
+  xy: 172, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 spider
   rotate: false
-  xy: 36, 172
+  xy: 206, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 spider
   rotate: false
-  xy: 70, 206
+  xy: 240, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 spider
   rotate: false
-  xy: 2, 104
+  xy: 274, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
+sword
+  rotate: false
+  xy: 580, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

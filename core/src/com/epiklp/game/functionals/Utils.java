@@ -1,4 +1,4 @@
-package com.epiklp.game.Functional;
+package com.epiklp.game.functionals;
 
 /**
  * Created by Asmei on 2018-02-05.

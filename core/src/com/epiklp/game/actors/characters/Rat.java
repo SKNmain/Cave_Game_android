@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.epiklp.game.Functional.Assets;
-import com.epiklp.game.Functional.TheBox;
+import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.b2d.BodyCreator;
 
 /**
  * Created by Asmei on 2017-11-29.
@@ -19,9 +19,9 @@ public class Rat extends Enemy {
     public Rat(float x, float y) {
         super(Assets.manager.get(Assets.textureAtlas).createSprite("rat", 0), 33, 32);
 
-        body = TheBox.createBody(x, y, false);
-        TheBox.createBoxShape(body, 30f, 20f, 25f, 0);
-        TheBox.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), PATROL_SENSOR);
+        body = BodyCreator.createBody(x, y, false);
+        BodyCreator.createBoxShape(body, 30f, 20f, 1f, 0);
+        BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), PATROL_SENSOR);
         body.setUserData(this);
         body.setGravityScale(30f);
 
