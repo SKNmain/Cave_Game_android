@@ -102,21 +102,20 @@ public class Menu implements Screen {
 
 
         b2dr = new Box2DDebugRenderer();
-        Body floor = BodyCreator.createBody(0, 50, true);
+        Body floor = BodyCreator.createBody(0, 25, true);
         floor.setUserData("floor");
-        //Zmieniłem funkcję do tworzenia BoxShape - musiałem dodać tarcie, wywaliłem tymczasowo maski, w sumie skróciło się
         BodyCreator.createBoxShape(floor, Cave.WIDTH, 2, 0, 0);
         BodyCreator.createBoxShape(floor, 2, Cave.HEIGHT, 0, 0);
 
-        creditBody = BodyCreator.createBody(260, 130, true);
-        BodyCreator.createBoxSensor(creditBody, 60, 50);
+        creditBody = BodyCreator.createBody(130, 75, true);
+        BodyCreator.createBoxSensor(creditBody, 60, 60);
         creditBody.setUserData("credit");
 
-        shopBody = BodyCreator.createBody(600, 130, true);
+        shopBody = BodyCreator.createBody(300, 75, true);
         BodyCreator.createBoxSensor(shopBody, 80, 50);
         shopBody.setUserData("shop");
 
-        caveBody = BodyCreator.createBody(1020, 130, true);
+        caveBody = BodyCreator.createBody(520, 75, true);
         BodyCreator.createBoxSensor(caveBody, 40, 50);
         caveBody.setUserData("cave");
 
