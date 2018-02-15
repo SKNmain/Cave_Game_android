@@ -60,7 +60,6 @@ public class Menu implements Screen {
 
     private PauseMenu MenuPause;
 
-    private UI ui;
 
     public Menu(final Cave cave) {
         state = STATE.GAME;
@@ -128,7 +127,6 @@ public class Menu implements Screen {
         inputMultiplexer.addProcessor(controller);
         inputMultiplexer.addProcessor(creditsScreen);
 
-        ui = new UI();
 
         TheBox.world.setContactListener(new ContactListener() {
             @Override
@@ -207,8 +205,9 @@ public class Menu implements Screen {
             stage.act();
             stage.draw();
             controller.draw();
-            ui.draw();
+            cave.ui.draw();
             update(Gdx.graphics.getDeltaTime());
+            cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana);
             //TheBox.world.setContactListener(myContactListner);
         } else if (state.equals(STATE.CREDIT)) {
             creditsScreen.draw();

@@ -11,7 +11,7 @@ import com.epiklp.game.Cave;
 
 
 public class Controller extends Stage {
-    private final float BUTTON_SIZE = Cave.WIDTH / 10;
+    private final float BUTTON_SIZE = 128;
     private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed, enterPresed;
     private Table tabRight, tabLeft;
     private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, enter;

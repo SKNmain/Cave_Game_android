@@ -17,6 +17,7 @@ public class UI extends Stage {
     private Label.LabelStyle labelStyle;
     private Image lifeTexture, magicTexture, timeTexture;
     private Image statusBelt;
+    private Image sword, staff;
     private int length;
 
 
@@ -56,11 +57,13 @@ public class UI extends Stage {
     }
 
 
-    public void update(int life, int magic) {
+    public void update(int maxLife, int life,int maxMagic, int magic) {
         if (life <= 0) life = 1;
         if (magic <= 0) magic = 1;
-        lifeTexture.setWidth(length);
-        magicTexture.setWidth(length);
+        float b;
+
+        lifeTexture.setWidth((life/(float)maxLife)*100 + 1);
+        magicTexture.setWidth((magic/(float)maxMagic)*100 + 1);
         text.setText("FPS:" + Gdx.graphics.getFramesPerSecond());
     }
 }

@@ -15,7 +15,7 @@ import com.epiklp.game.functionals.Assets;
 public class PauseMenu extends Stage {
 
     private Image pauseWindow, buttonExit, buttonRestart, buttonResume;
-    public boolean pressExit, pressRestart, presssResume;
+    public boolean pressExit, pressRestart, presssResume, debugBox, Sound, Effect;
     private Table tbl;
 
     public PauseMenu() {

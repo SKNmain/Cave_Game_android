@@ -6,19 +6,20 @@ import com.badlogic.gdx.files.FileHandle;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.JsonFunction;
 import com.epiklp.game.functionals.Sound;
+import com.epiklp.game.functionals.UI;
 import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.game.GameScreen;
+import com.epiklp.game.game.Logo;
 
 
 public class Cave extends Game {
-    public static boolean MUSIC = true;
-    public static boolean EFFECTS = true;
     public static String LANGUAGE = "en";
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
     public static final int PPM = 32;
     public static final float SCALE = 2;
     public static FileHandle FILE;
+    public static UI ui;
 
     @Override
     public void create() {
@@ -35,20 +36,21 @@ public class Cave extends Game {
         Sound.initialize();
         JsonFunction.initzialie();
         FILE = Gdx.files.local("option.json");
-        if(FILE.exists())
+        if(!FILE.exists())
             JsonFunction.Create();
         else
             JsonFunction.Read();
         JsonFunction.edit("Music");
         Sound.play("menuMusic");
         JsonFunction.updateJSON();
+        ui = new UI();
         //Create physics
         TheBox.initWorld();
 
 
-        //this.setScreen(new Logo(this));
+        this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        this.setScreen(new GameScreen(this));
+        //this.setScreen(new GameScreen(this));
 
     }
 
@@ -74,6 +76,7 @@ public class Cave extends Game {
 
     @Override
     public void dispose() {
+        ui.dispose();
         Assets.dispose();
         super.dispose();
     }

@@ -71,6 +71,9 @@ public class Assets {
     public static final AssetDescriptor<Texture> statusHp = new AssetDescriptor<Texture>("UI/status_hp.png", Texture.class);
     public static final AssetDescriptor<Texture> statusMana = new AssetDescriptor<Texture>("UI/status_mana.png", Texture.class);
     public static final AssetDescriptor<Texture> statusTime = new AssetDescriptor<Texture>("UI/status_time.png", Texture.class);
+    public static final AssetDescriptor<Texture> uiSword = new AssetDescriptor<Texture>("UI/sword.png", Texture.class);
+    public static final AssetDescriptor<Texture> uiStaff = new AssetDescriptor<Texture>("UI/staff.png", Texture.class);
+    public static final AssetDescriptor<Texture> uiBag = new AssetDescriptor<Texture>("UI/bag.png", Texture.class);
     /*******************************************/
 
 
@@ -119,6 +122,9 @@ public class Assets {
         manager.load(statusHp);
         manager.load(statusMana);
         manager.load(statusTime);
+        manager.load(uiStaff);
+        manager.load(uiSword);
+        manager.load(uiBag);
 
 
         String tmp = "";

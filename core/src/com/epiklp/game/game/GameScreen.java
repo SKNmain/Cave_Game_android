@@ -45,7 +45,6 @@ public class GameScreen implements Screen {
     private float horizontalForce = 0;
 
     //texture && sprite && font && map
-    private UI ui;
     private OrthogonalTiledMapRenderer tmr;
     private TiledMap map;
     private Viewport viewport;
@@ -68,7 +67,7 @@ public class GameScreen implements Screen {
         gameContactListener = new GameContactListener();
         controller = new Controller(false);
         Gdx.input.setInputProcessor(new InputMultiplexer());
-        ui = new UI();
+
 
         b2dr = new Box2DDebugRenderer();
         map = new TmxMapLoader().load("Map/tmp.tmx"); //mapa  odpowiednimi wymiarami mieniona 32x32
@@ -107,7 +106,7 @@ public class GameScreen implements Screen {
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
         TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
-        ui.update(hero.actLife, hero.actMana);
+        cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana);
 
     }
 
@@ -124,7 +123,7 @@ public class GameScreen implements Screen {
             stage.draw();
             TheBox.rayHandler.render();
             controller.draw();
-            ui.draw();
+            cave.ui.draw();
             b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
         } else {
@@ -215,7 +214,6 @@ public class GameScreen implements Screen {
     public void dispose() {
         TheBox.destroyWorld();
         b2dr.dispose();
-        ui.dispose();
         controller.dispose();
         tmr.dispose();
         map.dispose();
