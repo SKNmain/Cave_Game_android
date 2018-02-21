@@ -23,14 +23,11 @@ public class Sound {
             menuMusic.play();
     }
 
-    public static void pause(String music) {
+    public static void update(String music)
+    {
         if(music.equals("menuMusic") && MUSIC == true )
-            menuMusic.pause();
-    }
-
-
-    public static void stop(String music) {
-        if(music.equals("menuMusic"))
+            menuMusic.play();
+        else
             menuMusic.stop();
     }
 

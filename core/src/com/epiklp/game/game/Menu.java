@@ -31,11 +31,7 @@ import com.epiklp.game.actors.characters.Hero;
  */
 
 public class Menu implements Screen {
-    private enum STATE {
-        OPTION, GAME, CREDIT, SHOP
-    }
 
-    ;
 
 
     final Cave cave;
@@ -56,13 +52,11 @@ public class Menu implements Screen {
     private Body creditBody, shopBody, caveBody;
     private CreditsScreen creditsScreen;
 
-    private STATE state;
 
-    private PauseMenu MenuPause;
-
+    //private PauseMenu MenuPause;
+    private Pause MenuPause;
 
     public Menu(final Cave cave) {
-        state = STATE.GAME;
 
         this.cave = cave;
 
@@ -119,7 +113,7 @@ public class Menu implements Screen {
         caveBody.setUserData("cave");
 
         //Multi Events
-        MenuPause = new PauseMenu();
+        MenuPause = new Pause();
         controller = new Controller(true);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
@@ -198,10 +192,11 @@ public class Menu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (state.equals(STATE.OPTION)) {
+        if (Cave.state.equals(Cave.STATE.OPTION)) {
+            stage.draw();
             MenuPause.draw();
-            updateMenu(Gdx.graphics.getDeltaTime());
-        } else if (state.equals(STATE.GAME)) {
+        //    updateMenu(Gdx.graphics.getDeltaTime());
+        } else if (Cave.state.equals(Cave.STATE.GAME)) {
             stage.act();
             stage.draw();
             controller.draw();
@@ -209,17 +204,18 @@ public class Menu implements Screen {
             update(Gdx.graphics.getDeltaTime());
             cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana);
             //TheBox.world.setContactListener(myContactListner);
-        } else if (state.equals(STATE.CREDIT)) {
+        } else if (Cave.state.equals(Cave.STATE.CREDIT)) {
             creditsScreen.draw();
             creditsScreenUpdate();
         }
-        b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
+        if(Cave.renderBox2D)
+            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
     }
 
     private void creditsScreenUpdate() {
         if (creditsScreen.isBackPress())
-            state = STATE.GAME;
+            Cave.state = Cave.STATE.GAME;
     }
 
     private void update(float delta) {
@@ -238,20 +234,20 @@ public class Menu implements Screen {
             hero.wantToIdle();
         }
 
-        if (controller.isEnterPresed()) {
+        if (controller.isSellectPresed()) {
             if (enterShop) System.out.println("weeee shoping time!!!!!!");
-            else if (enterCredit) state = STATE.CREDIT;
+            else if (enterCredit) Cave.state = Cave.STATE.CREDIT;
             else if (enterCave) System.out.println("map");
         }
 
         if (controller.isHomePresed()) {
-            pause();
+            Cave.state = Cave.STATE.OPTION;
         }
     }
 
-    public void updateMenu(float delta) {
+    /*public void updateMenu(float delta) {
         if (MenuPause.presssResume) {
-            resume();
+            Cave.state = Cave.STATE.GAME;
         }
         if (MenuPause.pressRestart) {
             //dispose();
@@ -261,7 +257,7 @@ public class Menu implements Screen {
             dispose();
             Gdx.app.exit();
         }
-    }
+    }*/
 
     @Override
     public void resize(int width, int height) {
@@ -270,12 +266,11 @@ public class Menu implements Screen {
 
     @Override
     public void pause() {
-        state = STATE.OPTION;
     }
 
     @Override
     public void resume() {
-        state = STATE.GAME;
+
     }
 
     @Override

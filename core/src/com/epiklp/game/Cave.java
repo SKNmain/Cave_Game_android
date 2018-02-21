@@ -13,6 +13,10 @@ import com.epiklp.game.game.Logo;
 
 
 public class Cave extends Game {
+    public enum STATE {
+        OPTION, GAME, CREDIT, SHOP
+    }
+    public static STATE state = STATE.GAME;
     public static String LANGUAGE = "en";
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
@@ -20,12 +24,11 @@ public class Cave extends Game {
     public static final float SCALE = 2;
     public static FileHandle FILE;
     public static UI ui;
+    public static boolean renderBox2D;
 
     @Override
     public void create() {
-
-
-
+        renderBox2D = true;
         Assets.load();
         //Assets.manager.finishLoading();
         //this.setScreen(new Logo(this));

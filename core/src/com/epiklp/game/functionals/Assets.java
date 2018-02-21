@@ -36,12 +36,6 @@ public class Assets {
 
     //Buttons
     /*******************************************/
-    public static final AssetDescriptor<Texture> leftButton = new AssetDescriptor<Texture>("button/Left.png", Texture.class);
-    public static final AssetDescriptor<Texture> rightButton = new AssetDescriptor<Texture>("button/Right.png", Texture.class);
-    public static final AssetDescriptor<Texture> attackButton = new AssetDescriptor<Texture>("button/Attack.png", Texture.class);
-    public static final AssetDescriptor<Texture> upButton = new AssetDescriptor<Texture>("button/Up.png", Texture.class);
-    public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("button/home2.png", Texture.class);
-    public static final AssetDescriptor<Texture> goButton = new AssetDescriptor<Texture>("button/go.png", Texture.class);
     public static final AssetDescriptor<Texture> pauseWindow = new AssetDescriptor<Texture>("PauseMenu/window.png", Texture.class);
     public static final AssetDescriptor<Texture> restartButton = new AssetDescriptor<Texture>("PauseMenu/button_restart.png", Texture.class);
     public static final AssetDescriptor<Texture> resumeButton = new AssetDescriptor<Texture>("PauseMenu/button_resume.png", Texture.class);
@@ -51,8 +45,27 @@ public class Assets {
     public static final AssetDescriptor<Texture> continueButton = new AssetDescriptor<Texture>("MenuButtons/button_continue.png", Texture.class);
     public static final AssetDescriptor<Texture> creditButton = new AssetDescriptor<Texture>("MenuButtons/button_credit.png", Texture.class);
     public static final AssetDescriptor<Texture> enterButton = new AssetDescriptor<Texture>("button/E.png", Texture.class);
-
     /*******************************************/
+
+    //ControlerButtons
+    /*******************************************/
+    public static final AssetDescriptor<Texture> sellectButton = new AssetDescriptor<Texture>("ControlerButtons/sellect.png", Texture.class);
+    public static final AssetDescriptor<Texture> leftButton = new AssetDescriptor<Texture>("ControlerButtons/Left.png", Texture.class);
+    public static final AssetDescriptor<Texture> rightButton = new AssetDescriptor<Texture>("ControlerButtons/Right.png", Texture.class);
+    public static final AssetDescriptor<Texture> attackButton = new AssetDescriptor<Texture>("ControlerButtons/Attack.png", Texture.class);
+    public static final AssetDescriptor<Texture> upButton = new AssetDescriptor<Texture>("ControlerButtons/Up.png", Texture.class);
+    public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("ControlerButtons/home2.png", Texture.class);
+    /*******************************************/
+
+    //PauseButtons
+    /*******************************************/
+    public static final AssetDescriptor<Texture> exit = new AssetDescriptor<Texture>("PauseMenuButtons/Exit.png", Texture.class);
+    public static final AssetDescriptor<Texture> on = new AssetDescriptor<Texture>("PauseMenuButtons/ON.png", Texture.class);
+    public static final AssetDescriptor<Texture> off = new AssetDescriptor<Texture>("PauseMenuButtons/OFF.png", Texture.class);
+    public static final AssetDescriptor<Texture> resume = new AssetDescriptor<Texture>("PauseMenuButtons/resume.png", Texture.class);
+    public static final AssetDescriptor<Texture> render = new AssetDescriptor<Texture>("PauseMenuButtons/Box2D.png", Texture.class);
+    /*******************************************/
+
 
     //menu
     /*******************************************/
@@ -63,6 +76,11 @@ public class Assets {
     public static final AssetDescriptor<Texture> creditLayer = new AssetDescriptor<Texture>("menu/credit.png", Texture.class);
     public static final AssetDescriptor<Texture> cave1Layer = new AssetDescriptor<Texture>("menu/cave1.png", Texture.class);
     public static final AssetDescriptor<Texture> cave2Layer = new AssetDescriptor<Texture>("menu/cave2.png", Texture.class);
+    /*******************************************/
+
+    //pause
+    /*******************************************/
+
     /*******************************************/
 
     //UI
@@ -90,16 +108,24 @@ public class Assets {
         manager.load(player);
         manager.load(flameDemon);
 
-
-        //Buttons
-        manager.load(restartButton);
-        manager.load(resumeButton);
+        //ControlerButtons
         manager.load(leftButton);
         manager.load(rightButton);
         manager.load(upButton);
         manager.load(attackButton);
         manager.load(homeButton);
-        manager.load(goButton);
+
+        //PauseButtons
+        manager.load(exit);
+        manager.load(on);
+        manager.load(off);
+        manager.load(resume);
+        manager.load(render);
+
+        //Buttons
+        manager.load(restartButton);
+        manager.load(resumeButton);
+        manager.load(sellectButton);
         manager.load(pauseWindow);
         manager.load(backButton);
         manager.load(quitButton);

@@ -20,6 +20,7 @@ public class AndroidLauncher extends AndroidApplication {
 
 		initialize(new Cave(), config);
 	}
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {

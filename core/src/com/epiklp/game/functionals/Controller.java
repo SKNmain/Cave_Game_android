@@ -12,9 +12,9 @@ import com.epiklp.game.Cave;
 
 public class Controller extends Stage {
     private final float BUTTON_SIZE = 128;
-    private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed, enterPresed;
+    private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed, sellectPresed;
     private Table tabRight, tabLeft;
-    private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, enter;
+    private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, sellectButton;
 
     public Controller(boolean menu) {
         //Buttons on Left
@@ -51,8 +51,8 @@ public class Controller extends Stage {
                 leftPressed = false;
             }
         });
-        tabLeft.add(buttonLeft).size(buttonLeft.getWidth(), buttonLeft.getHeight());
-        tabLeft.add(buttonRight).size(buttonRight.getWidth(), buttonRight.getHeight());
+        tabLeft.add(buttonLeft).size(BUTTON_SIZE, BUTTON_SIZE);
+        tabLeft.add(buttonRight).size(BUTTON_SIZE, BUTTON_SIZE);
         addActor(tabLeft);
         /*******************************************/
 
@@ -90,9 +90,9 @@ public class Controller extends Stage {
                     atackPressed = false;
                 }
             });
-            tabRight.add(buttonAttack).size(buttonAttack.getWidth(), buttonAttack.getHeight());
+            tabRight.add(buttonAttack).size(BUTTON_SIZE, BUTTON_SIZE);
             tabRight.row().padBottom(10);
-            tabRight.add(buttonUp).size(buttonUp.getWidth(), buttonUp.getHeight());
+            tabRight.add(buttonUp).size(BUTTON_SIZE, BUTTON_SIZE);
             addActor(tabRight);
         }
 
@@ -118,30 +118,30 @@ public class Controller extends Stage {
         addActor(buttonHome);
         /*******************************************/
 
-        enter = new Image(Assets.manager.get(Assets.goButton));
-        enter.setSize(buttonLeft.getWidth()*2, buttonLeft.getWidth());
-        enter.setPosition(Cave.WIDTH-enter.getWidth(),0);
+        sellectButton = new Image(Assets.manager.get(Assets.sellectButton));
+        sellectButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
+        sellectButton.setPosition(Cave.WIDTH-BUTTON_SIZE,0);
 
-        enter.addListener(new InputListener() {
+        sellectButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                enterPresed = true;
+                sellectPresed = true;
                 return true;
             }
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                enterPresed = false;
+                sellectPresed = false;
             }
         });
     }
 
     public void enterOn(Vector2 position) {
-        addActor(enter);
+        addActor(sellectButton);
     }
 
     public void enterOff() {
-        enter.remove();
+        sellectButton.remove();
     }
 
 
@@ -149,8 +149,8 @@ public class Controller extends Stage {
         return upPressed;
     }
 
-    public boolean isEnterPresed() {
-        return enterPresed;
+    public boolean isSellectPresed() {
+        return sellectPresed;
     }
 
     public boolean isAttackPressed() {
