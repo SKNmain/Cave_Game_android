@@ -38,7 +38,6 @@ public class Menu implements Screen {
     private Camera camera;
     private Viewport viewport;
     private Stage stage;
-    //    private GameContactListener myContactListener;
     private Controller controller;
     private Hero hero;
     private float horizontalForce = 0;
@@ -54,7 +53,6 @@ public class Menu implements Screen {
 
 
     //private PauseMenu MenuPause;
-    private Pause MenuPause;
 
     public Menu(final Cave cave) {
 
@@ -113,11 +111,11 @@ public class Menu implements Screen {
         caveBody.setUserData("cave");
 
         //Multi Events
-        MenuPause = new Pause();
+
         controller = new Controller(true);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        inputMultiplexer.addProcessor(MenuPause);
+        inputMultiplexer.addProcessor(Cave.MenuPause);
         inputMultiplexer.addProcessor(controller);
         inputMultiplexer.addProcessor(creditsScreen);
 
@@ -128,19 +126,19 @@ public class Menu implements Screen {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("credit")) {
-                    controller.enterOn(new Vector2(240, 250));
+                    controller.enterOn();
                     enterCredit = true;
                     return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("shop")) {
-                    controller.enterOn(new Vector2(665, Cave.HEIGHT / 3 + 20));
+                    controller.enterOn();
                     enterShop = true;
                     return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("cave")) {
-                    controller.enterOn(new Vector2(1140, Cave.HEIGHT / 3 + 20));
+                    controller.enterOn();
                     enterCave = true;
                     TheBox.cleanWorld();
                     cave.setScreen(new GameScreen(cave));
@@ -194,7 +192,7 @@ public class Menu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (Cave.state.equals(Cave.STATE.OPTION)) {
             stage.draw();
-            MenuPause.draw();
+            Cave.MenuPause.draw();
         //    updateMenu(Gdx.graphics.getDeltaTime());
         } else if (Cave.state.equals(Cave.STATE.GAME)) {
             stage.act();
@@ -282,6 +280,5 @@ public class Menu implements Screen {
         stage.dispose();
         controller.dispose();
         hero.destroy();
-        MenuPause.dispose();
     }
 }

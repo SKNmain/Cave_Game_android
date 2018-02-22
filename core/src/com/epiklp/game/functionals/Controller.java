@@ -136,7 +136,7 @@ public class Controller extends Stage {
         });
     }
 
-    public void enterOn(Vector2 position) {
+    public void enterOn() {
         addActor(sellectButton);
     }
 

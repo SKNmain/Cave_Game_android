@@ -65,7 +65,8 @@ public class EndScreen implements Screen {
     public void render(float delta) {
 
         if (backPress == true) {
-            cave.setScreen(new Menu(cave));
+            Cave.CaveState = Cave.CaveGame.MENU;
+            Cave.change = true;
             dispose();
         }
         textMenu.draw();

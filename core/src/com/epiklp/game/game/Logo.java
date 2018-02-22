@@ -18,7 +18,7 @@ public class Logo implements Screen {
     private Image image;
     private Stage stage;
 
-    public Logo(final Cave cave) {
+    public Logo(Cave cave) {
         this.cave = cave;
         stage = new Stage();
         image = new Image(Assets.manager.get(Assets.logo));
@@ -37,8 +37,11 @@ public class Logo implements Screen {
         stage.draw();
         time += delta;
         if (time > 5) {
+            //cave.setScreen(Cave.menu);
             dispose();
             cave.setScreen(new Menu(cave));
+            //Cave.CaveState = Cave.CaveGame.GAME;
+            //Cave.change = true;
         }
     }
 

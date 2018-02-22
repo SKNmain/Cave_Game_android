@@ -34,7 +34,6 @@ import com.epiklp.game.actors.characters.Hero;
 public class GameScreen implements Screen {
     final Cave cave;
 
-    private boolean PAUSE;
     private Stage stage;
 
     private OrthographicCamera camera;
@@ -56,10 +55,9 @@ public class GameScreen implements Screen {
     private Array<Body> mapBodies;
 
     private GameContactListener gameContactListener;
-    private PauseMenu MenuPause;
+
 
     public GameScreen(Cave cave) {
-        PAUSE = false;
         this.cave = cave;
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
@@ -84,10 +82,10 @@ public class GameScreen implements Screen {
         for (GameObject i : items) {
             stage.addActor(i);
         }
-        MenuPause = new PauseMenu();
+
 
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        inputMultiplexer.addProcessor(MenuPause);
+        inputMultiplexer.addProcessor(Cave.MenuPause);
         inputMultiplexer.addProcessor(controller);
     }
 
@@ -114,7 +112,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        if (!PAUSE) {
+        if (Cave.state.equals(Cave.STATE.GAME)) {
             update(Gdx.graphics.getDeltaTime());
             TheBox.world.setContactListener(gameContactListener);
             checkEndGame();
@@ -124,28 +122,24 @@ public class GameScreen implements Screen {
             TheBox.rayHandler.render();
             controller.draw();
             cave.ui.draw();
-            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
 
-        } else {
-            MenuPause.draw();
-            updateMenu(Gdx.graphics.getDeltaTime());
-        }
-    }
 
-    public void updateMenu(float delta) {
-        if (MenuPause.presssResume) {
-            resume();
-        }
-        if (MenuPause.pressRestart) {
+        } else  if (Cave.state.equals(Cave.STATE.RESTART)) {
             TheBox.cleanWorld();
-            cave.setScreen(new Menu(cave));
-            //  dispose();
-        }
-        if (MenuPause.pressExit) {
             dispose();
-            Gdx.app.exit();
+            cave.setScreen(new Menu(cave));
         }
+        else if (Cave.state.equals(Cave.STATE.OPTION))
+        {
+            tmr.render();
+            stage.draw();
+            TheBox.rayHandler.render();
+            Cave.MenuPause.draw();
+        }
+        if(Cave.renderBox2D)
+            b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
     }
+
 
     private void checkEndGame() {
         if (hero.isDead()) {
@@ -186,7 +180,7 @@ public class GameScreen implements Screen {
         }
 
         if (controller.isHomePresed()) {
-            pause();
+            Cave.state = Cave.STATE.OPTION;
         }
     }
 
@@ -197,12 +191,11 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        PAUSE = true;
+
     }
 
     @Override
     public void resume() {
-        PAUSE = false;
     }
 
     @Override
@@ -217,7 +210,6 @@ public class GameScreen implements Screen {
         controller.dispose();
         tmr.dispose();
         map.dispose();
-        MenuPause.dispose();
     }
 
 
