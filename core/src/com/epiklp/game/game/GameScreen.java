@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -18,13 +17,13 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
+import com.epiklp.game.actors.characters.Enemy;
+import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
-import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.functionals.UI;
-import com.epiklp.game.actors.characters.Enemy;
-import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
  * Created by epiklp on 27.11.17.
@@ -182,6 +181,8 @@ public class GameScreen implements Screen {
         if (controller.isHomePresed()) {
             Cave.state = Cave.STATE.OPTION;
         }
+        if (controller.isDebugPresed())
+            DEBUG = !DEBUG;
     }
 
     @Override

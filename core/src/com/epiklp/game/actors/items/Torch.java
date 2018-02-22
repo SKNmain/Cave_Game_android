@@ -9,6 +9,8 @@ import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
 
+import java.util.Random;
+
 /**
  * Created by Asmei on 2018-02-12.
  */
@@ -20,16 +22,17 @@ public class Torch extends GameObject {
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxSensor(body, 16f, 20f);
-        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .9f), 6, 0, 0);
+        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .9f), 12, 0, 0);
         body.setGravityScale(0);
 
 
         Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("torch");
-        animator.addNewFrames(0.17f, sprites, STATE.ITEM, Animation.PlayMode.LOOP);
+        animator.addNewFrames(0.09f, sprites, STATE.ITEM, Animation.PlayMode.LOOP);
     }
 
     @Override
     public void act(float delta) {
+       // light.setDistance(60 + new Random().nextFloat()*5);
         super.act(delta);
         animate(delta, STATE.ITEM);
     }

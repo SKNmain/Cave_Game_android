@@ -57,13 +57,13 @@ public class BodyCreator {
         shape.dispose();
     }
 
-    public static void createShape(Body body, float density, float friction, Vector2 ... verticles) {
+    public static void createShape(Body body, float density, float friction, boolean isSensor, Vector2 ... verticles) {
         PolygonShape shape = new PolygonShape();
         shape.set(verticles);
         fixDef.shape = shape;
         fixDef.density = density;
         fixDef.friction = friction;
-        fixDef.isSensor = false;
+        fixDef.isSensor = isSensor;
         body.createFixture(fixDef);
         shape.dispose();
     }

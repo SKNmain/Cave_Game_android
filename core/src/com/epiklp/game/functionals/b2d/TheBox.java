@@ -67,10 +67,10 @@ public class TheBox {
     }
 
     public static void initRayHandler() {
+        rayHandler = new RayHandler(TheBox.world);
         RayHandler.setGammaCorrection(false);
         RayHandler.useDiffuseLight(false);
-        rayHandler = new RayHandler(TheBox.world);
-        rayHandler.setAmbientLight(0.2f); //0.2f
+        rayHandler.setAmbientLight(0.3f);
         rayHandler.setCulling(true);
         rayHandler.setShadows(true);
         Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
@@ -78,6 +78,7 @@ public class TheBox {
 
     public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y) {
         PointLight pointLight = new PointLight(rayHandler, rays, color, 10, -2, -2);
+        pointLight.setDistance(distance);
         pointLight.attachToBody(body);
         pointLight.setXray(true);
         pointLight.setIgnoreAttachedBody(true);
