@@ -181,8 +181,7 @@ public class GameScreen implements Screen {
         if (controller.isHomePresed()) {
             Cave.state = Cave.STATE.OPTION;
         }
-        if (controller.isDebugPresed())
-            DEBUG = !DEBUG;
+
     }
 
     @Override

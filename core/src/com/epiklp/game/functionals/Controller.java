@@ -116,32 +116,7 @@ public class Controller extends Stage {
             }
         });
         addActor(buttonHome);
-        /*******************************************/
-        buttonDebug = new Image(Assets.manager.get(Assets.homeButton));
-        buttonDebug.setPosition(Gdx.graphics.getWidth() - 240, Gdx.graphics.getHeight() - 74);
-        buttonDebug.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                debug = true;
-                return true;
-            }
 
-        sellectButton = new Image(Assets.manager.get(Assets.sellectButton));
-        sellectButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
-        sellectButton.setPosition(Cave.WIDTH-BUTTON_SIZE,0);
-
-        sellectButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                sellectPresed = true;
-                return true;
-            }
-
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                sellectPresed = false;
-            }
-        });
     }
 
     public void enterOn() {
@@ -175,10 +150,6 @@ public class Controller extends Stage {
 
     public boolean isHomePresed() {
         return homePresed;
-    }
-
-    public boolean isDebugPresed() {
-        return debug;
     }
 
 }
