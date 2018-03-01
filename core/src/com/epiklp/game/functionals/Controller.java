@@ -1,7 +1,6 @@
 package com.epiklp.game.functionals;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -120,7 +119,7 @@ public class Controller extends Stage {
 
         sellectButton = new Image(Assets.manager.get(Assets.sellectButton));
         sellectButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
-        sellectButton.setPosition(Cave.WIDTH-BUTTON_SIZE,0);
+        sellectButton.setPosition(Cave.WIDTH - BUTTON_SIZE, 0);
 
         sellectButton.addListener(new InputListener() {
             @Override
@@ -170,3 +169,4 @@ public class Controller extends Stage {
     }
 
 }
+ 

@@ -13,38 +13,32 @@ import com.epiklp.game.functionals.b2d.TheBox;
  * Created by Asmei on 2017-11-29.
  */
 
-public class Rat extends Enemy {
+public class Crown extends Enemy {
     private Sprite currentFrame;
     private static float FRAME_DURATION = 0.15f;
 
 
-    public Rat(float x, float y) {
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("rat", 0), 33, 32);
+    public Crown(float x, float y) {
+        super(Assets.manager.get(Assets.textureAtlas).createSprite("crown", 1), 33, 32);
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 30f, 20f, 1f, 0);
-        //Sensors
         BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), PATROL_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, new Vector2(-40, -22f), LEFT_DOWN_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, new Vector2(40, -22f), RIGHT_DOWN_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, new Vector2(-40, 20f), LEFT_UP_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, new Vector2(40, 20f), RIGHT_UP_SENSOR);
-
-
         body.setUserData(this);
-        body.setGravityScale(30f);
+        body.setGravityScale(0f);
 
-        //light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0, 0);
+        light = TheBox.createPointLight(body, 64, new Color(1.0f, 0.498f, 0.314f, .6f), true, 10, 0, 0);
 
         initStats();
 
         Array<Sprite> spritesForRunning = new Array<Sprite>();
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("rat",0));
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("rat",1));
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("rat",2));
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("rat",3));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("crown",1));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("crown",2));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("crown",3));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("crown",4));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("crown",5));
 
-        animator.addNewFrames(0.13f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
+        animator.addNewFrames(0.1f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
 
         setPatrolPoints();
 
@@ -61,10 +55,11 @@ public class Rat extends Enemy {
     public void initStats() {
         this.actLife = this.maxLife = 30;
         this.attackSpeed = 2;
-        this.runSpeed = 2;
+        this.runSpeed = 5;
         this.strengh = 10;
         this.attackRange = 5f;
         this.patrolRange = 2f;
         state = STATE.RUNNING;
+
     }
 }

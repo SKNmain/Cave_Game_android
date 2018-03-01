@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -18,19 +17,19 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
+import com.epiklp.game.actors.characters.Enemy;
+import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
-import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.functionals.UI;
-import com.epiklp.game.actors.characters.Enemy;
-import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
  * Created by epiklp on 27.11.17.
  */
 
-public class GameScreen implements Screen {
+public class GameLevel implements Screen {
     final Cave cave;
 
     private Stage stage;
@@ -56,7 +55,7 @@ public class GameScreen implements Screen {
     private GameContactListener gameContactListener;
 
 
-    public GameScreen(Cave cave) {
+    public GameLevel(Cave cave) {
         this.cave = cave;
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
@@ -71,9 +70,7 @@ public class GameScreen implements Screen {
 
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
         mapBodies = MapBuilder.parseTiledObjectLayer(map.getLayers().get("collision").getObjects());
-        hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
         items = MapBuilder.parseItemsAndObjectFromObjectLayer(map.getLayers().get("items").getObjects());
-        stage.addActor(hero);
         enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
         for (Enemy ac : enemies) {
             stage.addActor(ac);
@@ -81,6 +78,8 @@ public class GameScreen implements Screen {
         for (GameObject i : items) {
             stage.addActor(i);
         }
+        hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
+        stage.addActor(hero);
 
 
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
@@ -96,29 +95,27 @@ public class GameScreen implements Screen {
     public void update(float delta) {
         TheBox.world.step(1 / 60f, 6, 2);
         TheBox.sweepDeadBodies();
-
-        TheBox.rayHandler.update();
+        checkEndGame();
+        stage.act();
         inputUpdate();
         cameraUpdate();
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
-        TheBox.rayHandler.setCombinedMatrix(camera.combined.scl(Cave.PPM));
         cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana);
+        TheBox.rayHandler.setCombinedMatrix(camera.combined.cpy().scl(Cave.PPM));
 
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (Cave.state.equals(Cave.STATE.GAME)) {
             update(Gdx.graphics.getDeltaTime());
             TheBox.world.setContactListener(gameContactListener);
-            checkEndGame();
             tmr.render();
-            stage.act();
             stage.draw();
-            TheBox.rayHandler.render();
+            TheBox.rayHandler.updateAndRender();
             controller.draw();
             cave.ui.draw();
 
@@ -132,7 +129,7 @@ public class GameScreen implements Screen {
         {
             tmr.render();
             stage.draw();
-            TheBox.rayHandler.render();
+            TheBox.rayHandler.updateAndRender();
             Cave.MenuPause.draw();
         }
         if(Cave.renderBox2D)
@@ -174,13 +171,14 @@ public class GameScreen implements Screen {
         }
 
         if (controller.isAttackPressed()) {
-            //hero.shoot();
-            hero.meleeAttack();
+            hero.shoot();
+            //hero.meleeAttack();
         }
 
         if (controller.isHomePresed()) {
             Cave.state = Cave.STATE.OPTION;
         }
+
     }
 
     @Override

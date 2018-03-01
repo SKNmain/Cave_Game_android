@@ -1,8 +1,10 @@
 package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
@@ -27,6 +29,9 @@ public class Hero extends GameCharacter implements Shootable {
 
     public int actMana;
     public int maxMana;
+    public int maxAuraTimer;
+    public int actAuraTimer;
+
 
     private float climbingSpeed;
 
@@ -37,33 +42,54 @@ public class Hero extends GameCharacter implements Shootable {
         super(new Sprite(Assets.manager.get(Assets.player)), 64, 64);
 
         body = BodyCreator.createBody(x, y, false);
-        BodyCreator.createBoxShape(body, 28, 60, 1f, 0);
+        BodyCreator.createBoxShape(body, 28, 60, 1f, 0f);
         BodyCreator.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), JUMP_SENSOR);
+
+
         BodyCreator.createBoxSensor(body, 32f, 45f, new Vector2(0, -5), CLIMB_SENSOR);
         body.setUserData(this);
-        light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 10, -2, -2);
+        //light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 11, -2, -2);
+        light = TheBox.createPointLight(body, 64, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
+
+
+        Array<Sprite> sprites = new Array<Sprite>();
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle",0));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle",1));
+        animator.addNewFrames(0.5f, sprites, STATE.IDLE, Animation.PlayMode.LOOP);
+        sprites.clear();
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 0));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run",1));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run",2));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run",3));
+        animator.addNewFrames(0.2f, sprites, STATE.RUNNING, Animation.PlayMode.LOOP);
+        animator.addNewFrames(0.2f, sprites, STATE.CLIMBING, Animation.PlayMode.LOOP);
+
+
+
         initStats();
 
     }
 
     @Override
     public void initStats() {
-        this.actLife = this.maxLife = 100;
-        this.actMana = this.maxMana = 100;
+        this.actLife = this.maxLife = this.actAuraTimer = 100;
+        this.actMana = this.maxMana = this.actAuraTimer = 100;
         this.attackSpeed = 0.8f;
         this.runSpeed = 3.5f;
         this.climbingSpeed = 3f;
         this.strengh = 10;
         state = STATE.IDLE;
+
     }
 
     float hor = 0;
 
     @Override
     public void act(float delta) {
-
+        animate(delta, state);
         attackDelta += delta;
         jumpTimeout--;
+        actAuraTimer -= delta;
 
         if (state == STATE.RUNNING) {
             if (turn) {
@@ -76,10 +102,10 @@ public class Hero extends GameCharacter implements Shootable {
                 setSpeedX(hor);
             }
         } else if (state == STATE.IDLE) {
-            if (hor > 0.1f) {
-                hor -= 0.2f;
-            } else if (hor < -0.1f) {
-                hor += 0.2f;
+            if (hor > 0.2f) {
+                hor -= 0.4f;
+            } else if (hor < -0.2f) {
+                hor += 0.4f;
             } else {
                 hor = 0;
             }
@@ -113,9 +139,13 @@ public class Hero extends GameCharacter implements Shootable {
         return runSpeed + actLife * 0.03f;
     }
 
-    public void setMagic(int mana) {
+    public void setActMana(int mana) {
         this.actMana += mana;
         if (this.actMana > maxMana) this.actMana = maxMana;
+    }
+    public void setActAuraTimer(int timeAura) {
+        this.actAuraTimer += timeAura;
+        if (this.actAuraTimer > maxAuraTimer) this.actAuraTimer = maxAuraTimer;
     }
 
     public void outGround() {
@@ -150,7 +180,7 @@ public class Hero extends GameCharacter implements Shootable {
         if (jumpTimeout <= 0) {
             if (onGround > 0) {
                 body.setLinearVelocity(0, 16.5f);
-                jumpTimeout = 65f;
+                jumpTimeout = 45f;
             }
         }
         wantToJump = false;
@@ -163,7 +193,7 @@ public class Hero extends GameCharacter implements Shootable {
     @Override
     public void shoot() {
         if (actMana > 10 && attackSpeed <= attackDelta) {
-            setMagic(-10);
+            setActMana(-10);
             FireBall fireBall = new FireBall(this, strengh, getTurn());
             this.getStage().addActor(fireBall);
             activeBullets.add(fireBall);

@@ -3,6 +3,8 @@ package com.epiklp.game.functionals.b2d;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
@@ -24,7 +26,11 @@ public class BodyCreator {
         def.type = BodyDef.BodyType.StaticBody;
         def.fixedRotation = true;
         pBody = TheBox.world.createBody(def);
-        pBody.createFixture(shape, 1);
+        Filter f = new Filter();
+        f.categoryBits = TheBox.CATEGORY_BODY;
+        f.maskBits = TheBox.MASK_BODY;
+        pBody.createFixture(shape, 1).setFilterData(f);
+
         pBody.setUserData(userData);
         return pBody;
     }
@@ -46,24 +52,29 @@ public class BodyCreator {
         return createBody(x, y, isStatic, true);
     }
 
-    public static void createBoxShape(Body body, float width, float height, float density, float friction, Object userData) {
+    public static void createBoxShape(Body body, float width, float height, float density, float friction, Vector2 shift, Object userData) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / Cave.PPM, height / Cave.PPM);
+        shape.setAsBox(width / Cave.PPM, height / Cave.PPM, shift, 0);
         fixDef.shape = shape;
         fixDef.density = density;
         fixDef.friction = friction;
         fixDef.isSensor = false;
+        fixDef.filter.categoryBits = TheBox.CATEGORY_BODY;
+        fixDef.filter.maskBits = TheBox.MASK_BODY;
         body.createFixture(fixDef).setUserData(userData);
         shape.dispose();
     }
 
-    public static void createShape(Body body, float density, float friction, Vector2 ... verticles) {
+    public static void createBoxShape(Body body, float width, float height, float density, float friction, Object userData) {
+        createBoxShape(body, width, height, density, friction, new Vector2(0,0),  userData);
+    }
+    public static void createBoxShape(Body body, float density, float friction, boolean isSensor, Vector2 ... verticles) {
         PolygonShape shape = new PolygonShape();
         shape.set(verticles);
         fixDef.shape = shape;
         fixDef.density = density;
         fixDef.friction = friction;
-        fixDef.isSensor = false;
+        fixDef.isSensor = isSensor;
         body.createFixture(fixDef);
         shape.dispose();
     }
@@ -85,6 +96,8 @@ public class BodyCreator {
         fixDef.density = density;
         fixDef.friction = friction;
         fixDef.isSensor = true;
+        fixDef.filter.categoryBits = TheBox.CATEGORY_SENSOR;
+        fixDef.filter.maskBits = TheBox.MASK_SENSOR;
         body.createFixture(fixDef).setUserData(userData);
         shape.dispose();
     }

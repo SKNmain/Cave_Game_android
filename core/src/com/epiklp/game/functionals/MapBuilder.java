@@ -14,10 +14,12 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
+import com.epiklp.game.actors.characters.Crown;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.characters.Rat;
 import com.epiklp.game.actors.characters.Spider;
+import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.items.Torch;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 
@@ -41,6 +43,8 @@ public class MapBuilder {
                     enemies.add(new Rat(en.getRectangle().x, en.getRectangle().y));
                 }else if(Utils.equalsWithNulls(object.getName(), Spider.class.getSimpleName())){
                     enemies.add(new Spider(en.getRectangle().x , en.getRectangle().y));
+                }else if(Utils.equalsWithNulls(object.getName(), Crown.class.getSimpleName())){
+                    enemies.add(new Crown(en.getRectangle().x , en.getRectangle().y));
                 }
             }
 
@@ -55,6 +59,11 @@ public class MapBuilder {
                 RectangleMapObject en = ((RectangleMapObject) object);
                 if(Utils.equalsWithNulls(object.getName(), Torch.class.getSimpleName())){
                     items.add(new Torch(en.getRectangle().x, en.getRectangle().y));
+                }
+                if(Utils.equalsWithNulls(object.getName(), Bottle.class.getSimpleName())){
+                    String type = (String)object.getProperties().get("type");
+                    String size = (String)object.getProperties().get("size");
+                    items.add(new Bottle(en.getRectangle().x, en.getRectangle().y, type, size));
                 }
             }
         }

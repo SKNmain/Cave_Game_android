@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.actors.weapons.Weapon;
 
@@ -28,13 +29,11 @@ public class GameContactListener implements ContactListener {
             Hero hero = (Hero) b.getBody().getUserData();
             Enemy enemy = (Enemy) a.getBody().getUserData();
             hero.setActLife(-enemy.getStrengh());
-            enemy.setActLife(-hero.getStrengh());
             return;
         } else if (!aIsSen && !bIsSen && b.getBody().getUserData() instanceof Enemy && a.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) a.getBody().getUserData();
             Enemy enemy = (Enemy) b.getBody().getUserData();
             hero.setActLife(-enemy.getStrengh());
-            enemy.setActLife(-hero.getStrengh());
             return;
         }
         //Enemy sensor and hero touch (enemy is in following mode)
@@ -85,6 +84,19 @@ public class GameContactListener implements ContactListener {
                 weapon.setToDelete();
                 weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
             }
+            return;
+        }
+
+        //Pot
+        if (!bIsSen && a.getBody().getUserData() instanceof Bottle && b.getBody().getUserData() instanceof Hero) {
+            Bottle bottle = (Bottle) a.getBody().getUserData();
+            bottle.use((Hero)b.getBody().getUserData());
+            bottle.setToDelete();
+            return;
+        } else if (!aIsSen && b.getBody().getUserData() instanceof Bottle && a.getBody().getUserData() instanceof Hero) {
+            Bottle bottle = (Bottle) b.getBody().getUserData();
+            bottle.use((Hero)a.getBody().getUserData());
+            bottle.setToDelete();
             return;
         }
 

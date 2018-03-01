@@ -8,9 +8,7 @@ import com.epiklp.game.functionals.JsonFunction;
 import com.epiklp.game.functionals.Sound;
 import com.epiklp.game.functionals.UI;
 import com.epiklp.game.functionals.b2d.TheBox;
-import com.epiklp.game.game.GameScreen;
-import com.epiklp.game.game.Logo;
-import com.epiklp.game.game.Menu;
+import com.epiklp.game.game.GameLevel;
 import com.epiklp.game.game.Pause;
 
 
@@ -59,9 +57,9 @@ public class Cave extends Game {
         TheBox.initWorld();
         MenuPause = new Pause();
 
-        this.setScreen(new Logo(this));
+        //this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        //this.setScreen(new GameScreen(this));
+        this.setScreen(new GameLevel(this));
 
     }
 
