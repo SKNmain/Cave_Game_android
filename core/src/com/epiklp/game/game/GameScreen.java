@@ -28,7 +28,6 @@ import com.epiklp.game.actors.characters.Hero;
 
 /**
  * Created by epiklp on 27.11.17.
- * Created by epiklp on 27.11.17.
  */
 
 public class GameScreen implements Screen {

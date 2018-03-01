@@ -87,7 +87,7 @@ public class Menu implements Screen {
         stage.addActor(shop);
         stage.addActor(credit);
         stage.addActor(cave1);
-        hero = new Hero(100, 100);  //Hero, przykładowa pozycja
+        hero = new Hero(10, 100);  //Hero, przykładowa pozycja
         stage.addActor(hero);
         stage.addActor(cave2);
 

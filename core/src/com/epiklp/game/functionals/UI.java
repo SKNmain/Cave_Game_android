@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.epiklp.game.Cave;
 
 
@@ -39,7 +41,22 @@ public class UI extends Stage {
         statusBelt = new Image(Assets.manager.get(Assets.statusBelt));
         statusBelt.setScale(Cave.SCALE*1.5f);
         statusBelt.setPosition(0, Cave.HEIGHT-statusBelt.getHeight()*2*1.5f);
+        sword = new Image(Assets.manager.get(Assets.uiSword));
+        sword.setScale(1.75f);
+        sword.setPosition(38, Cave.HEIGHT - sword.getHeight()*2 - 10);
+        sword.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+            }
+        });
+        staff = new Image(Assets.manager.get(Assets.uiStaff));
+        staff.setScale(2.25f);
+        staff.setPosition(25, Cave.HEIGHT - sword.getHeight()*2 - 40);
         addActor(statusBelt);
+        addActor(sword);
+        //addActor(staff);
         addActor(lifeTexture);
         addActor(magicTexture);
         addActor(timeTexture);
