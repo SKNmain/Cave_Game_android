@@ -1,5 +1,6 @@
 package com.epiklp.game.actors.characters;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -16,7 +17,7 @@ public class Spider extends Enemy {
         super(new Sprite(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 0)), 38, 32);
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 35f, 20f, 1f, 0);
-        BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), PATROL_SENSOR);
+        BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), GameCharacter.SENSORS.PATROL_SENSOR);
         body.setUserData(this);
         body.setGravityScale(30f);
 

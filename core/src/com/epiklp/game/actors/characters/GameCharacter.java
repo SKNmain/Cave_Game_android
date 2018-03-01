@@ -8,7 +8,9 @@ import com.epiklp.game.actors.GameObject;
  */
 
 public abstract class GameCharacter extends GameObject {
-
+    public enum SENSORS{
+        JUMP_SENSOR, CLIMB_SENSOR, HEAD_SENSOR, PATROL_SENSOR, LEFT_DOWN_SENSOR, RIGHT_DOWN_SENSOR, LEFT_UP_SENSOR, RIGHT_UP_SENSOR
+    }
     public int actLife;
     public int maxLife;
 

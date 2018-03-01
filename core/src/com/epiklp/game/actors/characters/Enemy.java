@@ -2,6 +2,7 @@ package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.epiklp.game.functionals.b2d.BodyCreator;
 
 /**
  * Created by epiklp on 19.11.17.
@@ -14,15 +15,12 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Enemy extends GameCharacter {
 
-    public static final String PATROL_SENSOR = "PATROL_SEN";
-    public static final String LEFT_DOWN_SENSOR = "LD_SEN";
-    public static final String RIGHT_DOWN_SENSOR = "RD_SEN";
-    public static final String LEFT_UP_SENSOR = "LU_SEN";
-    public static final String RIGHT_UP_SENSOR = "RU_SEN";
 
     public enum AI_STATE {
         PATROLING, ATTACKED, FOLLOWING,
     }
+
+    protected boolean flying; //if we want a flying creature, we need set it to true in constructor
 
     protected float chanceOfDrop;
     protected float attackRange;
@@ -30,8 +28,15 @@ public abstract class Enemy extends GameCharacter {
     protected Vector2 leftPatrolPoints;
     protected Vector2 rightPatrolPoints;
 
+    protected boolean leftDownSensor = true;
+    protected boolean rightDownSensor = true;
+    protected boolean leftUpSensor;
+    protected boolean rightUpSensor;
+
+
     protected boolean following;
     protected boolean attacked;
+
 
     protected Vector2 heroLastPos;
     float elapsed_time = 0;
@@ -43,7 +48,6 @@ public abstract class Enemy extends GameCharacter {
         rightPatrolPoints = new Vector2();
         state = STATE.RUNNING;
     }
-
 
 
     @Override
@@ -87,11 +91,22 @@ public abstract class Enemy extends GameCharacter {
         if (state == STATE.RUNNING) {
             if (turn) {
                 setSpeedX(runSpeed);
+                if (flying) {
+                    if (rightUpSensor) rightPatrolPoints.x = body.getPosition().x;
+                } else {
+                    if (!rightDownSensor || rightUpSensor)
+                        rightPatrolPoints.x = body.getPosition().x;
+                }
                 float distance = body.getPosition().x - rightPatrolPoints.x;
                 if (distance >= 0) {
                     turn = false;
                 }
             } else {
+                if (flying) {
+                    if (leftUpSensor) leftPatrolPoints.x = body.getPosition().x;
+                } else {
+                    if (!leftDownSensor || leftUpSensor) leftPatrolPoints.x = body.getPosition().x;
+                }
                 setSpeedX(-runSpeed);
                 float distance = body.getPosition().x - leftPatrolPoints.x;
                 if (distance <= 0) {
@@ -102,6 +117,10 @@ public abstract class Enemy extends GameCharacter {
     }
 
     protected void moving() {
+        // hero get away, set to patroling
+        if(attacked && body.getPosition().dst(heroLastPos) > 20f)
+            attacked = false;
+
         if (following || attacked) {
             followHero();
             setPatrolPoints();
@@ -118,6 +137,20 @@ public abstract class Enemy extends GameCharacter {
         } else if (heroLastPos.x < body.getPosition().x + 3f) {
             body.setLinearVelocity(-runSpeed, 0);
         }
+    }
+
+    protected void setSensorAround(Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
+        BodyCreator.createBoxSensor(body, 5f, 5f, posLD, SENSORS.LEFT_DOWN_SENSOR);
+        BodyCreator.createBoxSensor(body, 5f, 5f, posRD, SENSORS.RIGHT_DOWN_SENSOR);
+        BodyCreator.createBoxSensor(body, 5f, 5f, posLU, SENSORS.LEFT_UP_SENSOR);
+        BodyCreator.createBoxSensor(body, 5f, 5f, posRU, SENSORS.RIGHT_UP_SENSOR);
+    }
+
+    public void setSensorUp(boolean active, SENSORS sensor) {
+        if (sensor == SENSORS.LEFT_DOWN_SENSOR) leftDownSensor = active;
+        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor = active;
+        else if (sensor == SENSORS.LEFT_UP_SENSOR) leftUpSensor = active;
+        else if (sensor == SENSORS.RIGHT_UP_SENSOR) rightUpSensor = active;
     }
 
 }

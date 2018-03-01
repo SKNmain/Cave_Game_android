@@ -39,8 +39,6 @@ public class GameLevel implements Screen {
 
     private Box2DDebugRenderer b2dr;
 
-    private float horizontalForce = 0;
-
     //texture && sprite && font && map
     private OrthogonalTiledMapRenderer tmr;
     private TiledMap map;
@@ -147,7 +145,7 @@ public class GameLevel implements Screen {
     private void cameraUpdate() {
         Vector3 position = camera.position;
         position.x = hero.getBody().getPosition().x * Cave.PPM;
-        position.y = hero.getBody().getPosition().y * Cave.PPM;//HEIGHT/PPM/4;
+        position.y = hero.getBody().getPosition().y * Cave.PPM;
         camera.position.set(position);
         camera.update();
     }
@@ -160,9 +158,10 @@ public class GameLevel implements Screen {
                 hero.wantToMoveLeft();
             else if (controller.isRightPressed())
                 hero.wantToMoveRight();
-        } else
+            else
+                hero.wantToIdle();
+        }   else
             hero.wantToIdle();
-
 
         if (controller.isUpPressed() && hero.canClimbing()) {
             hero.wantToClimb();

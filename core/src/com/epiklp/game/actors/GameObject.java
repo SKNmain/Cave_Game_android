@@ -19,6 +19,7 @@ public abstract class GameObject extends Actor {
         CLIMBING, IDLE, ATTACKING, RUNNING, ITEM
     }
 
+
     protected STATE state;
 
     //true - "watching" to right side of screen

@@ -18,11 +18,6 @@ import com.epiklp.game.actors.weapons.Sword;
 
 
 public class Hero extends GameCharacter implements Shootable {
-
-
-    public static final String JUMP_SENSOR = "JUMP_SEN";
-    public static final String CLIMB_SENSOR = "CLIMB_SEN";
-
     private boolean canClimb;
     private boolean wantToJump; //flaga od sterowania, gdy gracz chce skoczyć, nie ma nic wspólnego z wykrywaniem możliwości skoku!
 
@@ -32,7 +27,7 @@ public class Hero extends GameCharacter implements Shootable {
     public int maxAuraTimer;
     public int actAuraTimer;
 
-
+    public  boolean test;
     private float climbingSpeed;
 
     private int onGround = 0;
@@ -43,10 +38,10 @@ public class Hero extends GameCharacter implements Shootable {
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 28, 60, 1f, 0f);
-        BodyCreator.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), JUMP_SENSOR);
+        BodyCreator.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), SENSORS.JUMP_SENSOR);
 
 
-        BodyCreator.createBoxSensor(body, 32f, 45f, new Vector2(0, -5), CLIMB_SENSOR);
+        BodyCreator.createBoxSensor(body, 32f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
         body.setUserData(this);
         //light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 11, -2, -2);
         light = TheBox.createPointLight(body, 64, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
@@ -177,10 +172,10 @@ public class Hero extends GameCharacter implements Shootable {
     }
 
     private void jump() {
-        if (jumpTimeout <= 0) {
-            if (onGround > 0) {
+        if (onGround > 0) {
+            if (jumpTimeout <= 0) {
                 body.setLinearVelocity(0, 16.5f);
-                jumpTimeout = 45f;
+                jumpTimeout = 65f;
             }
         }
         wantToJump = false;
