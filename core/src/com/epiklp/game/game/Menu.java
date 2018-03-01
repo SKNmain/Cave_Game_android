@@ -114,6 +114,7 @@ public class Menu implements Screen {
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(Cave.MenuPause);
+        inputMultiplexer.addProcessor(Cave.ui);
         inputMultiplexer.addProcessor(controller);
         inputMultiplexer.addProcessor(creditsScreen);
 

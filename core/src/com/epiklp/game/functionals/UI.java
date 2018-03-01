@@ -21,10 +21,12 @@ public class UI extends Stage {
     private Image statusBelt;
     private Image sword, staff;
     private int length;
+    private boolean weapon;
 
 
     public UI() {
         bitmapFont = new BitmapFont();
+        weapon = true;
         labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
         text = new Label("FPS:" + Gdx.graphics.getFramesPerSecond(), labelStyle);
         text.setPosition(0, Cave.HEIGHT /2);
@@ -48,12 +50,23 @@ public class UI extends Stage {
         {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
+                weapon = false;
+                sword.remove();
+                addActor(staff);
             }
         });
         staff = new Image(Assets.manager.get(Assets.uiStaff));
         staff.setScale(2.25f);
         staff.setPosition(25, Cave.HEIGHT - sword.getHeight()*2 - 40);
+        staff.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                weapon = true;
+                staff.remove();
+                addActor(sword);
+            }
+        });
         addActor(statusBelt);
         addActor(sword);
         //addActor(staff);
