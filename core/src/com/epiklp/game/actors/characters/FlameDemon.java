@@ -20,7 +20,7 @@ public class FlameDemon extends Enemy {
         body.setUserData(this);
         body.setGravityScale(50f);
 
-        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0, 0);
+      //  light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0, 0);
 
         initStats();
 

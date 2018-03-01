@@ -14,11 +14,15 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Enemy extends GameCharacter {
 
+    public static final String PATROL_SENSOR = "PATROL_SEN";
+    public static final String LEFT_DOWN_SENSOR = "LD_SEN";
+    public static final String RIGHT_DOWN_SENSOR = "RD_SEN";
+    public static final String LEFT_UP_SENSOR = "LU_SEN";
+    public static final String RIGHT_UP_SENSOR = "RU_SEN";
+
     public enum AI_STATE {
         PATROLING, ATTACKED, FOLLOWING,
     }
-
-    public static final String PATROL_SENSOR = "PATROL_SEN";
 
     protected float chanceOfDrop;
     protected float attackRange;

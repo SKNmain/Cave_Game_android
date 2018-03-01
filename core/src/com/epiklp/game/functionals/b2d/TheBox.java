@@ -1,6 +1,7 @@
 package com.epiklp.game.functionals.b2d;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -26,23 +27,26 @@ import box2dLight.RayHandler;
 
 public class TheBox {
 
-
+/*
     public static final short CATEGORY_PLAYER = 0x0001;
     public static final short CATEGORY_ENEMY = 0x0002;
     public static final short CATEGORY_MAP = 0x0004;
     public static final short CATEGORY_ITEM = 0x0008;
-    public static final short CATEGORY_SENSOR = 0x0016;
     public static final short CATEGORY_BULLET = 0x0032;
-    public static final short CATEGORY_LIGHT = 0x0064;
     public static final short CATEGORY_WALL = 0x0128;
 
     public static final short MASK_PLAYER = 1;
     public static final short MASK_WALL = 1;
     public static final short MASK_ENEMY = CATEGORY_MAP | CATEGORY_SENSOR | CATEGORY_PLAYER | CATEGORY_BULLET;
-    public static final short MASK_LIGHT = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY | CATEGORY_LIGHT | CATEGORY_BULLET;
     public static final short MASK_SENSOR = CATEGORY_PLAYER;
     public static final short MASK_BULLET = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY;
-
+*/
+public static final short CATEGORY_SENSOR = 0x0001;
+    public static final short CATEGORY_BODY = 0x004;
+    public static final short CATEGORY_LIGHT = 0x008;
+    public static final short MASK_SENSOR = CATEGORY_BODY | CATEGORY_SENSOR;
+    public static final short MASK_BODY = CATEGORY_BODY | CATEGORY_LIGHT | CATEGORY_SENSOR;
+    public static final short MASK_LIGHT = CATEGORY_BODY | CATEGORY_LIGHT;
 
     public static World world;
     public static RayHandler rayHandler;
@@ -68,20 +72,25 @@ public class TheBox {
 
     public static void initRayHandler() {
         rayHandler = new RayHandler(TheBox.world);
-        RayHandler.setGammaCorrection(false);
-        RayHandler.useDiffuseLight(false);
-        rayHandler.setAmbientLight(0.3f);
-        rayHandler.setCulling(true);
+        RayHandler.setGammaCorrection(true);
+        RayHandler.useDiffuseLight(true);
+        //rayHandler.setAmbientLight(0.7f);
+        rayHandler.setAmbientLight(new Color(.2f, .2f, .2f, 0.7f));
+        rayHandler.setBlurNum(3);
+        rayHandler.setBlur(true);
+        rayHandler.diffuseBlendFunc.set(GL20.GL_DST_COLOR, GL20.GL_SRC_COLOR);
         rayHandler.setShadows(true);
-        Light.setGlobalContactFilter(TheBox.CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
+        //Light.setGlobalContactFilter( (short)0, (short) 2, TheBox.MASK_LIGHT);
+
+        Light.setGlobalContactFilter(CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
     }
 
-    public static PointLight createPointLight(Body body, int rays, Color color, int distance, int x, int y) {
-        PointLight pointLight = new PointLight(rayHandler, rays, color, 10, -2, -2);
-        pointLight.setDistance(distance);
+    public static PointLight createPointLight(Body body, int rays, Color color, boolean xRay, int distance, int x, int y) {
+        PointLight pointLight = new PointLight(rayHandler, rays, color, distance, x, y);
         pointLight.attachToBody(body);
-        pointLight.setXray(true);
-        pointLight.setIgnoreAttachedBody(true);
+        pointLight.setXray(true); // cienie
+        pointLight.setIgnoreAttachedBody(false);
+        pointLight.setSoftnessLength(2);
         return pointLight;
 
     }

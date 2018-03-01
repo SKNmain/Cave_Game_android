@@ -30,7 +30,7 @@ public class FireBall extends Weapon {
         body.setUserData(this);
         body.setBullet(true);
         body.applyLinearImpulse((turn ? 1 : -1) * 3.5f, 0, x, y, true);
-        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .85f), 5, 0, 0);
+        light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.598f, 0.414f, 1f), true, 8, 0, 0);
 
 
         Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("fireball");

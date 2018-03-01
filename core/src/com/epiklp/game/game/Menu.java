@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -22,7 +21,6 @@ import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
-import com.epiklp.game.functionals.UI;
 import com.epiklp.game.actors.characters.Hero;
 
 
@@ -141,7 +139,7 @@ public class Menu implements Screen {
                     controller.enterOn();
                     enterCave = true;
                     TheBox.cleanWorld();
-                    cave.setScreen(new GameScreen(cave));
+                    cave.setScreen(new GameLevel(cave));
                 }
             }
 
@@ -220,7 +218,7 @@ public class Menu implements Screen {
         TheBox.world.step(1 / 60f, 6, 2);
         inputUpdate();  //Controler
     }
-    // po tym, jak wyrzuciłem z GameScreen te obliczenia prędkości z metody sterowania do hero, tutaj też musiałem Ci zmienić, żeby się nie sypało
+    // po tym, jak wyrzuciłem z GameLevel te obliczenia prędkości z metody sterowania do hero, tutaj też musiałem Ci zmienić, żeby się nie sypało
 
     private void inputUpdate() {
         if (Gdx.input.isTouched()) {
