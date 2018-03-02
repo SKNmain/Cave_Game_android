@@ -72,7 +72,7 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void initStats() {
-        this.actLife = this.maxLife = this.actAuraTimer = 100;
+        this.actLife = this.maxLife = this.maxAuraTimer = 100;
         this.actMana = this.maxMana = this.actAuraTimer = 100;
         this.attackSpeed = 0.8f;
         this.runSpeed = 3.5f;
@@ -89,7 +89,7 @@ public class Hero extends GameCharacter implements Shootable {
         animate(delta, state);
         attackDelta += delta;
         jumpTimeout--;
-        actAuraTimer -= delta;
+        //actAuraTimer -= delta;
 
         if (state == STATE.RUNNING) {
             if (turn) {

@@ -15,7 +15,7 @@ import com.epiklp.game.Cave;
 
 public class UI extends Stage {
     private BitmapFont bitmapFont;
-    private Label text;
+    private Label text, lifeText, magicText, auraText;
     private Label.LabelStyle labelStyle;
     private Image lifeTexture, magicTexture, timeTexture;
     private Image statusBelt;
@@ -34,12 +34,18 @@ public class UI extends Stage {
         lifeTexture = new Image(Assets.manager.get(Assets.statusHp));
         lifeTexture.setPosition(219, Cave.HEIGHT - 69);
         lifeTexture.setScale(Cave.SCALE*1.5f);
+        lifeText = new Label("HP: 0/0", labelStyle);
+        lifeText.setPosition(219, Cave.HEIGHT - 69);
         magicTexture = new Image(Assets.manager.get(Assets.statusMana));
         magicTexture.setPosition(219, Cave.HEIGHT - 105);
         magicTexture.setScale(Cave.SCALE*1.5f);
+        magicText = new Label("MP: 0/0", labelStyle);
+        magicText.setPosition(219, Cave.HEIGHT - 105);
         timeTexture = new Image(Assets.manager.get(Assets.statusTime));
         timeTexture.setPosition(219, Cave.HEIGHT - 140);
         timeTexture.setScale(Cave.SCALE*1.5f);
+        auraText = new Label("AURA: 0/0", labelStyle);
+        auraText.setPosition(219, Cave.HEIGHT - 140);
         statusBelt = new Image(Assets.manager.get(Assets.statusBelt));
         statusBelt.setScale(Cave.SCALE*1.5f);
         statusBelt.setPosition(0, Cave.HEIGHT-statusBelt.getHeight()*2*1.5f);
@@ -73,6 +79,9 @@ public class UI extends Stage {
         addActor(lifeTexture);
         addActor(magicTexture);
         addActor(timeTexture);
+        addActor(auraText);
+        addActor(lifeText);
+        addActor(magicText);
         length = (int)timeTexture.getWidth();
     }
 
@@ -86,14 +95,19 @@ public class UI extends Stage {
         return tmp;
     }
 
+    public boolean getWeapon()
+    {
+        return weapon;
+    }
 
-    public void update(int maxLife, int life,int maxMagic, int magic) {
-        if (life <= 0) life = 1;
-        if (magic <= 0) magic = 1;
-        float b;
+    public void update(int maxLife, int life,int maxMagic, int magic, int maxAura, int aura) {
 
         lifeTexture.setWidth((life/(float)maxLife)*100 + 1);
         magicTexture.setWidth((magic/(float)maxMagic)*100 + 1);
+        timeTexture.setWidth((aura/(float)maxAura)*100 + 1);
         text.setText("FPS:" + Gdx.graphics.getFramesPerSecond());
+        auraText.setText("AURA: " + aura + "/" + maxAura);
+        magicText.setText("AURA: " + magic + "/" + maxMagic);
+        lifeText.setText("AURA: " + life + "/" + maxLife);
     }
 }

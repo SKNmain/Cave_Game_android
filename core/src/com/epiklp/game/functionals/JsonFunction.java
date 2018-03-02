@@ -75,7 +75,9 @@ class Player
     int level = 1;
     float experience = 0;
     int strengh = 10;
-    int maxlife = 100;
+    int maxLife = 100;
+    int maxMana = 100;
+    int maxAura = 100;
     int life = 100;
     int magic = 100;
     float attackSpeed = 0.7f;
