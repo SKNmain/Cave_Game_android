@@ -193,7 +193,7 @@ public class Menu implements Screen {
             stage.act();
             stage.draw();
             controller.draw();
-            Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAuraTimer, hero.actAuraTimer);
+            Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura);
             cave.ui.draw();
             update(Gdx.graphics.getDeltaTime());
             //TheBox.world.setContactListener(myContactListner);

@@ -22,7 +22,6 @@ import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
-import com.epiklp.game.functionals.UI;
 import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
@@ -102,15 +101,16 @@ public class GameLevel implements Screen {
         cameraUpdate();
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
-        cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAuraTimer, hero.actAuraTimer);
+        cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura);
         TheBox.rayHandler.setCombinedMatrix(camera.combined.cpy().scl(Cave.PPM));
+
         time += delta;
         if(time > 1) {
-            if(hero.actAuraTimer == 0) {
+            if(hero.actAura == 0) {
                 hero.setActLife(-1);
             }
             else {
-                hero.setActAuraTimer(-takeAura);
+                hero.setActAura(-takeAura);
             }
             time = 0;
         }
@@ -136,8 +136,7 @@ public class GameLevel implements Screen {
             dispose();
             cave.setScreen(new Menu(cave));
         }
-        else if (Cave.state.equals(Cave.STATE.OPTION))
-        {
+        else if (Cave.state.equals(Cave.STATE.OPTION)){
             tmr.render();
             stage.draw();
             TheBox.rayHandler.updateAndRender();

@@ -24,14 +24,13 @@ public class Hero extends GameCharacter implements Shootable {
 
     public int actMana;
     public int maxMana;
-    public int maxAuraTimer;
-    public int actAuraTimer;
-    float horizontalSpeed;
+    public int maxAura;
+    public int actAura;
+    private float horizontalSpeed;
 
     private float climbingSpeed;
 
     private int onGround;
-    private float auraTickTimeout;
     private float damageTimeout;
     private float jumpTimeout;
 
@@ -69,8 +68,8 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void initStats() {
-        this.actLife = this.maxLife = this.maxAuraTimer = 100;
-        this.actMana = this.maxMana = this.actAuraTimer = 100;
+        this.actLife = this.maxLife = this.maxAura = 100;
+        this.actMana = this.maxMana = this.actAura = 100;
         this.attackSpeed = 0.8f;
         this.runSpeed = 3.5f;
         this.climbingSpeed = 3f;
@@ -86,12 +85,7 @@ public class Hero extends GameCharacter implements Shootable {
 
         attackDelta += delta;
         jumpTimeout--;
-        //actAuraTimer -= delta;
 
-        if(auraTickTimeout < 0){
-            actAuraTimer--;
-            auraTickTimeout = 1f;
-        }
 
         if (state == STATE.RUNNING) {
             if (turn) {
@@ -145,9 +139,9 @@ public class Hero extends GameCharacter implements Shootable {
         this.actMana += mana;
         if (this.actMana > maxMana) this.actMana = maxMana;
     }
-    public void setActAuraTimer(int timeAura) {
-        this.actAuraTimer += timeAura;
-        if (this.actAuraTimer > maxAuraTimer) this.actAuraTimer = maxAuraTimer;
+    public void setActAura(int timeAura) {
+        this.actAura += timeAura;
+        if (this.actAura > maxAura) this.actAura = maxAura;
     }
 
     public void getDamage(int damage) {
