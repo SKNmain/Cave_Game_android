@@ -58,9 +58,9 @@ public class Cave extends Game {
         TheBox.initWorld();
         MenuPause = new Pause();
 
-        this.setScreen(new Logo(this));
+        //this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        //this.setScreen(new GameLevel(this));
+        this.setScreen(new GameLevel(this));
 
     }
 

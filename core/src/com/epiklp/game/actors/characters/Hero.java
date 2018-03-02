@@ -26,25 +26,27 @@ public class Hero extends GameCharacter implements Shootable {
     public int maxMana;
     public int maxAuraTimer;
     public int actAuraTimer;
+    float horizontalSpeed;
 
-    public  boolean test;
     private float climbingSpeed;
 
-    private int onGround = 0;
-    private float jumpTimeout = 0;
+    private int onGround;
+    private float auraTickTimeout;
+    private float damageTimeout;
+    private float jumpTimeout;
 
     public Hero(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.player)), 64, 64);
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 28, 60, 1f, 0f);
-        BodyCreator.createBoxSensor(body, 10f, 10f, new Vector2(0, -60), SENSORS.JUMP_SENSOR);
 
 
+        BodyCreator.createBoxSensor(body, 14f, 10f, new Vector2(0, -60), SENSORS.JUMP_SENSOR);
         BodyCreator.createBoxSensor(body, 32f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
         body.setUserData(this);
         //light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 11, -2, -2);
-        light = TheBox.createPointLight(body, 64, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
+        light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
 
 
         Array<Sprite> sprites = new Array<Sprite>();
@@ -77,35 +79,41 @@ public class Hero extends GameCharacter implements Shootable {
 
     }
 
-    float hor = 0;
 
     @Override
     public void act(float delta) {
         animate(delta, state);
+
         attackDelta += delta;
         jumpTimeout--;
-        actAuraTimer -= delta;
+        damageTimeout--;
+        auraTickTimeout -= delta;
+
+        if(auraTickTimeout < 0){
+            actAuraTimer--;
+            auraTickTimeout = 1f;
+        }
 
         if (state == STATE.RUNNING) {
             if (turn) {
-                if (hor < getRunSpeed()) {
-                    hor += 0.4f;
+                if (horizontalSpeed < getRunSpeed()) {
+                    horizontalSpeed += 0.4f;
                 }
             } else {
-                if (hor > -getRunSpeed())
-                    hor -= 0.4f;
-                setSpeedX(hor);
+                if (horizontalSpeed > -getRunSpeed())
+                    horizontalSpeed -= 0.4f;
+                setSpeedX(horizontalSpeed);
             }
         } else if (state == STATE.IDLE) {
-            if (hor > 0.2f) {
-                hor -= 0.4f;
-            } else if (hor < -0.2f) {
-                hor += 0.4f;
+            if (horizontalSpeed > 0.4f) {
+                horizontalSpeed -= 0.4f;
+            } else if (horizontalSpeed < -0.4f) {
+                horizontalSpeed += 0.4f;
             } else {
-                hor = 0;
+                horizontalSpeed = 0;
             }
         }
-        setSpeedX(hor);
+        setSpeedX(horizontalSpeed);
 
         if (state == STATE.CLIMBING && canClimbing()) {
             climb();
@@ -141,6 +149,13 @@ public class Hero extends GameCharacter implements Shootable {
     public void setActAuraTimer(int timeAura) {
         this.actAuraTimer += timeAura;
         if (this.actAuraTimer > maxAuraTimer) this.actAuraTimer = maxAuraTimer;
+    }
+
+    public void getDamage(int damage) {
+        if(damageTimeout < 0){
+            setActLife(-damage);
+            damageTimeout = 0.1f;
+        }
     }
 
     public void outGround() {

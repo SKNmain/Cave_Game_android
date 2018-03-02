@@ -1,6 +1,5 @@
 package com.epiklp.game.actors.characters;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -18,28 +17,35 @@ public class Spider extends Enemy {
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 35f, 20f, 1f, 0);
         BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), GameCharacter.SENSORS.PATROL_SENSOR);
+
+        BodyCreator.createBoxSensor(body, 28f, 2f, new Vector2(0, 20f), SENSORS.HEAD_SENSOR);
+        setSensorAround(new Vector2(-45f, -28f),
+                        new Vector2( 45f, -28f),
+                        new Vector2(-49f, 20f),
+                        new Vector2( 49f, 20f));
+
+
         body.setUserData(this);
         body.setGravityScale(30f);
 
 
         //light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0, 0);
-
-
-
         initStats();
         setPatrolPoints();
 
         Array<Sprite> spritesForRunning = new Array<Sprite>();
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider",0));
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider",1));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 0));
+        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 1));
         animator.addNewFrames(0.2f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
 
     }
+
     @Override
     public void act(float delta) {
         super.act(delta);
         animate(delta, state);
     }
+
     @Override
     public void initStats() {
         this.actLife = this.maxLife = 30;

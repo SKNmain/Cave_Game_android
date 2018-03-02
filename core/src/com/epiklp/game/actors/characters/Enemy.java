@@ -28,8 +28,8 @@ public abstract class Enemy extends GameCharacter {
     protected Vector2 leftPatrolPoints;
     protected Vector2 rightPatrolPoints;
 
-    protected boolean leftDownSensor = true;
-    protected boolean rightDownSensor = true;
+    protected boolean leftDownSensor;
+    protected boolean rightDownSensor;
     protected boolean leftUpSensor;
     protected boolean rightUpSensor;
 
@@ -39,7 +39,6 @@ public abstract class Enemy extends GameCharacter {
 
 
     protected Vector2 heroLastPos;
-    float elapsed_time = 0;
 
 
     public Enemy(Sprite sprite, float sizeX, float sizeY) {
@@ -91,34 +90,41 @@ public abstract class Enemy extends GameCharacter {
         if (state == STATE.RUNNING) {
             if (turn) {
                 setSpeedX(runSpeed);
+                float distance = body.getPosition().x - rightPatrolPoints.x;
+                if (distance >= 0 || rightDownSensor) {
+                    turn = false;
+                }
+
                 if (flying) {
                     if (rightUpSensor) rightPatrolPoints.x = body.getPosition().x;
                 } else {
-                    if (!rightDownSensor || rightUpSensor)
+                    if (rightUpSensor) {
                         rightPatrolPoints.x = body.getPosition().x;
+                    }
                 }
-                float distance = body.getPosition().x - rightPatrolPoints.x;
-                if (distance >= 0) {
-                    turn = false;
-                }
+
             } else {
+                setSpeedX(-runSpeed);
+                float distance = body.getPosition().x - leftPatrolPoints.x;
+
+                if (distance <= 0 || leftDownSensor) {
+                    turn = true;
+                }
                 if (flying) {
                     if (leftUpSensor) leftPatrolPoints.x = body.getPosition().x;
                 } else {
-                    if (!leftDownSensor || leftUpSensor) leftPatrolPoints.x = body.getPosition().x;
+                    if (leftUpSensor){
+                        leftPatrolPoints.x = body.getPosition().x;
+                    }
                 }
-                setSpeedX(-runSpeed);
-                float distance = body.getPosition().x - leftPatrolPoints.x;
-                if (distance <= 0) {
-                    turn = true;
-                }
+
             }
         }
     }
 
     protected void moving() {
         // hero get away, set to patroling
-        if(attacked && body.getPosition().dst(heroLastPos) > 20f)
+        if (attacked && body.getPosition().dst(heroLastPos) > 20f)
             attacked = false;
 
         if (following || attacked) {
@@ -141,15 +147,15 @@ public abstract class Enemy extends GameCharacter {
 
     protected void setSensorAround(Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
         BodyCreator.createBoxSensor(body, 5f, 5f, posLD, SENSORS.LEFT_DOWN_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, posRD, SENSORS.RIGHT_DOWN_SENSOR);
         BodyCreator.createBoxSensor(body, 5f, 5f, posLU, SENSORS.LEFT_UP_SENSOR);
+        BodyCreator.createBoxSensor(body, 5f, 5f, posRD, SENSORS.RIGHT_DOWN_SENSOR);
         BodyCreator.createBoxSensor(body, 5f, 5f, posRU, SENSORS.RIGHT_UP_SENSOR);
     }
 
     public void setSensorUp(boolean active, SENSORS sensor) {
         if (sensor == SENSORS.LEFT_DOWN_SENSOR) leftDownSensor = active;
-        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor = active;
         else if (sensor == SENSORS.LEFT_UP_SENSOR) leftUpSensor = active;
+        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor = active;
         else if (sensor == SENSORS.RIGHT_UP_SENSOR) rightUpSensor = active;
     }
 

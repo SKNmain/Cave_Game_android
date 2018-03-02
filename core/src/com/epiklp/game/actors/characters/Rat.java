@@ -22,14 +22,14 @@ public class Rat extends Enemy {
         super(Assets.manager.get(Assets.textureAtlas).createSprite("rat", 0), 33, 32);
 
         body = BodyCreator.createBody(x, y, false);
-        BodyCreator.createBoxShape(body, 30f, 16f, 1f, 0);
+        BodyCreator.createBoxShape(body, 30f, 16f, 10f, 0);
         //Sensors
-        BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), SENSORS.PATROL_SENSOR);
-        BodyCreator.createBoxSensor(body, 28f, 2f, new Vector2(0, 45f), SENSORS.HEAD_SENSOR);
-        setSensorAround(new Vector2(-40f, -22f),
-                        new Vector2( 40f, -22f),
-                        new Vector2(-44f,  18f),
-                        new Vector2( 44f,  18f));
+        BodyCreator.createBoxSensor(body, 150f, 65f, new Vector2(0, 45f), SENSORS.PATROL_SENSOR);
+       // BodyCreator.createBoxSensor(body, 28f, 2f, new Vector2(0, 20f), SENSORS.HEAD_SENSOR);
+        setSensorAround(new Vector2(-40f, -24f),
+                        new Vector2( 40f, -24f),
+                        new Vector2(-45f,  16f),
+                        new Vector2( 45f,  16f));
         body.setUserData(this);
         body.setGravityScale(30f);
         initStats();
