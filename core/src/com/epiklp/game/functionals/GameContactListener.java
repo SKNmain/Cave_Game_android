@@ -5,7 +5,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
+import com.epiklp.game.actors.characters.GameCharacter;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.weapons.FireBall;
@@ -37,12 +39,12 @@ public class GameContactListener implements ContactListener {
             return;
         }
         //Enemy sensor and hero touch (enemy is in following mode)
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.PATROL_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.PATROL_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) b.getBody().getUserData();
             Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setFollowing(true).setHeroLastPos(hero.getBody().getPosition());
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.PATROL_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.PATROL_SENSOR) && a.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) a.getBody().getUserData();
             Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setFollowing(true).setHeroLastPos(hero.getBody().getPosition());
@@ -101,24 +103,81 @@ public class GameContactListener implements ContactListener {
         }
 
         //Can I JUMP?
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.onGround();
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), Hero.JUMP_SENSOR)) {
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.onGround();
             return;
         }
 
         //Can I CLIMB?
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.setCanClimb(true);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), Hero.CLIMB_SENSOR)) {
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.setCanClimb(true);
+            return;
+        }
+
+// ================ SENSORS FOR ENEMY AI ===============================
+        //Enemy sensor and hero touch (enemy is in following mode)
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            return;
+        }
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            return;
+        }
+
+        //UP
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            return;
+        }
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         }
     }
@@ -131,34 +190,90 @@ public class GameContactListener implements ContactListener {
         boolean bIsSen = b.isSensor();
         boolean aIsSen = a.isSensor();
         //Enemy warding sensor and hero
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Enemy.PATROL_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.PATROL_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setFollowing(false);
             return;
-        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getUserData(), Enemy.PATROL_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.PATROL_SENSOR) && a.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setFollowing(false);
             return;
         }
 
         //I can't jump?
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.outGround();
             return;
-        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), Hero.JUMP_SENSOR)) {
+        } else if (bIsSen && !aIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.outGround();
             return;
         }
         //I can't climb
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), Hero.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
             Hero hero = (Hero) a.getBody().getUserData();
             hero.setCanClimb(false);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), Hero.CLIMB_SENSOR)) {
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR)) {
             Hero hero = (Hero) b.getBody().getUserData();
             hero.setCanClimb(false);
+            return;
+        }
+        // ================ SENSORS FOR ENEMY AI ===============================
+        //Enemy sensor and hero touch (enemy is in following mode)
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            return;
+        }
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            return;
+        }
+
+        //UP
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            return;
+        }
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
+                &&
+                (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") ) ) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
+            enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         }
 

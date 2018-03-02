@@ -16,7 +16,7 @@ public class FlameDemon extends Enemy {
         super(new Sprite(Assets.manager.get(Assets.flameDemon)), 44, 57);
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 30f, 50f, 25f, 0);
-        BodyCreator.createBoxSensor(body, 200f, 90f, new Vector2(0, 45f), PATROL_SENSOR);
+        BodyCreator.createBoxSensor(body, 200f, 90f, new Vector2(0, 45f), GameCharacter.SENSORS.PATROL_SENSOR);
         body.setUserData(this);
         body.setGravityScale(50f);
 

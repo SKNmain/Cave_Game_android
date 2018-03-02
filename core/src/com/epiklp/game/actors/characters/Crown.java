@@ -23,7 +23,7 @@ public class Crown extends Enemy {
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 30f, 20f, 1f, 0);
-        BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), PATROL_SENSOR);
+        BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), SENSORS.PATROL_SENSOR);
         body.setUserData(this);
         body.setGravityScale(0f);
 
