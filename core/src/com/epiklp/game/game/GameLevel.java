@@ -52,6 +52,8 @@ public class GameLevel implements Screen {
 
     private GameContactListener gameContactListener;
 
+    private int takeAura = 1;
+    private double time = 0;
 
     public GameLevel(Cave cave) {
         this.cave = cave;
@@ -82,6 +84,7 @@ public class GameLevel implements Screen {
 
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(Cave.MenuPause);
+        inputMultiplexer.addProcessor(Cave.ui);
         inputMultiplexer.addProcessor(controller);
     }
 
@@ -99,8 +102,18 @@ public class GameLevel implements Screen {
         cameraUpdate();
         tmr.setView(camera);
         stage.getViewport().setCamera(camera);
-        cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana);
+        cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAuraTimer, hero.actAuraTimer);
         TheBox.rayHandler.setCombinedMatrix(camera.combined.cpy().scl(Cave.PPM));
+        time += delta;
+        if(time > 1) {
+            if(hero.actAuraTimer == 0) {
+                hero.setActLife(-1);
+            }
+            else {
+                hero.setActAuraTimer(-takeAura);
+            }
+            time = 0;
+        }
 
     }
 
@@ -170,8 +183,10 @@ public class GameLevel implements Screen {
         }
 
         if (controller.isAttackPressed()) {
-            hero.shoot();
-            //hero.meleeAttack();
+            if(Cave.ui.getWeapon())
+                hero.meleeAttack();
+            else
+                hero.shoot();
         }
 
         if (controller.isHomePresed()) {

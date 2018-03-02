@@ -96,6 +96,7 @@ public class Cave extends Game {
 
     @Override
     public void dispose() {
+
         ui.dispose();
         Assets.dispose();
         super.dispose();

@@ -43,8 +43,6 @@ public class Menu implements Screen {
     private Image image;
     private Image shop;
     private Image credit;
-    private Image cave1;
-    private Image cave2;
     private boolean enterShop, enterCredit, enterCave;
     private Body creditBody, shopBody, caveBody;
     private CreditsScreen creditsScreen;
@@ -70,12 +68,6 @@ public class Menu implements Screen {
         credit = new Image(Assets.manager.get(Assets.creditLayer));
         credit.setSize(150, 150);
         credit.setPosition(180, 55);
-        cave1 = new Image(Assets.manager.get(Assets.cave1Layer));
-        cave1.setSize(400, Cave.HEIGHT);
-        cave1.setPosition(Cave.WIDTH - 500, 55);
-        cave2 = new Image(Assets.manager.get(Assets.cave2Layer));
-        cave2.setSize(400, Cave.HEIGHT);
-        cave2.setPosition(Cave.WIDTH - 500, 55);
 
         //Create stage
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
@@ -83,11 +75,9 @@ public class Menu implements Screen {
         stage = new Stage(viewport);
         stage.addActor(image);
         stage.addActor(shop);
-        stage.addActor(credit);
-        stage.addActor(cave1);
+        stage.addActor(credit);;
         hero = new Hero(10, 100);  //Hero, przykładowa pozycja
         stage.addActor(hero);
-        stage.addActor(cave2);
 
 
         b2dr = new Box2DDebugRenderer();
@@ -179,6 +169,12 @@ public class Menu implements Screen {
         });
     }
 
+
+    public void initzializeWorld()
+    {
+
+    }
+
     @Override
     public void show() {
 
@@ -197,9 +193,9 @@ public class Menu implements Screen {
             stage.act();
             stage.draw();
             controller.draw();
+            Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAuraTimer, hero.actAuraTimer);
             cave.ui.draw();
             update(Gdx.graphics.getDeltaTime());
-            cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana);
             //TheBox.world.setContactListener(myContactListner);
         } else if (Cave.state.equals(Cave.STATE.CREDIT)) {
             creditsScreen.draw();
