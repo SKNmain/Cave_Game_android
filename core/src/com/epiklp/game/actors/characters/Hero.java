@@ -85,7 +85,10 @@ public class Hero extends GameCharacter implements Shootable {
 
         attackDelta += delta;
         jumpTimeout--;
+        damageTimeout--;
 
+        if(actAura <= 0) light.setActive(false);
+        else light.setActive(true);
 
         if (state == STATE.RUNNING) {
             if (turn) {
@@ -98,13 +101,9 @@ public class Hero extends GameCharacter implements Shootable {
                 setSpeedX(horizontalSpeed);
             }
         } else if (state == STATE.IDLE) {
-            if (horizontalSpeed > 0.4f) {
-                horizontalSpeed -= 0.4f;
-            } else if (horizontalSpeed < -0.4f) {
-                horizontalSpeed += 0.4f;
-            } else {
+
                 horizontalSpeed = 0;
-            }
+
         }
         setSpeedX(horizontalSpeed);
 
@@ -178,7 +177,11 @@ public class Hero extends GameCharacter implements Shootable {
     public void wantToIdle() {
         state = STATE.IDLE;
     }
-
+    @Override
+    public void setActLife(int actLife) {
+        this.actLife += actLife;
+        if(this.actLife > maxLife) this.actLife = maxLife;
+    }
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout <= 0) {
@@ -195,7 +198,7 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void shoot() {
-        if (actMana > 10 && attackSpeed <= attackDelta) {
+        if (actMana >= 10 && attackSpeed <= attackDelta) {
             setActMana(-10);
             FireBall fireBall = new FireBall(this, strengh, getTurn());
             this.getStage().addActor(fireBall);
