@@ -5,11 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.JsonFunction;
-import com.epiklp.game.functionals.Sound;
+import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.UI;
 import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.game.GameLevel;
-import com.epiklp.game.game.Logo;
 import com.epiklp.game.game.Pause;
 
 
@@ -43,7 +42,7 @@ public class Cave extends Game {
         while (!Assets.manager.update()) {
             System.out.println(Assets.manager.getProgress() * 100 + "%");
         }
-        Sound.initialize();
+        OwnSound.initialize();
         JsonFunction.initzialie();
         FILE = Gdx.files.local("option.json");
         if(!FILE.exists())
@@ -51,7 +50,7 @@ public class Cave extends Game {
         else
             JsonFunction.Read();
         JsonFunction.edit("Music");
-        Sound.play("menuMusic");
+        OwnSound.play("menuMusic");
         JsonFunction.updateJSON();
         ui = new UI();
         //Create physics

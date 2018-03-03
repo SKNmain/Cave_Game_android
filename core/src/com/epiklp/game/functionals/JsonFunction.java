@@ -20,15 +20,15 @@ public class JsonFunction {
     public static void Create() {
         one = new One();
         json.toJson(one,Cave.FILE);
-        Sound.EFFECTS = one.game.effect;
-        Sound.MUSIC = one.game.music;
+        OwnSound.EFFECTS = one.game.effect;
+        OwnSound.MUSIC = one.game.music;
         Cave.LANGUAGE = one.game.language;
     }
 
     public static void Read() {
         one = json.fromJson(One.class, Cave.FILE);
-        Sound.EFFECTS = one.game.effect;
-        Sound.MUSIC = one.game.music;
+        OwnSound.EFFECTS = one.game.effect;
+        OwnSound.MUSIC = one.game.music;
         Cave.LANGUAGE = one.game.language;
     }
 
@@ -36,11 +36,11 @@ public class JsonFunction {
     {
         if(what.equals("Music"))
         {
-            one.game.music = Sound.MUSIC = !Sound.MUSIC;
+            one.game.music = OwnSound.MUSIC = !OwnSound.MUSIC;
         }
         else if(what.equals("effects"))
         {
-            one.game.effect = Sound.EFFECTS = !Sound.EFFECTS;
+            one.game.effect = OwnSound.EFFECTS = !OwnSound.EFFECTS;
         }
         else if (what.equals("language"))
         {

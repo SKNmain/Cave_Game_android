@@ -3,6 +3,7 @@ package com.epiklp.game.functionals;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -70,7 +71,7 @@ public class Assets {
     //menu
     /*******************************************/
     public static final AssetDescriptor<Texture> menuMap = new AssetDescriptor<Texture>("Map/menu_map.png", Texture.class);
-    public static final AssetDescriptor<Music> menuMusic = new AssetDescriptor<Music>("sounds/menu.wav", Music.class);
+    public static final AssetDescriptor<Music> menuMusic = new AssetDescriptor<Music>("SFX/menu.wav", Music.class);
     public static final AssetDescriptor<Texture> menuLayer = new AssetDescriptor<Texture>("menu/all.png", Texture.class);
     public static final AssetDescriptor<Texture> shopLayer = new AssetDescriptor<Texture>("menu/shop.png", Texture.class);
     public static final AssetDescriptor<Texture> creditLayer = new AssetDescriptor<Texture>("menu/credit.png", Texture.class);
@@ -94,6 +95,11 @@ public class Assets {
     public static final AssetDescriptor<Texture> uiBag = new AssetDescriptor<Texture>("UI/bag.png", Texture.class);
     /*******************************************/
 
+    //SFX
+    public static final AssetDescriptor<Sound> leftFootStep = new AssetDescriptor<Sound>("SFX/lFootStone.ogg", Sound.class);
+    public static final AssetDescriptor<Sound> rightFootStep = new AssetDescriptor<Sound>("SFX/rFootStone.ogg", Sound.class);
+    public static final AssetDescriptor<Sound> flame = new AssetDescriptor<Sound>("SFX/flame.ogg", Sound.class);
+
 
     public static BitmapFont Font; //Font
 
@@ -107,6 +113,11 @@ public class Assets {
 
         manager.load(player);
         manager.load(flameDemon);
+
+        //SFX
+        manager.load(leftFootStep);
+        manager.load(rightFootStep);
+        manager.load(flame);
 
         //ControlerButtons
         manager.load(leftButton);

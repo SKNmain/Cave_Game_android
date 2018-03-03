@@ -35,6 +35,8 @@ public class FireBall extends Weapon {
 
         Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("fireball");
         animator.addNewFrames(0.15f, sprites, STATE.ITEM, Animation.PlayMode.LOOP);
+
+        Assets.manager.get(Assets.flame).play(0.35f);
     }
 
     @Override

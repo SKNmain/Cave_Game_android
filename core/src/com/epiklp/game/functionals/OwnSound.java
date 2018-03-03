@@ -6,7 +6,7 @@ import com.badlogic.gdx.audio.Music;
  * Created by epiklp on 07.02.18.
  */
 
-public class Sound {
+public class OwnSound {
     public static boolean MUSIC;
     public static boolean EFFECTS;
     private static Music menuMusic;
@@ -19,8 +19,10 @@ public class Sound {
 
 
     public static void play(String music) {
-        if(music.equals("menuMusic") && MUSIC == true )
+        if(music.equals("menuMusic") && MUSIC == true ){
             menuMusic.play();
+            menuMusic.setVolume(0.4f);
+        }
     }
 
     public static void update(String music)

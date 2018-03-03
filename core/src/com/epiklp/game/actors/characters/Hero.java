@@ -1,16 +1,17 @@
 package com.epiklp.game.actors.characters;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.epiklp.game.functionals.Assets;
-import com.epiklp.game.functionals.b2d.BodyCreator;
-import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.actors.weapons.Shootable;
 import com.epiklp.game.actors.weapons.Sword;
+import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.b2d.BodyCreator;
+import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
  * Created by epiklp on 14.11.17.
@@ -21,47 +22,51 @@ public class Hero extends GameCharacter implements Shootable {
     private boolean canClimb;
     private boolean wantToJump; //flaga od sterowania, gdy gracz chce skoczyć, nie ma nic wspólnego z wykrywaniem możliwości skoku!
 
+    private Sound rightFootStep;
+    private Sound leftFootStep;
 
     public int actMana;
     public int maxMana;
     public int maxAura;
     public int actAura;
     private float horizontalSpeed;
-
     private float climbingSpeed;
 
     private int onGround;
+
     private float damageTimeout;
     private float jumpTimeout;
+    private float timeToNextFootStep;
+    private boolean whichFoot;
 
     public Hero(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.player)), 64, 64);
 
         body = BodyCreator.createBody(x, y, false);
-        BodyCreator.createBoxShape(body, 28, 60, 1f, 0f);
+        BodyCreator.createBoxShape(body, 24, 58, 1f, 0f);
 
 
         BodyCreator.createBoxSensor(body, 14f, 10f, new Vector2(0, -60), SENSORS.JUMP_SENSOR);
-        BodyCreator.createBoxSensor(body, 32f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
+        BodyCreator.createBoxSensor(body, 28f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
         body.setUserData(this);
         //light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 11, -2, -2);
         light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
 
 
         Array<Sprite> sprites = new Array<Sprite>();
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle",0));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle",1));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle", 0));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle", 1));
         animator.addNewFrames(0.5f, sprites, STATE.IDLE, Animation.PlayMode.LOOP);
         sprites.clear();
         sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 0));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run",1));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run",2));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run",3));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 1));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 2));
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 3));
         animator.addNewFrames(0.2f, sprites, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.2f, sprites, STATE.CLIMBING, Animation.PlayMode.LOOP);
 
-
-
+        leftFootStep = Assets.manager.get(Assets.leftFootStep);
+        rightFootStep = Assets.manager.get(Assets.rightFootStep);
         initStats();
 
     }
@@ -72,7 +77,7 @@ public class Hero extends GameCharacter implements Shootable {
         this.actMana = this.maxMana = this.actAura = 100;
         this.attackSpeed = 0.8f;
         this.runSpeed = 3.5f;
-        this.climbingSpeed = 3f;
+        this.climbingSpeed = body.getMass() * 0.8f;
         this.strengh = 10;
         state = STATE.IDLE;
 
@@ -82,15 +87,25 @@ public class Hero extends GameCharacter implements Shootable {
     @Override
     public void act(float delta) {
         animate(delta, state);
-
+        timeToNextFootStep += delta;
         attackDelta += delta;
         jumpTimeout--;
         damageTimeout--;
 
-        if(actAura <= 0) light.setActive(false);
+        if (actAura <= 0) light.setActive(false);
         else light.setActive(true);
 
         if (state == STATE.RUNNING) {
+            if (timeToNextFootStep > .4f && onGround > 0) {
+                if (whichFoot) {
+                    whichFoot = false;
+                    leftFootStep.play(0.1f);
+                } else {
+                    whichFoot = true;
+                    rightFootStep.play(0.1f);
+                }
+                timeToNextFootStep = 0;
+            }
             if (turn) {
                 if (horizontalSpeed < getRunSpeed()) {
                     horizontalSpeed += 0.4f;
@@ -102,7 +117,7 @@ public class Hero extends GameCharacter implements Shootable {
             }
         } else if (state == STATE.IDLE) {
 
-                horizontalSpeed = 0;
+            horizontalSpeed = 0;
 
         }
         setSpeedX(horizontalSpeed);
@@ -138,13 +153,14 @@ public class Hero extends GameCharacter implements Shootable {
         this.actMana += mana;
         if (this.actMana > maxMana) this.actMana = maxMana;
     }
+
     public void setActAura(int timeAura) {
         this.actAura += timeAura;
         if (this.actAura > maxAura) this.actAura = maxAura;
     }
 
     public void getDamage(int damage) {
-        if(damageTimeout < 0){
+        if (damageTimeout < 0) {
             setActLife(-damage);
             damageTimeout = 0.1f;
         }
@@ -177,11 +193,13 @@ public class Hero extends GameCharacter implements Shootable {
     public void wantToIdle() {
         state = STATE.IDLE;
     }
+
     @Override
     public void setActLife(int actLife) {
         this.actLife += actLife;
-        if(this.actLife > maxLife) this.actLife = maxLife;
+        if (this.actLife > maxLife) this.actLife = maxLife;
     }
+
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout <= 0) {
@@ -193,7 +211,7 @@ public class Hero extends GameCharacter implements Shootable {
     }
 
     private void climb() {
-        setSpeedY(body.getMass() * 0.8f);
+        setSpeedY(climbingSpeed);
     }
 
     @Override

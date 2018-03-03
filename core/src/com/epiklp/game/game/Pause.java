@@ -7,10 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.epiklp.game.Cave;
 import com.epiklp.game.functionals.Assets;
-import com.epiklp.game.functionals.Sound;
+import com.epiklp.game.functionals.OwnSound;
 
 /**
  * Created by epiklp on 21.02.18.
@@ -37,16 +36,16 @@ public class Pause extends Stage {
         buttonPlayMusic.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Sound.MUSIC = !Sound.MUSIC;
-                Sound.update("menuMusic");
+                OwnSound.MUSIC = !OwnSound.MUSIC;
+                OwnSound.update("menuMusic");
             }
         });
         buttonPlayEffects = new Image(Assets.manager.get(Assets.on));
         buttonPlayEffects.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Sound.EFFECTS = !Sound.EFFECTS;
-                Sound.update("menuMusic");
+                OwnSound.EFFECTS = !OwnSound.EFFECTS;
+                OwnSound.update("menuMusic");
             }
         });
         buttonExit = new Image(Assets.manager.get(Assets.exit));
