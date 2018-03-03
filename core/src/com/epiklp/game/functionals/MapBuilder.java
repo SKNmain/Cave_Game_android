@@ -10,11 +10,10 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
-import com.epiklp.game.actors.characters.Crown;
+import com.epiklp.game.actors.characters.Raven;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.characters.Rat;
@@ -43,8 +42,8 @@ public class MapBuilder {
                     enemies.add(new Rat(en.getRectangle().x, en.getRectangle().y));
                 }else if(Utils.equalsWithNulls(object.getName(), Spider.class.getSimpleName())){
                     enemies.add(new Spider(en.getRectangle().x , en.getRectangle().y));
-                }else if(Utils.equalsWithNulls(object.getName(), Crown.class.getSimpleName())){
-                    enemies.add(new Crown(en.getRectangle().x , en.getRectangle().y));
+                }else if(Utils.equalsWithNulls(object.getName(), Raven.class.getSimpleName())){
+                    enemies.add(new Raven(en.getRectangle().x , en.getRectangle().y));
                 }
             }
 

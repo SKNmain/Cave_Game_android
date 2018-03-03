@@ -26,7 +26,7 @@ public class Sword extends Weapon {
         float y = gameCharacterRef.getBody().getPosition().y * Cave.PPM / Cave.SCALE;
 
         body = BodyCreator.createBody(x + (turn ? 18 : -18), y+16, false, false);
-        BodyCreator.createBoxSensor(body, 16f, 37f, .00001f, 0, new Vector2(0,0), this);
+        BodyCreator.createBoxSensor(body, 10f, 37f, .00001f, 0, new Vector2(0,0), this);
         body.setUserData(this);
         body.setGravityScale(0);
 
@@ -37,8 +37,8 @@ public class Sword extends Weapon {
             JointCreator.setLimitForRevoluteJoint(true, -2.2f, 0f, -1.5f);
             JointCreator.setMotorForRevoluteJoint(true, -8f, 50f);
         }else{
-            JointCreator.setLimitForRevoluteJoint(true, -.25f, 0f, 1.9f);
-            JointCreator.setMotorForRevoluteJoint(true, 8f, 50f);
+            JointCreator.setLimitForRevoluteJoint(true, -.25f, 0f, 2.0f);
+            JointCreator.setMotorForRevoluteJoint(true, 8f, 70f);
         }
 
         joint = JointCreator.createRevoluteJoint();

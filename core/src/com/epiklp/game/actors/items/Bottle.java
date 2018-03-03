@@ -29,7 +29,7 @@ public class Bottle extends GameObject {
         this.type = type;
         this.size = sizeOfBottle;
         body = BodyCreator.createBody(x, y, false);
-        light = TheBox.createPointLight(body, 64, new Color(0.5f, 0.5f , 1f, 0.7f), false, 4, -2, -2);
+        light = TheBox.createPointLight(body, 32, new Color(0.5f, 0.5f , 1f, 0.7f), false, 4, -2, -2);
 
         switch(size){
             case "big":

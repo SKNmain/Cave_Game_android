@@ -106,8 +106,8 @@ public class UI extends Stage {
         magicTexture.setWidth((magic/(float)maxMagic)*100 + 1);
         timeTexture.setWidth((aura/(float)maxAura)*100 + 1);
         text.setText("FPS:" + Gdx.graphics.getFramesPerSecond());
+        lifeText.setText("HP: " + life + "/" + maxLife);
+        magicText.setText("MP: " + magic + "/" + maxMagic);
         auraText.setText("AURA: " + aura + "/" + maxAura);
-        magicText.setText("AURA: " + magic + "/" + maxMagic);
-        lifeText.setText("AURA: " + life + "/" + maxLife);
     }
 }

@@ -12,6 +12,7 @@ import com.epiklp.game.functionals.b2d.BodyCreator;
  */
 
 public class Spider extends Enemy {
+
     public Spider(float x, float y) {
         super(new Sprite(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 0)), 38, 32);
         body = BodyCreator.createBody(x, y, false);
@@ -53,7 +54,7 @@ public class Spider extends Enemy {
         this.runSpeed = 2.5f;
         this.strengh = 10;
         this.attackRange = 5f;
-        this.patrolRange = 2f;
+        this.patrolRange = 5f;
         state = STATE.RUNNING;
     }
 }

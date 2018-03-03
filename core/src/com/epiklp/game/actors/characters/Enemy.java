@@ -28,10 +28,10 @@ public abstract class Enemy extends GameCharacter {
     protected Vector2 leftPatrolPoints;
     protected Vector2 rightPatrolPoints;
 
-    protected boolean leftDownSensor;
-    protected boolean rightDownSensor;
-    protected boolean leftUpSensor;
-    protected boolean rightUpSensor;
+    protected byte leftDownSensor;
+    protected byte rightDownSensor;
+    protected byte leftUpSensor;
+    protected byte rightUpSensor;
 
 
     protected boolean following;
@@ -91,14 +91,14 @@ public abstract class Enemy extends GameCharacter {
             if (turn) {
                 setSpeedX(runSpeed);
                 float distance = body.getPosition().x - rightPatrolPoints.x;
-                if (distance >= 0 || rightDownSensor) {
+                if (distance >= 0) {
                     turn = false;
                 }
 
                 if (flying) {
-                    if (rightUpSensor) rightPatrolPoints.x = body.getPosition().x;
+                    if (rightUpSensor > 0) rightPatrolPoints.x = body.getPosition().x;
                 } else {
-                    if (rightUpSensor) {
+                    if (rightUpSensor > 0 || rightDownSensor < 0) {
                         rightPatrolPoints.x = body.getPosition().x;
                     }
                 }
@@ -107,13 +107,13 @@ public abstract class Enemy extends GameCharacter {
                 setSpeedX(-runSpeed);
                 float distance = body.getPosition().x - leftPatrolPoints.x;
 
-                if (distance <= 0 || leftDownSensor) {
+                if (distance <= 0 || leftDownSensor > 0) {
                     turn = true;
                 }
                 if (flying) {
-                    if (leftUpSensor) leftPatrolPoints.x = body.getPosition().x;
+                    if (leftUpSensor > 0) leftPatrolPoints.x = body.getPosition().x;
                 } else {
-                    if (leftUpSensor){
+                    if (leftUpSensor > 0 || leftDownSensor < 0){
                         leftPatrolPoints.x = body.getPosition().x;
                     }
                 }
@@ -126,6 +126,11 @@ public abstract class Enemy extends GameCharacter {
         // hero get away, set to patroling
         if (attacked && body.getPosition().dst(heroLastPos) > 20f)
             attacked = false;
+        if(flying){
+            if(rightDownSensor < 0) setSpeedY(body.getMass());
+            else if( leftDownSensor < 0) setSpeedY(body.getMass());
+        }
+
 
         if (following || attacked) {
             followHero();
@@ -137,26 +142,30 @@ public abstract class Enemy extends GameCharacter {
 
     protected void followHero() {
         if (heroLastPos.x > body.getPosition().x - 3f && heroLastPos.x < body.getPosition().x + 3f) {
-            body.setLinearVelocity(0, 0);
+            body.setLinearVelocity(0, body.getLinearVelocity().y);
         } else if (heroLastPos.x > body.getPosition().x - 3f) {
-            body.setLinearVelocity(runSpeed, 0);
+            body.setLinearVelocity(runSpeed, body.getLinearVelocity().y);
         } else if (heroLastPos.x < body.getPosition().x + 3f) {
-            body.setLinearVelocity(-runSpeed, 0);
+            body.setLinearVelocity(-runSpeed, body.getLinearVelocity().y);
         }
     }
 
     protected void setSensorAround(Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
-        BodyCreator.createBoxSensor(body, 5f, 5f, posLD, SENSORS.LEFT_DOWN_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, posLU, SENSORS.LEFT_UP_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, posRD, SENSORS.RIGHT_DOWN_SENSOR);
-        BodyCreator.createBoxSensor(body, 5f, 5f, posRU, SENSORS.RIGHT_UP_SENSOR);
+        Vector2 defSize =  new Vector2(5f, 5f);
+        setSensorAround(defSize, defSize, defSize, defSize, posLD, posRD, posLU, posRU);
     }
-
-    public void setSensorUp(boolean active, SENSORS sensor) {
-        if (sensor == SENSORS.LEFT_DOWN_SENSOR) leftDownSensor = active;
-        else if (sensor == SENSORS.LEFT_UP_SENSOR) leftUpSensor = active;
-        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor = active;
-        else if (sensor == SENSORS.RIGHT_UP_SENSOR) rightUpSensor = active;
+    protected void setSensorAround(Vector2 sizeLD, Vector2 sizeRD, Vector2 sizeLU, Vector2 sizeRU,
+                                   Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
+        BodyCreator.createBoxSensor(body, sizeLD.x, sizeLD.y, posLD, SENSORS.LEFT_DOWN_SENSOR);
+        BodyCreator.createBoxSensor(body, sizeRD.x, sizeRD.y, posRD, SENSORS.RIGHT_DOWN_SENSOR);
+        BodyCreator.createBoxSensor(body, sizeLU.x, sizeLU.y, posLU, SENSORS.LEFT_UP_SENSOR);
+        BodyCreator.createBoxSensor(body, sizeRU.x, sizeRU.y, posRU, SENSORS.RIGHT_UP_SENSOR);
+    }
+    public void setSensorUp(byte active, SENSORS sensor) {
+        if (sensor == SENSORS.LEFT_DOWN_SENSOR) leftDownSensor += active;
+        else if (sensor == SENSORS.LEFT_UP_SENSOR) leftUpSensor += active;
+        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor += active;
+        else if (sensor == SENSORS.RIGHT_UP_SENSOR) rightUpSensor += active;
     }
 
 }

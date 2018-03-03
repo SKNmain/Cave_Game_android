@@ -14,9 +14,6 @@ import com.epiklp.game.functionals.b2d.TheBox;
  */
 
 public class Rat extends Enemy {
-    private Sprite currentFrame;
-    private static float FRAME_DURATION = 0.15f;
-
 
     public Rat(float x, float y) {
         super(Assets.manager.get(Assets.textureAtlas).createSprite("rat", 0), 33, 32);

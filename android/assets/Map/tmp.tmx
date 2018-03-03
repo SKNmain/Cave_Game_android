@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="53">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="32" tileheight="32" nextobjectid="65">
  <tileset firstgid="1" source="new.tsx"/>
  <layer name="BG TILE" width="50" height="50">
   <data encoding="csv">
@@ -82,7 +82,7 @@
 2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,4,4,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,4,4,1,1,1,4,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,4,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,4,2,2,2,2,2,2,
+2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,4,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,0,0,0,0,0,2,2,2,2,2,2,2,2,0,0,4,4,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,2,2,2,2,2,2,
@@ -117,21 +117,23 @@
    <polyline points="0,0 384,0 384,-96 480,-96 480,-64 416,-64 416,32 0,32 0,0"/>
   </object>
   <object id="10" name="CLIMBING_WALL" x="1152" y="1312" width="32" height="64"/>
-  <object id="9" name="CLIMBING_WALL" x="1120" y="1280" width="32" height="96"/>
+  <object id="9" name="CLIMBING_WALL" x="1120" y="1280" height="96"/>
   <object id="8" name="CLIMBING_WALL" x="672" y="640" width="64" height="160"/>
   <object id="11" name="CLIMBING_WALL" x="1345" y="832" width="63" height="448"/>
-  <object id="20" name="CLIMBING_WALL" x="801" y="1376" width="32" height="15"/>
-  <object id="23" name="CLIMBING_WALL" x="1250" y="993" width="30" height="30"/>
+  <object id="20" name="CLIMBING_WALL" x="801" y="1376" height="23"/>
+  <object id="23" name="CLIMBING_WALL" x="1280" y="993" height="30"/>
   <object id="44" name="CLIMBING_WALL" x="832" y="768" width="32" height="96"/>
-  <object id="50" x="928" y="928" width="125" height="32"/>
   <object id="52" x="832" y="864" width="64" height="32"/>
+  <object id="64" x="928" y="960">
+   <polyline points="0,0 128,0 128,-32 0,-32 0,0"/>
+  </object>
  </objectgroup>
  <objectgroup name="characters">
-  <object id="3" name="hero" x="891" y="763" width="6" height="32"/>
-  <object id="22" name="Spider" x="1216" y="896" width="48" height="48"/>
-  <object id="36" name="Crown" x="892" y="1290" width="48" height="48"/>
-  <object id="40" name="Rat" x="601" y="703" width="48" height="48"/>
-  <object id="47" name="Rat" x="957" y="831" width="48" height="48"/>
+  <object id="3" name="hero" x="1073" y="1276.33" width="6" height="32"/>
+  <object id="22" name="Spider" x="1194.67" y="1198.67" width="48" height="48"/>
+  <object id="36" name="Crown" x="895.333" y="1237.33" width="48" height="48"/>
+  <object id="40" name="Rat" x="568" y="747" width="48" height="48"/>
+  <object id="47" name="Rat" x="998.333" y="894.667" width="16" height="14"/>
  </objectgroup>
  <objectgroup name="items" offsetx="1" offsety="-7">
   <object id="24" name="Torch" x="768" y="672" width="32" height="32"/>
