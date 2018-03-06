@@ -4,11 +4,13 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.JsonFunction;
 import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.UI;
 import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.game.GameLevel;
+import com.epiklp.game.game.Logo;
 import com.epiklp.game.game.Pause;
 
 
@@ -16,6 +18,7 @@ public class Cave extends Game {
     public enum STATE {
         OPTION, GAME, CREDIT, SHOP, RESTART
     }
+
     public enum CaveGame{
         GAME, MENU, LOGO
     }
@@ -30,6 +33,7 @@ public class Cave extends Game {
     public static UI ui;
     public static boolean renderBox2D, change;
     public static Pause MenuPause;
+    public static Controller controller;
 
     @Override
     public void create() {
@@ -55,11 +59,11 @@ public class Cave extends Game {
         ui = new UI();
         //Create physics
         TheBox.initWorld();
-        MenuPause = new Pause();
-
-        //this.setScreen(new Logo(this));
+        MenuPause = new Pause(true);
+        controller = null;
+        this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        this.setScreen(new GameLevel(this));
+        //this.setScreen(new GameLevel(this));
 
     }
 

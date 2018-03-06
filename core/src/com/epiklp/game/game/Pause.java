@@ -1,7 +1,10 @@
 package com.epiklp.game.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -18,13 +21,14 @@ import com.epiklp.game.functionals.OwnSound;
 public class Pause extends Stage {
     private final float BUTTON_SIZE = 128;
     private Image buttonResume,  buttonPlayMusic, buttonPlayEffects, buttonExit, buttonBox;
-    private Table table;
+    private Table tablePlayer, tableDev;
+
     private Label textResume, textMusic, textEffects, textExit, textBox;
     private Label.LabelStyle labelStyle;
 
-    public Pause()
+    public Pause(boolean dev)
     {
-        table = new Table();
+        tablePlayer = new Table();
         buttonResume = new Image(Assets.manager.get(Assets.resume));
         buttonResume.addListener(new ClickListener(){
             @Override
@@ -45,39 +49,46 @@ public class Pause extends Stage {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 OwnSound.EFFECTS = !OwnSound.EFFECTS;
-                OwnSound.update("menuMusic");
-            }
-        });
-        buttonExit = new Image(Assets.manager.get(Assets.exit));
-        buttonExit.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-        buttonBox = new Image(Assets.manager.get(Assets.render));
-        buttonBox.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Cave.renderBox2D = !Cave.renderBox2D;
             }
         });
 
-        table.setPosition(Cave.WIDTH/2, Cave.HEIGHT/2);
-        table.center().bottom();
-        table.padRight(10);
-        table.add(buttonResume).size(BUTTON_SIZE, BUTTON_SIZE);
-        table.padRight(10);
-        table.add(buttonPlayMusic).size(BUTTON_SIZE, BUTTON_SIZE);
-        table.padRight(10);
-        table.add(buttonPlayEffects).size(BUTTON_SIZE, BUTTON_SIZE);
-        table.padRight(10);
-        table.add(buttonExit).size(BUTTON_SIZE, BUTTON_SIZE);
-        table.padRight(10);
-        table.add(buttonBox).size(BUTTON_SIZE, BUTTON_SIZE);
-        table.row();
-        addActor(table);
+        buttonExit = new Image(Assets.manager.get(Assets.exit));
+        buttonExit.addListener(new InputListener()
+        {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+
+
+        tablePlayer.setPosition(Cave.WIDTH/2, Cave.HEIGHT/2);
+        tablePlayer.center().bottom();
+        tablePlayer.add(buttonResume).size(BUTTON_SIZE, BUTTON_SIZE).padRight(10);
+        tablePlayer.padRight(10);
+        tablePlayer.add(buttonPlayMusic).size(BUTTON_SIZE, BUTTON_SIZE).padRight(10);
+        tablePlayer.padRight(10);
+        tablePlayer.add(buttonPlayEffects).size(BUTTON_SIZE, BUTTON_SIZE).padRight(10);
+        tablePlayer.padRight(10);
+        tablePlayer.add(buttonExit).size(BUTTON_SIZE, BUTTON_SIZE);
+        tablePlayer.padRight(10);
+        addActor(tablePlayer);
+        if(dev == true)
+        {
+            tableDev = new Table();
+            tableDev.setPosition(Cave.WIDTH/2, Cave.HEIGHT/2 - BUTTON_SIZE);
+            tableDev.bottom().center();
+
+            buttonBox = new Image(Assets.manager.get(Assets.render));
+            buttonBox.addListener(new ClickListener()
+            {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    Cave.renderBox2D = !Cave.renderBox2D;
+                }
+            });
+            tableDev.add(buttonBox).size(BUTTON_SIZE, BUTTON_SIZE);;
+            addActor(tableDev);
+        }
     }
 }
