@@ -19,7 +19,6 @@ public class Spider extends Enemy {
         BodyCreator.createBoxShape(body, 35f, 20f, 1f, 0);
         BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), GameCharacter.SENSORS.PATROL_SENSOR);
 
-        BodyCreator.createBoxSensor(body, 28f, 2f, new Vector2(0, 20f), SENSORS.HEAD_SENSOR);
         setSensorAround(new Vector2(-45f, -28f),
                         new Vector2( 45f, -28f),
                         new Vector2(-49f, 20f),

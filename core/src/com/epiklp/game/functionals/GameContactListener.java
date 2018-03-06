@@ -26,6 +26,22 @@ public class GameContactListener implements ContactListener {
         boolean aIsSen = a.isSensor();
         boolean bIsSen = b.isSensor();
 
+        //Insta Traps
+        if (a.getBody().getUserData() instanceof GameCharacter && Utils.equalsWithNulls(b.getBody().getUserData(), "INSTA_TRAP")) {
+            Weapon weapon = (Weapon) a.getBody().getUserData();
+            if (weapon instanceof FireBall) {
+                weapon.setToDelete();
+                weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
+            }
+            return;
+        } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Weapon) {
+            Weapon weapon = (Weapon) b.getBody().getUserData();
+            if (weapon instanceof FireBall) {
+                weapon.setToDelete();
+                weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
+            }
+            return;
+        }
         //Enemy and hero touch
         if (!aIsSen && !bIsSen && a.getBody().getUserData() instanceof Enemy && b.getBody().getUserData() instanceof Hero) {
             Hero hero = (Hero) b.getBody().getUserData();
