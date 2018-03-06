@@ -95,8 +95,7 @@ public class UI extends Stage {
         return tmp;
     }
 
-    public boolean getWeapon()
-    {
+    public boolean getWeapon() {
         return weapon;
     }
 

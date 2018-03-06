@@ -36,7 +36,6 @@ public class Menu implements Screen {
     private Camera camera;
     private Viewport viewport;
     private Stage stage;
-    private Controller controller;
     private Hero hero;
     private float horizontalForce = 0;
     private Box2DDebugRenderer b2dr;
@@ -100,12 +99,12 @@ public class Menu implements Screen {
 
         //Multi Events
 
-        controller = new Controller(true);
+        Cave.controller = new Controller(true);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(Cave.MenuPause);
         inputMultiplexer.addProcessor(Cave.ui);
-        inputMultiplexer.addProcessor(controller);
+        inputMultiplexer.addProcessor(Cave.controller);
         inputMultiplexer.addProcessor(creditsScreen);
 
 
@@ -115,19 +114,19 @@ public class Menu implements Screen {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("credit")) {
-                    controller.enterOn();
+                    Cave.controller.enterOn();
                     enterCredit = true;
                     return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("shop")) {
-                    controller.enterOn();
+                    Cave.controller.enterOn();
                     enterShop = true;
                     return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData().equals("cave")) {
-                    controller.enterOn();
+                    Cave.controller.enterOn();
                     enterCave = true;
                     TheBox.cleanWorld();
                     cave.setScreen(new GameLevel(cave));
@@ -139,19 +138,19 @@ public class Menu implements Screen {
                 Body a = contact.getFixtureA().getBody();
                 Body b = contact.getFixtureB().getBody();
                 if (a.getUserData() instanceof Hero && b.getUserData() == "credit") {
-                    controller.enterOff();
+                    Cave.controller.enterOff();
                     enterCredit = false;
                     return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData() == "shop") {
-                    controller.enterOff();
+                    Cave.controller.enterOff();
                     enterShop = false;
                     return;
                 }
 
                 if (a.getUserData() instanceof Hero && b.getUserData() == "cave") {
-                    controller.enterOff();
+                    Cave.controller.enterOff();
                     enterCave = false;
 
                 }
@@ -192,7 +191,7 @@ public class Menu implements Screen {
         } else if (Cave.state.equals(Cave.STATE.GAME)) {
             stage.act();
             stage.draw();
-            controller.draw();
+            Cave.controller.draw();
             Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura);
             cave.ui.draw();
             update(Gdx.graphics.getDeltaTime());
@@ -219,21 +218,21 @@ public class Menu implements Screen {
 
     private void inputUpdate() {
         if (Gdx.input.isTouched()) {
-            if (controller.isLeftPressed())
+            if (Cave.controller.isLeftPressed())
                 hero.wantToMoveLeft();
-            else if (controller.isRightPressed())
+            else if (Cave.controller.isRightPressed())
                 hero.wantToMoveRight();
         } else {
             hero.wantToIdle();
         }
 
-        if (controller.isSellectPresed()) {
+        if (Cave.controller.isSellectPresed()) {
             if (enterShop) System.out.println("weeee shoping time!!!!!!");
             else if (enterCredit) Cave.state = Cave.STATE.CREDIT;
             else if (enterCave) System.out.println("map");
         }
 
-        if (controller.isHomePresed()) {
+        if (Cave.controller.isHomePresed()) {
             Cave.state = Cave.STATE.OPTION;
         }
     }
@@ -273,7 +272,9 @@ public class Menu implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        controller.dispose();
+        Cave.controller.dispose();
+        Cave.controller = null;
+        System.gc();
         hero.destroy();
     }
 }

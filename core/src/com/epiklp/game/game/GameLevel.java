@@ -34,7 +34,6 @@ public class GameLevel implements Screen {
     private Stage stage;
 
     private OrthographicCamera camera;
-    private Controller controller;
 
     private Box2DDebugRenderer b2dr;
 
@@ -60,7 +59,7 @@ public class GameLevel implements Screen {
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
         stage = new Stage(viewport);
         gameContactListener = new GameContactListener();
-        controller = new Controller(false);
+        Cave.controller = new Controller(false);
         Gdx.input.setInputProcessor(new InputMultiplexer());
 
 
@@ -84,7 +83,7 @@ public class GameLevel implements Screen {
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(Cave.MenuPause);
         inputMultiplexer.addProcessor(Cave.ui);
-        inputMultiplexer.addProcessor(controller);
+        inputMultiplexer.addProcessor(Cave.controller);
     }
 
     @Override
@@ -127,7 +126,7 @@ public class GameLevel implements Screen {
             tmr.render();
             stage.draw();
             TheBox.rayHandler.updateAndRender();
-            controller.draw();
+            Cave.controller.draw();
             cave.ui.draw();
 
 
@@ -166,29 +165,29 @@ public class GameLevel implements Screen {
     private void inputUpdate() {
 
         if (Gdx.input.isTouched()) {
-            if (controller.isLeftPressed())
+            if (Cave.controller.isLeftPressed())
                 hero.wantToMoveLeft();
-            else if (controller.isRightPressed())
+            else if (Cave.controller.isRightPressed())
                 hero.wantToMoveRight();
             else
                 hero.wantToIdle();
         }   else
             hero.wantToIdle();
 
-        if (controller.isUpPressed() && hero.canClimbing()) {
+        if (Cave.controller.isUpPressed() && hero.canClimbing()) {
             hero.wantToClimb();
-        } else if (controller.isUpPressed()) {
+        } else if (Cave.controller.isUpPressed()) {
             hero.wantToJump();
         }
 
-        if (controller.isAttackPressed()) {
+        if (Cave.controller.isAttackPressed()) {
             if(Cave.ui.getWeapon())
                 hero.meleeAttack();
             else
                 hero.shoot();
         }
 
-        if (controller.isHomePresed()) {
+        if (Cave.controller.isHomePresed()) {
             Cave.state = Cave.STATE.OPTION;
         }
 
@@ -217,7 +216,9 @@ public class GameLevel implements Screen {
     public void dispose() {
         TheBox.destroyWorld();
         b2dr.dispose();
-        controller.dispose();
+        Cave.controller.dispose();
+        Cave.controller = null;
+        System.gc();
         tmr.dispose();
         map.dispose();
     }
