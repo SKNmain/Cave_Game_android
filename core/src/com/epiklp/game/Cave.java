@@ -20,9 +20,9 @@ public class Cave extends Game {
     }
 
     public enum CaveGame{
-        GAME, MENU, LOGO
+        GAME, MENU
     }
-    public static CaveGame CaveState = CaveGame.LOGO;
+    public static CaveGame CaveState = CaveGame.MENU;
     public static STATE state = STATE.GAME;
     public static String LANGUAGE = "en";
     public static final int WIDTH = 1280;
@@ -40,11 +40,11 @@ public class Cave extends Game {
         change = true;
         renderBox2D = true;
         Assets.load();
-        //Assets.manager.finishLoading();
+        //Assets.MANAGER.finishLoading();
         //this.setScreen(new Logo(this));
         //z tego bedzie mozna zrobic pasek ładowania gdy bedzie wincej assetów
-        while (!Assets.manager.update()) {
-            System.out.println(Assets.manager.getProgress() * 100 + "%");
+        while (!Assets.MANAGER.update()) {
+            System.out.println(Assets.MANAGER.getProgress() * 100 + "%");
         }
         OwnSound.initialize();
         JsonFunction.initzialie();
@@ -54,16 +54,16 @@ public class Cave extends Game {
         else
             JsonFunction.Read();
         JsonFunction.edit("Music");
-        OwnSound.play("menuMusic");
+        OwnSound.firstPlay();
         JsonFunction.updateJSON();
         ui = new UI();
         //Create physics
         TheBox.initWorld();
         menuPause = new Pause(true);
         controller = null;
-        //this.setScreen(new Logo(this));
+        this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        this.setScreen(new GameLevel(this));
+        //this.setScreen(new GameLevel(this));
 
     }
 

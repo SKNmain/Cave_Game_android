@@ -20,7 +20,7 @@ public class Torch extends GameObject {
     float timeToUpdateLight = 0;
 
     public Torch(float x, float y) {
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("torch",0), 16, 20);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("torch",0), 16, 20);
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxSensor(body, 16f, 20f);
@@ -30,7 +30,7 @@ public class Torch extends GameObject {
         body.setGravityScale(0);
 
 
-        Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("torch");
+        Array<Sprite> sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("torch");
         animator.addNewFrames(0.12f, sprites, STATE.ITEM, Animation.PlayMode.LOOP);
     }
 

@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.Cave;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.Controller;
+import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
 import com.epiklp.game.actors.characters.Hero;
@@ -58,12 +59,12 @@ public class Menu implements Screen {
         enterShop = false;
 
         //Download Assets
-        image = new Image(Assets.manager.get(Assets.menuLayer));
+        image = new Image(Assets.MANAGER.get(Assets.menuLayer));
         image.setSize(Cave.WIDTH, Cave.HEIGHT);
-        shop = new Image(Assets.manager.get(Assets.shopLayer));
+        shop = new Image(Assets.MANAGER.get(Assets.shopLayer));
         shop.setSize(200, 200);
         shop.setPosition(500, 55);
-        credit = new Image(Assets.manager.get(Assets.creditLayer));
+        credit = new Image(Assets.MANAGER.get(Assets.creditLayer));
         credit.setSize(150, 150);
         credit.setPosition(180, 55);
 
@@ -128,7 +129,11 @@ public class Menu implements Screen {
                     Cave.controller.enterOn();
                     enterCave = true;
                     TheBox.cleanWorld();
+                    OwnSound.stop();
                     cave.setScreen(new GameLevel(cave));
+                    Cave.CaveState = Cave.CaveGame.GAME;
+                    if(OwnSound.MUSIC)
+                        OwnSound.play();
                 }
             }
 

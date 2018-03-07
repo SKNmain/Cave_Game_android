@@ -21,7 +21,7 @@ public class Controller extends Stage {
         tabLeft = new Table();
         tabLeft.bottom().left();
 
-        buttonRight = new Image(Assets.manager.get(Assets.rightButton));
+        buttonRight = new Image(Assets.MANAGER.get(Assets.rightButton));
         buttonRight.setSize(BUTTON_SIZE, BUTTON_SIZE);
         buttonRight.addListener(new InputListener() {
             @Override
@@ -36,7 +36,7 @@ public class Controller extends Stage {
             }
         });
 
-        buttonLeft = new Image(Assets.manager.get(Assets.leftButton));
+        buttonLeft = new Image(Assets.MANAGER.get(Assets.leftButton));
         buttonLeft.setSize(BUTTON_SIZE, BUTTON_SIZE);
         buttonLeft.addListener(new InputListener() {
             @Override
@@ -60,7 +60,7 @@ public class Controller extends Stage {
         if (menu == false) {
             tabRight = new Table();
             tabRight.setPosition(Gdx.graphics.getWidth() - 64, (Cave.WIDTH / 10));
-            buttonUp = new Image(Assets.manager.get(Assets.upButton));
+            buttonUp = new Image(Assets.MANAGER.get(Assets.upButton));
             buttonUp.setSize(BUTTON_SIZE, BUTTON_SIZE);
             buttonUp.addListener(new InputListener() {
                 @Override
@@ -75,7 +75,7 @@ public class Controller extends Stage {
                 }
             });
 
-            buttonAttack = new Image(Assets.manager.get(Assets.swordAttackButton));
+            buttonAttack = new Image(Assets.MANAGER.get(Assets.swordAttackButton));
             buttonAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
             buttonAttack.addListener(new InputListener() {
                 @Override
@@ -100,7 +100,7 @@ public class Controller extends Stage {
 
         //Pause/Menu
         /*******************************************/
-        buttonHome = new Image(Assets.manager.get(Assets.homeButton));
+        buttonHome = new Image(Assets.MANAGER.get(Assets.homeButton));
         buttonHome.setPosition(Gdx.graphics.getWidth() - 74, Gdx.graphics.getHeight() - 74);
         buttonHome.addListener(new InputListener() {
             @Override
@@ -117,7 +117,7 @@ public class Controller extends Stage {
         addActor(buttonHome);
         /*******************************************/
 
-        sellectButton = new Image(Assets.manager.get(Assets.sellectButton));
+        sellectButton = new Image(Assets.MANAGER.get(Assets.sellectButton));
         sellectButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
         sellectButton.setPosition(Cave.WIDTH - BUTTON_SIZE, 0);
 

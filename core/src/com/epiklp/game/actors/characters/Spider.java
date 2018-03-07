@@ -14,7 +14,7 @@ import com.epiklp.game.functionals.b2d.BodyCreator;
 public class Spider extends Enemy {
 
     public Spider(float x, float y) {
-        super(new Sprite(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 0)), 38, 32);
+        super(new Sprite(Assets.MANAGER.get(Assets.textureAtlas).createSprite("spider", 0)), 38, 32);
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 35f, 20f, 1f, 0);
         BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 45f), GameCharacter.SENSORS.PATROL_SENSOR);
@@ -34,8 +34,8 @@ public class Spider extends Enemy {
         setPatrolPoints();
 
         Array<Sprite> spritesForRunning = new Array<Sprite>();
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 0));
-        spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 1));
+        spritesForRunning.add(Assets.MANAGER.get(Assets.textureAtlas).createSprite("spider", 0));
+        spritesForRunning.add(Assets.MANAGER.get(Assets.textureAtlas).createSprite("spider", 1));
         animator.addNewFrames(0.2f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.2f, spritesForRunning, STATE.IDLE, Animation.PlayMode.LOOP);
 

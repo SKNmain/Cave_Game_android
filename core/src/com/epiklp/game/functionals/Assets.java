@@ -17,7 +17,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class Assets {
 
     //Asset
-    public static final AssetManager manager = new AssetManager();
+    public static final AssetManager MANAGER = new AssetManager();
 
     public static final AssetDescriptor<TextureAtlas> textureAtlas = new AssetDescriptor<TextureAtlas>("enemies/enemies.atlas", TextureAtlas.class);
 
@@ -64,7 +64,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> exit = new AssetDescriptor<Texture>("PauseMenuButtons/Exit.png", Texture.class);
     public static final AssetDescriptor<Texture> on = new AssetDescriptor<Texture>("PauseMenuButtons/ON.png", Texture.class);
     public static final AssetDescriptor<Texture> off = new AssetDescriptor<Texture>("PauseMenuButtons/OFF.png", Texture.class);
-    public static final AssetDescriptor<Texture> resume = new AssetDescriptor<Texture>("PauseMenuButtons/resume.png", Texture.class);
+    public static final AssetDescriptor<Texture> resume = new AssetDescriptor<Texture>("PauseMenuButtons/Resume.png", Texture.class);
+    public static final AssetDescriptor<Texture> restart = new AssetDescriptor<Texture>("PauseMenuButtons/Restart.png", Texture.class);
     public static final AssetDescriptor<Texture> render = new AssetDescriptor<Texture>("PauseMenuButtons/Box2D.png", Texture.class);
     /*******************************************/
 
@@ -72,7 +73,6 @@ public class Assets {
     //menu
     /*******************************************/
     public static final AssetDescriptor<Texture> menuMap = new AssetDescriptor<Texture>("Map/menu_map.png", Texture.class);
-    public static final AssetDescriptor<Music> menuMusic = new AssetDescriptor<Music>("SFX/menu.wav", Music.class);
     public static final AssetDescriptor<Texture> menuLayer = new AssetDescriptor<Texture>("menu/all.png", Texture.class);
     public static final AssetDescriptor<Texture> shopLayer = new AssetDescriptor<Texture>("menu/shop.png", Texture.class);
     public static final AssetDescriptor<Texture> creditLayer = new AssetDescriptor<Texture>("menu/credit.png", Texture.class);
@@ -102,6 +102,8 @@ public class Assets {
     public static final AssetDescriptor<Sound> jumpingSound = new AssetDescriptor<Sound>("SFX/jump.ogg", Sound.class);
     public static final AssetDescriptor<Sound> swordSound = new AssetDescriptor<Sound>("SFX/sword.ogg", Sound.class);
     public static final AssetDescriptor<Sound> castingFlameSpell = new AssetDescriptor<Sound>("SFX/flame.ogg", Sound.class);
+    public static final AssetDescriptor<Music> menuMusic = new AssetDescriptor<Music>("SFX/menu.wav", Music.class);
+    public static final AssetDescriptor<Music> gameMusic = new AssetDescriptor<Music>("SFX/cave_theme.ogg", Music.class);
 
 
     public static BitmapFont Font; //Font
@@ -110,78 +112,80 @@ public class Assets {
 
     public static void load() {
 
-        manager.load(logo);
+        MANAGER.load(logo);
 
-        manager.load(textureAtlas);
+        MANAGER.load(textureAtlas);
 
-        manager.load(player);
-        manager.load(flameDemon);
+        MANAGER.load(player);
+        MANAGER.load(flameDemon);
 
         //SFX
-        manager.load(leftFootStep);
-        manager.load(rightFootStep);
-        manager.load(jumpingSound);
-        manager.load(swordSound);
-        manager.load(castingFlameSpell);
+        MANAGER.load(leftFootStep);
+        MANAGER.load(rightFootStep);
+        MANAGER.load(jumpingSound);
+        MANAGER.load(swordSound);
+        MANAGER.load(castingFlameSpell);
+        MANAGER.load(menuMusic);
+        MANAGER.load(gameMusic);
 
         //ControlerButtons
-        manager.load(leftButton);
-        manager.load(rightButton);
-        manager.load(upButton);
-        manager.load(mageAttackButton);
-        manager.load(swordAttackButton);
-        manager.load(homeButton);
+        MANAGER.load(leftButton);
+        MANAGER.load(rightButton);
+        MANAGER.load(upButton);
+        MANAGER.load(mageAttackButton);
+        MANAGER.load(swordAttackButton);
+        MANAGER.load(homeButton);
 
         //PauseButtons
-        manager.load(exit);
-        manager.load(on);
-        manager.load(off);
-        manager.load(resume);
-        manager.load(render);
+        MANAGER.load(exit);
+        MANAGER.load(on);
+        MANAGER.load(off);
+        MANAGER.load(resume);
+        MANAGER.load(render);
+        MANAGER.load(restart);
 
         //Buttons
-        manager.load(restartButton);
-        manager.load(resumeButton);
-        manager.load(sellectButton);
-        manager.load(pauseWindow);
-        manager.load(backButton);
-        manager.load(quitButton);
-        manager.load(playButton);
-        manager.load(continueButton);
-        manager.load(creditButton);
-        manager.load(enterButton);
+        MANAGER.load(restartButton);
+        MANAGER.load(resumeButton);
+        MANAGER.load(sellectButton);
+        MANAGER.load(pauseWindow);
+        MANAGER.load(backButton);
+        MANAGER.load(quitButton);
+        MANAGER.load(playButton);
+        MANAGER.load(continueButton);
+        MANAGER.load(creditButton);
+        MANAGER.load(enterButton);
 
         //Menu
-        manager.load(menuLayer);
-        manager.load(shopLayer);
-        manager.load(creditLayer);
-        manager.load(cave1Layer);
-        manager.load(cave2Layer);
-        manager.load(menuMap);
-        manager.load(menuMusic);
+        MANAGER.load(menuLayer);
+        MANAGER.load(shopLayer);
+        MANAGER.load(creditLayer);
+        MANAGER.load(cave1Layer);
+        MANAGER.load(cave2Layer);
+        MANAGER.load(menuMap);
 
         //UI
-        manager.load(statusBelt);
-        manager.load(statusHp);
-        manager.load(statusMana);
-        manager.load(statusTime);
-        manager.load(uiStaff);
-        manager.load(uiSword);
-        manager.load(uiBag);
+        MANAGER.load(statusBelt);
+        MANAGER.load(statusHp);
+        MANAGER.load(statusMana);
+        MANAGER.load(statusTime);
+        MANAGER.load(uiStaff);
+        MANAGER.load(uiSword);
+        MANAGER.load(uiBag);
 
 
         String tmp = "";
         for (int i = 0; i < 9; i++) {
             tmp = "layer/" + (i + 1) + ".png";
             layer[i] = new AssetDescriptor<Texture>(tmp, Texture.class);
-            manager.load(layer[i]);
+            MANAGER.load(layer[i]);
         }
 
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/font.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 80;
+        parameter.size = 16;
         parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
         BitmapFont character = generator.generateFont(parameter);
         Font = character;
@@ -189,8 +193,8 @@ public class Assets {
     }
 
     public static void dispose() {
-        manager.dispose();
-        manager.dispose();
+        MANAGER.dispose();
+        MANAGER.dispose();
     }
 
 

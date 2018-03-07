@@ -1,9 +1,7 @@
 package com.epiklp.game.actors.weapons;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
-import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.epiklp.game.Cave;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
@@ -19,7 +17,7 @@ public class Sword extends Weapon {
     private float time;
     RevoluteJoint joint;
     public Sword(GameCharacter gameCharacterRef, int hitPoints, boolean turn){
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("sejminar", -1), 22f, 38, hitPoints, gameCharacterRef);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("sejminar", -1), 22f, 38, hitPoints, gameCharacterRef);
         this.turn = turn;
         time = 0.4f;
         float x = gameCharacterRef.getBody().getPosition().x * Cave.PPM / Cave.SCALE;

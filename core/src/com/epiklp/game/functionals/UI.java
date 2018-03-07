@@ -14,7 +14,6 @@ import com.epiklp.game.Cave;
 
 
 public class UI extends Stage {
-    private BitmapFont bitmapFont;
     private Label text, lifeText, magicText, auraText;
     private Label.LabelStyle labelStyle;
     private Image lifeTexture, magicTexture, timeTexture;
@@ -25,31 +24,30 @@ public class UI extends Stage {
 
 
     public UI() {
-        bitmapFont = new BitmapFont();
         weapon = true;
-        labelStyle = new Label.LabelStyle(bitmapFont, Color.WHITE);
+        labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
         text = new Label("FPS:" + Gdx.graphics.getFramesPerSecond(), labelStyle);
         text.setPosition(0, Cave.HEIGHT /2);
         addActor(text);
-        lifeTexture = new Image(Assets.manager.get(Assets.statusHp));
+        lifeTexture = new Image(Assets.MANAGER.get(Assets.statusHp));
         lifeTexture.setPosition(219, Cave.HEIGHT - 69);
         lifeTexture.setScale(Cave.SCALE*1.5f);
         lifeText = new Label("HP: 0/0", labelStyle);
         lifeText.setPosition(219, Cave.HEIGHT - 69);
-        magicTexture = new Image(Assets.manager.get(Assets.statusMana));
+        magicTexture = new Image(Assets.MANAGER.get(Assets.statusMana));
         magicTexture.setPosition(219, Cave.HEIGHT - 105);
         magicTexture.setScale(Cave.SCALE*1.5f);
         magicText = new Label("MP: 0/0", labelStyle);
         magicText.setPosition(219, Cave.HEIGHT - 105);
-        timeTexture = new Image(Assets.manager.get(Assets.statusTime));
+        timeTexture = new Image(Assets.MANAGER.get(Assets.statusTime));
         timeTexture.setPosition(219, Cave.HEIGHT - 140);
         timeTexture.setScale(Cave.SCALE*1.5f);
         auraText = new Label("AURA: 0/0", labelStyle);
         auraText.setPosition(219, Cave.HEIGHT - 140);
-        statusBelt = new Image(Assets.manager.get(Assets.statusBelt));
+        statusBelt = new Image(Assets.MANAGER.get(Assets.statusBelt));
         statusBelt.setScale(Cave.SCALE*1.5f);
         statusBelt.setPosition(0, Cave.HEIGHT-statusBelt.getHeight()*2*1.5f);
-        sword = new Image(Assets.manager.get(Assets.uiSword));
+        sword = new Image(Assets.MANAGER.get(Assets.uiSword));
         sword.setScale(1.75f);
         sword.setPosition(38, Cave.HEIGHT - sword.getHeight()*2 - 10);
         sword.addListener(new ClickListener()
@@ -61,7 +59,7 @@ public class UI extends Stage {
                 addActor(staff);
             }
         });
-        staff = new Image(Assets.manager.get(Assets.uiStaff));
+        staff = new Image(Assets.MANAGER.get(Assets.uiStaff));
         staff.setScale(2.25f);
         staff.setPosition(25, Cave.HEIGHT - sword.getHeight()*2 - 40);
         staff.addListener(new ClickListener()

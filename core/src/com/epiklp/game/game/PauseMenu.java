@@ -19,10 +19,10 @@ public class PauseMenu extends Stage {
     private Table tbl;
 
     public PauseMenu() {
-        pauseWindow = new Image(Assets.manager.get(Assets.pauseWindow));
+        pauseWindow = new Image(Assets.MANAGER.get(Assets.pauseWindow));
         pauseWindow.setScale(.8f);
         pressExit = pressRestart = presssResume = false;
-        buttonExit = new Image(Assets.manager.get(Assets.quitButton));
+        buttonExit = new Image(Assets.MANAGER.get(Assets.quitButton));
         buttonExit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -37,7 +37,7 @@ public class PauseMenu extends Stage {
         });
         buttonExit.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
 
-        buttonResume = new Image(Assets.manager.get(Assets.resumeButton));
+        buttonResume = new Image(Assets.MANAGER.get(Assets.resumeButton));
         buttonResume.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -53,7 +53,7 @@ public class PauseMenu extends Stage {
         buttonResume.setPosition(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2 + 64);
 
 
-        buttonRestart = new Image(Assets.manager.get(Assets.restartButton));
+        buttonRestart = new Image(Assets.MANAGER.get(Assets.restartButton));
         buttonRestart.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

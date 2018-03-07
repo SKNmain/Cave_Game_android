@@ -17,7 +17,7 @@ import com.epiklp.game.actors.characters.GameCharacter;
 public class FireBall extends Weapon {
 
     public FireBall(GameCharacter gameCharacterRef, int hitPoints, boolean turn) {
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("fireball"), 25, 30, hitPoints, gameCharacterRef);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("fireball"), 25, 30, hitPoints, gameCharacterRef);
         this.turn = turn;
         time = 5f;
         float x = gameCharacterRef.getBody().getPosition().x * Cave.PPM / Cave.SCALE;
@@ -33,10 +33,10 @@ public class FireBall extends Weapon {
         light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.598f, 0.414f, 1f), true, 8, 0, 0);
 
 
-        Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("fireball");
+        Array<Sprite> sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("fireball");
         animator.addNewFrames(0.15f, sprites, STATE.ITEM, Animation.PlayMode.LOOP);
 
-        Assets.manager.get(Assets.castingFlameSpell).play(0.35f);
+        Assets.MANAGER.get(Assets.castingFlameSpell).play(0.35f);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class Raven extends Enemy {
         initStats();
         setPatrolPoints();
 
-        Array<Sprite> spritesForRunning = Assets.manager.get(Assets.textureAtlas).createSprites("crown");
+        Array<Sprite> spritesForRunning = Assets.MANAGER.get(Assets.textureAtlas).createSprites("crown");
         animator.addNewFrames(0.08f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.08f, spritesForRunning, STATE.IDLE, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.08f, spritesForRunning, STATE.ATTACKING, Animation.PlayMode.LOOP);
