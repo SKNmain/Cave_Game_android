@@ -1,6 +1,7 @@
 package com.epiklp.game.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.epiklp.game.Cave;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.OwnSound;
@@ -19,17 +21,18 @@ import com.epiklp.game.functionals.OwnSound;
 public class Pause extends Stage {
     private final float BUTTON_SIZE = 128;
     private Image buttonResume,  buttonPlayMusic, buttonPlayEffects, buttonMenu, buttonBox,
-            buttonRestart, imageOn, imageOff;
+            buttonRestart;
     private Table tablePlayer, tableDev;
     private boolean restartButton = false;
     private boolean menuButton = false;
     private Label textResume, textMusic, textEffects, textMenu, textBox;
     private Label.LabelStyle labelStyle;
+    private TextureRegionDrawable textureOff, textureOn;
 
     public Pause(boolean dev)
     {
-        imageOn = new Image(Assets.MANAGER.get(Assets.on));
-        imageOff = new Image(Assets.MANAGER.get(Assets.off));
+        textureOff = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.off)));
+        textureOn = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.on)));
         labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
         textResume = new Label("RESUME", labelStyle);
         textMusic = new Label("MUSIC", labelStyle);
@@ -44,19 +47,21 @@ public class Pause extends Stage {
             }
         });
         if(OwnSound.MUSIC)
-            buttonPlayMusic = imageOn;
+            buttonPlayMusic = new Image(textureOn);
         else
-            buttonPlayMusic = imageOff;
+            buttonPlayMusic = new Image(textureOff);
         buttonPlayMusic.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(OwnSound.MUSIC) {
                     OwnSound.stop();
-                    buttonPlayMusic = imageOff;
+                    buttonPlayMusic.setDrawable(textureOff);
+
                 }
                 else {
                     OwnSound.play();
-                    buttonPlayMusic = imageOn;
+                    buttonPlayMusic.setDrawable(textureOn);
+
                 }
                 OwnSound.MUSIC = !OwnSound.MUSIC;
             }
