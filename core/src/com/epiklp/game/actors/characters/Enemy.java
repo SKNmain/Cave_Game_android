@@ -66,6 +66,10 @@ public abstract class Enemy extends GameCharacter {
         return this;
     }
 
+    public void attack(GameCharacter gameCharacter){
+        
+    }
+
     public void setHeroLastPos(Vector2 pos) {
         this.heroLastPos = pos;
     }

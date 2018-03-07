@@ -27,21 +27,21 @@ import box2dLight.RayHandler;
 
 public class TheBox {
 
-/*
-    public static final short CATEGORY_PLAYER = 0x0001;
-    public static final short CATEGORY_ENEMY = 0x0002;
-    public static final short CATEGORY_MAP = 0x0004;
-    public static final short CATEGORY_ITEM = 0x0008;
-    public static final short CATEGORY_BULLET = 0x0032;
-    public static final short CATEGORY_WALL = 0x0128;
+    /*
+        public static final short CATEGORY_PLAYER = 0x0001;
+        public static final short CATEGORY_ENEMY = 0x0002;
+        public static final short CATEGORY_MAP = 0x0004;
+        public static final short CATEGORY_ITEM = 0x0008;
+        public static final short CATEGORY_BULLET = 0x0032;
+        public static final short CATEGORY_WALL = 0x0128;
 
-    public static final short MASK_PLAYER = 1;
-    public static final short MASK_WALL = 1;
-    public static final short MASK_ENEMY = CATEGORY_MAP | CATEGORY_SENSOR | CATEGORY_PLAYER | CATEGORY_BULLET;
-    public static final short MASK_SENSOR = CATEGORY_PLAYER;
-    public static final short MASK_BULLET = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY;
-*/
-public static final short CATEGORY_SENSOR = 0x0001;
+        public static final short MASK_PLAYER = 1;
+        public static final short MASK_WALL = 1;
+        public static final short MASK_ENEMY = CATEGORY_MAP | CATEGORY_SENSOR | CATEGORY_PLAYER | CATEGORY_BULLET;
+        public static final short MASK_SENSOR = CATEGORY_PLAYER;
+        public static final short MASK_BULLET = CATEGORY_MAP | CATEGORY_BULLET | CATEGORY_PLAYER | CATEGORY_ENEMY;
+    */
+    public static final short CATEGORY_SENSOR = 0x0001;
     public static final short CATEGORY_BODY = 0x004;
     public static final short CATEGORY_LIGHT = 0x008;
     public static final short MASK_SENSOR = CATEGORY_BODY | CATEGORY_SENSOR;
@@ -75,7 +75,7 @@ public static final short CATEGORY_SENSOR = 0x0001;
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         //rayHandler.setAmbientLight(0.7f);
-        rayHandler.setAmbientLight(new Color(.2f, .2f, .2f, 0.7f));
+        rayHandler.setAmbientLight(new Color(.2f, .2f, .2f, 0.1f));
         rayHandler.setBlurNum(3);
         rayHandler.setBlur(true);
         rayHandler.diffuseBlendFunc.set(GL20.GL_DST_COLOR, GL20.GL_SRC_COLOR);

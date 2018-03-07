@@ -51,15 +51,10 @@ public class Hero extends GameCharacter implements Shootable {
         light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
 
 
-        Array<Sprite> sprites = new Array<Sprite>();
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle", 0));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_idle", 1));
+        Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("hero_idle");
         animator.addNewFrames(0.5f, sprites, STATE.IDLE, Animation.PlayMode.LOOP);
         sprites.clear();
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 0));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 1));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 2));
-        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("hero_run", 3));
+        sprites = Assets.manager.get(Assets.textureAtlas).createSprites("hero_run");
         animator.addNewFrames(0.2f, sprites, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.2f, sprites, STATE.CLIMBING, Animation.PlayMode.LOOP);
 
