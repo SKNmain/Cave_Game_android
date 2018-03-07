@@ -81,7 +81,7 @@ public class GameLevel implements Screen {
 
 
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        inputMultiplexer.addProcessor(Cave.MenuPause);
+        inputMultiplexer.addProcessor(Cave.menuPause);
         inputMultiplexer.addProcessor(Cave.ui);
         inputMultiplexer.addProcessor(Cave.controller);
     }
@@ -139,7 +139,14 @@ public class GameLevel implements Screen {
             tmr.render();
             stage.draw();
             TheBox.rayHandler.updateAndRender();
-            Cave.MenuPause.draw();
+            Cave.menuPause.draw();
+            if(Cave.menuPause.getMenuButton())
+            {
+                TheBox.cleanWorld();
+                dispose();
+                Cave.state = Cave.STATE.GAME;
+                cave.setScreen(new Menu(cave));
+            }
         }
         if(Cave.renderBox2D)
             b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
@@ -214,7 +221,7 @@ public class GameLevel implements Screen {
 
     @Override
     public void dispose() {
-        TheBox.destroyWorld();
+        //TheBox.destroyWorld();
         b2dr.dispose();
         Cave.controller.dispose();
         Cave.controller = null;

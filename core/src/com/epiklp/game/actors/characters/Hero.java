@@ -44,8 +44,6 @@ public class Hero extends GameCharacter implements Shootable {
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 24, 58, 1f, 0f);
-
-
         BodyCreator.createBoxSensor(body, 14f, 10f, new Vector2(0, -60), SENSORS.JUMP_SENSOR);
         BodyCreator.createBoxSensor(body, 28f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
         body.setUserData(this);
