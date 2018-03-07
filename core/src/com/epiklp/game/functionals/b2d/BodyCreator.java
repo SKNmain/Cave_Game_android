@@ -68,7 +68,7 @@ public class BodyCreator {
     public static void createBoxShape(Body body, float width, float height, float density, float friction, Object userData) {
         createBoxShape(body, width, height, density, friction, new Vector2(0,0),  userData);
     }
-    public static void createBoxShape(Body body, float density, float friction, boolean isSensor, Vector2 ... verticles) {
+    public static void createBoxShapeFromVer(Body body, float density, float friction, boolean isSensor, Vector2 ... verticles) {
         PolygonShape shape = new PolygonShape();
         shape.set(verticles);
         fixDef.shape = shape;

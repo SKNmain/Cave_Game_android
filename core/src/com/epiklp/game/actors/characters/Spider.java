@@ -37,6 +37,7 @@ public class Spider extends Enemy {
         spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 0));
         spritesForRunning.add(Assets.manager.get(Assets.textureAtlas).createSprite("spider", 1));
         animator.addNewFrames(0.2f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
+        animator.addNewFrames(0.2f, spritesForRunning, STATE.IDLE, Animation.PlayMode.LOOP);
 
     }
 
@@ -52,7 +53,7 @@ public class Spider extends Enemy {
         this.attackSpeed = 2;
         this.runSpeed = 2.5f;
         this.strengh = 10;
-        this.attackRange = 5f;
+        this.attackRange = 2.6f;
         this.patrolRange = 5f;
         state = STATE.RUNNING;
     }

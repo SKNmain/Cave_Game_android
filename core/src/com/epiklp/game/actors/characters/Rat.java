@@ -35,8 +35,11 @@ public class Rat extends Enemy {
         //light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0, 0);
 
 
-        Array<Sprite> spritesForRunning = Assets.manager.get(Assets.textureAtlas).createSprites("rat");
-        animator.addNewFrames(0.13f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
+        Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("rat");
+        animator.addNewFrames(0.13f, sprites, STATE.RUNNING, Animation.PlayMode.LOOP);
+        sprites.clear();
+        sprites.add(Assets.manager.get(Assets.textureAtlas).createSprite("rat", 0));
+        animator.addNewFrames(0.13f, sprites, STATE.IDLE, Animation.PlayMode.LOOP);
 
 
     }
@@ -54,7 +57,7 @@ public class Rat extends Enemy {
         this.attackSpeed = 2;
         this.runSpeed = 2;
         this.strengh = 10;
-        this.attackRange = 5f;
+        this.attackRange = 2.6f;
         this.patrolRange = 5f;
         state = STATE.RUNNING;
     }

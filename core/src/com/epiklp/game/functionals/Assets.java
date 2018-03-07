@@ -99,7 +99,9 @@ public class Assets {
     //SFX
     public static final AssetDescriptor<Sound> leftFootStep = new AssetDescriptor<Sound>("SFX/lFootStone.ogg", Sound.class);
     public static final AssetDescriptor<Sound> rightFootStep = new AssetDescriptor<Sound>("SFX/rFootStone.ogg", Sound.class);
-    public static final AssetDescriptor<Sound> flame = new AssetDescriptor<Sound>("SFX/flame.ogg", Sound.class);
+    public static final AssetDescriptor<Sound> jumpingSound = new AssetDescriptor<Sound>("SFX/jump.ogg", Sound.class);
+    public static final AssetDescriptor<Sound> swordSound = new AssetDescriptor<Sound>("SFX/sword.ogg", Sound.class);
+    public static final AssetDescriptor<Sound> castingFlameSpell = new AssetDescriptor<Sound>("SFX/flame.ogg", Sound.class);
 
 
     public static BitmapFont Font; //Font
@@ -118,7 +120,9 @@ public class Assets {
         //SFX
         manager.load(leftFootStep);
         manager.load(rightFootStep);
-        manager.load(flame);
+        manager.load(jumpingSound);
+        manager.load(swordSound);
+        manager.load(castingFlameSpell);
 
         //ControlerButtons
         manager.load(leftButton);
