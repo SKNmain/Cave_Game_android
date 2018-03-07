@@ -48,6 +48,11 @@ public class Spider extends Enemy {
     }
 
     @Override
+    protected void attack() {
+
+    }
+
+    @Override
     public void initStats() {
         this.actLife = this.maxLife = 30;
         this.attackSpeed = 2;

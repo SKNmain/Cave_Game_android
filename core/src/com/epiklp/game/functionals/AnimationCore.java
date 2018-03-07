@@ -18,7 +18,6 @@ public class AnimationCore {
     private float sizeY;
     private float elapsedTime;
 
-
     public AnimationCore() {
         sizeX = 1f;
         sizeY = 1f;

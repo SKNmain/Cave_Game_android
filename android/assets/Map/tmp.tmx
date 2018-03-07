@@ -140,7 +140,7 @@
   <object id="36" name="Raven" x="738.333" y="802.333" width="48" height="48"/>
   <object id="40" name="Rat" x="386" y="257" width="48" height="48"/>
   <object id="47" name="Rat" x="816.333" y="404.667" width="16" height="14"/>
-  <object id="99" name="hero" x="2624" y="672" width="6" height="32"/>
+  <object id="99" name="hero" x="2551.27" y="932.606" width="6" height="32"/>
   <object id="100" name="Raven" x="2603" y="928" width="48" height="48"/>
   <object id="101" name="Slime" x="2208" y="640" width="48" height="48"/>
   <object id="102" name="Raven" x="2260" y="914" width="48" height="48"/>

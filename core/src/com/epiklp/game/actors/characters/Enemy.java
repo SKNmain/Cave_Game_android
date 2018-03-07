@@ -2,6 +2,8 @@ package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.epiklp.game.actors.weapons.EnemyMelee;
+import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 
 /**
@@ -21,23 +23,27 @@ public abstract class Enemy extends GameCharacter {
     }
 
     protected boolean flying; //if we want a flying creature, we need set it to true in constructor
+    protected boolean following;
+    protected boolean attacked;
 
     protected float chanceOfDrop;
     protected float attackRange;
+    protected float attackTime;
+    protected float attackTimeout;
     protected float patrolRange;
+
+
     protected Vector2 leftPatrolPoints;
+
     protected Vector2 rightPatrolPoints;
+    protected boolean leftDownSensor;
+    protected boolean rightDownSensor;
+    protected boolean leftUpSensor;
+    protected boolean rightUpSensor;
+    protected boolean leftAttackSensor;
 
-    protected byte leftDownSensor;
-    protected byte rightDownSensor;
-    protected byte leftUpSensor;
-    protected byte rightUpSensor;
 
-
-    protected boolean following;
-    protected boolean attacked;
-    protected boolean canAttack;
-
+    protected boolean rightAttackSensor;
 
 
     protected Vector2 heroLastPos;
@@ -54,7 +60,10 @@ public abstract class Enemy extends GameCharacter {
     @Override
     public void act(float delta) {
         super.act(delta);
+        attackDelta   += delta;
+        attackTimeout += delta;
         moving();
+
     }
 
     //return this, only for shorter record in GameContactListener
@@ -98,9 +107,9 @@ public abstract class Enemy extends GameCharacter {
                 }
 
                 if (flying) {
-                    if (rightUpSensor > 0) rightPatrolPoints.x = body.getPosition().x;
+                    if (rightUpSensor) rightPatrolPoints.x = body.getPosition().x;
                 } else {
-                    if (rightUpSensor > 0 || rightDownSensor < 0) {
+                    if (rightUpSensor || rightDownSensor) {
                         rightPatrolPoints.x = body.getPosition().x;
                     }
                 }
@@ -109,13 +118,13 @@ public abstract class Enemy extends GameCharacter {
                 setSpeedX(-runSpeed);
                 float distance = body.getPosition().x - leftPatrolPoints.x;
 
-                if (distance <= 0 || leftDownSensor > 0) {
+                if (distance <= 0)
                     turn = true;
-                }
+
                 if (flying) {
-                    if (leftUpSensor > 0) leftPatrolPoints.x = body.getPosition().x;
+                    if (leftUpSensor) leftPatrolPoints.x = body.getPosition().x;
                 } else {
-                    if (leftUpSensor > 0 || leftDownSensor < 0){
+                    if (leftUpSensor || leftDownSensor) {
                         leftPatrolPoints.x = body.getPosition().x;
                     }
                 }
@@ -126,14 +135,14 @@ public abstract class Enemy extends GameCharacter {
 
     protected void moving() {
         // hero get away, set to patroling
-        if (attacked && body.getPosition().dst(heroLastPos) > 20f){
+        if (attacked && body.getPosition().dst(heroLastPos) > 20f) {
             attacked = false;
             state = STATE.RUNNING;
         }
 
-        if(flying){
-            if(rightDownSensor < 0) setSpeedY(body.getMass());
-            else if( leftDownSensor < 0) setSpeedY(body.getMass());
+        if (flying) {
+            if (rightDownSensor) setSpeedY(body.getMass());
+            else if (leftDownSensor) setSpeedY(body.getMass());
         }
 
         if (following || attacked) {
@@ -147,7 +156,8 @@ public abstract class Enemy extends GameCharacter {
     protected void followHero() {
         if (heroLastPos.x > body.getPosition().x - attackRange && heroLastPos.x < body.getPosition().x + attackRange) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
-            state = STATE.IDLE;
+            wantToAttack();
+
         } else if (heroLastPos.x >= body.getPosition().x - attackRange) {
             state = STATE.RUNNING;
             turn = true;
@@ -159,22 +169,58 @@ public abstract class Enemy extends GameCharacter {
         }
     }
 
-    protected void setSensorAround(Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
-        Vector2 defSize =  new Vector2(5f, 5f);
-        setSensorAround(defSize, defSize, defSize, defSize, posLD, posRD, posLU, posRU);
+    private void wantToAttack() {
+        if (attackDelta >= attackSpeed) {
+            if (leftAttackSensor) {
+                state = STATE.ATTACKING;
+                turn = false;
+                attackDelta = elapsedTime = 0;
+                attack();
+            } else if (rightAttackSensor) {
+                state = STATE.ATTACKING;
+                turn = true;
+                attackDelta = elapsedTime = 0;
+                attack();
+            }
+            attackTimeout = 0;
+        } else if( attackTimeout >= attackTime){
+            state = STATE.IDLE;
+        }
+
     }
+
+    abstract protected void attack();
+
+    protected void setSensorAround(Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
+        Vector2 defSize = new Vector2(5f, 5f);
+        setSensorAround(defSize, defSize, defSize, defSize, posLD, posRD, posLU, posRU, new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0), new Vector2(0, 0));
+    }
+
+    protected void setSensorAround(Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU, Vector2 sizeLA, Vector2 sizeRA, Vector2 posLA, Vector2 posRA) {
+        Vector2 defSize = new Vector2(5f, 5f);
+        setSensorAround(defSize, defSize, defSize, defSize, posLD, posRD, posLU, posRU, sizeLA, sizeRA, posLA, posRA);
+    }
+
     protected void setSensorAround(Vector2 sizeLD, Vector2 sizeRD, Vector2 sizeLU, Vector2 sizeRU,
-                                   Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU) {
+                                   Vector2 posLD, Vector2 posRD, Vector2 posLU, Vector2 posRU,
+                                   Vector2 sizeLA, Vector2 sizeRA, Vector2 posLA, Vector2 posRA) {
+
         BodyCreator.createBoxSensor(body, sizeLD.x, sizeLD.y, posLD, SENSORS.LEFT_DOWN_SENSOR);
         BodyCreator.createBoxSensor(body, sizeRD.x, sizeRD.y, posRD, SENSORS.RIGHT_DOWN_SENSOR);
         BodyCreator.createBoxSensor(body, sizeLU.x, sizeLU.y, posLU, SENSORS.LEFT_UP_SENSOR);
         BodyCreator.createBoxSensor(body, sizeRU.x, sizeRU.y, posRU, SENSORS.RIGHT_UP_SENSOR);
+        BodyCreator.createBoxSensor(body, sizeLA.x, sizeLA.y, posLA, SENSORS.LEFT_ATTACK_SENSOR);
+        BodyCreator.createBoxSensor(body, sizeRA.x, sizeRA.y, posRA, SENSORS.RIGHT_ATTACK_SENSOR);
+
     }
-    public void setSensorUp(byte active, SENSORS sensor) {
-        if (sensor == SENSORS.LEFT_DOWN_SENSOR) leftDownSensor += active;
-        else if (sensor == SENSORS.LEFT_UP_SENSOR) leftUpSensor += active;
-        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor += active;
-        else if (sensor == SENSORS.RIGHT_UP_SENSOR) rightUpSensor += active;
+
+    public void setSensorUp(boolean active, SENSORS sensor) {
+        if (sensor == SENSORS.LEFT_DOWN_SENSOR) leftDownSensor = active;
+        else if (sensor == SENSORS.LEFT_UP_SENSOR) leftUpSensor = active;
+        else if (sensor == SENSORS.RIGHT_DOWN_SENSOR) rightDownSensor = active;
+        else if (sensor == SENSORS.RIGHT_UP_SENSOR) rightUpSensor = active;
+        else if (sensor == SENSORS.LEFT_ATTACK_SENSOR) leftAttackSensor = active;
+        else if (sensor == SENSORS.RIGHT_ATTACK_SENSOR) rightAttackSensor = active;
     }
 
 }

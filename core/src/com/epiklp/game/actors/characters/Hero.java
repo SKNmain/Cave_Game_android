@@ -36,6 +36,7 @@ public class Hero extends GameCharacter implements Shootable {
 
     private float damageTimeout;
     private float jumpTimeout;
+    private float fallingTime;
     private float timeToNextFootStep;
     private boolean whichFoot;
 
@@ -83,11 +84,16 @@ public class Hero extends GameCharacter implements Shootable {
         animate(delta, state);
         timeToNextFootStep += delta;
         attackDelta += delta;
-        jumpTimeout--;
-        damageTimeout--;
+        jumpTimeout += delta;
+        damageTimeout += delta;
 
         if (actAura <= 0) light.setActive(false);
         else light.setActive(true);
+
+        //falling damage
+        //if(body.getLinearVelocity().y < 0 && onGround <= 0) fallingTime += delta;
+        //else fallingTime = 0;
+        //if(fallingTime > 0.5f && onGround > 0) setActLife(-50);
 
         if (state == STATE.RUNNING) {
             if (timeToNextFootStep > .4f && onGround > 0) {
@@ -121,7 +127,6 @@ public class Hero extends GameCharacter implements Shootable {
         } else if (wantToJump) {
             jump();
         }
-
         if (state == STATE.IDLE && canClimbing()) {//opuszczanie się po ściance
             setSpeedY(-0.5f);
         }
@@ -154,9 +159,9 @@ public class Hero extends GameCharacter implements Shootable {
     }
     @Override
     public void getDamage(int damage) {
-        if (damageTimeout < 0) {
+        if (damageTimeout > 1) {
             setActLife(-damage);
-            damageTimeout = 0.1f;
+            damageTimeout = 0;
         }
     }
 
@@ -196,10 +201,10 @@ public class Hero extends GameCharacter implements Shootable {
 
     private void jump() {
         if (onGround > 0) {
-            if (jumpTimeout <= 0) {
+            if (jumpTimeout >= 1.2f) {
                 Assets.manager.get(Assets.jumpingSound).play(0.3f);
                 body.setLinearVelocity(0, 16.5f);
-                jumpTimeout = 65f;
+                jumpTimeout = 0;
             }
         }
         wantToJump = false;
@@ -224,9 +229,9 @@ public class Hero extends GameCharacter implements Shootable {
     public void meleeAttack() {
         if (attackSpeed <= attackDelta) {
             Assets.manager.get(Assets.swordSound).play(0.1f);
-            attackDelta = 0;
             Sword sword = new Sword(this, strengh, turn);
             this.getStage().addActor(sword);
+            attackDelta = 0;
         }
     }
 }

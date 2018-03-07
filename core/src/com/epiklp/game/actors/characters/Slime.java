@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.epiklp.game.actors.weapons.EnemyMelee;
+import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
@@ -22,10 +24,8 @@ public class Slime extends Enemy {
         BodyCreator.createBoxShape(body, 34f, 32f, 10f,0);
         //Sensors
         BodyCreator.createBoxSensor(body, 150f, 65f, new Vector2(0, 45f), SENSORS.PATROL_SENSOR);
-        setSensorAround(new Vector2(-40f, -40f),
-                new Vector2( 40f, -40f),
-                new Vector2(-45f,  16f),
-                new Vector2( 45f,  16f));
+        setSensorAround(new Vector2(-40f, -40f), new Vector2( 40f, -40f), new Vector2(-45f,  16f), new Vector2( 45f,  16f),
+                        new Vector2(15f, 50f), new Vector2(15f, 50f), new Vector2(-42f, 0f), new Vector2(42f, 0f));
         body.setUserData(this);
         body.setGravityScale(30f);
         initStats();
@@ -39,7 +39,7 @@ public class Slime extends Enemy {
         animationSprites = Assets.manager.get(Assets.textureAtlas).createSprites("slime_run");
         animator.addNewFrames(0.2f, animationSprites, STATE.RUNNING, Animation.PlayMode.LOOP);
         animationSprites = Assets.manager.get(Assets.textureAtlas).createSprites("slime_attack");
-        animator.addNewFrames(0.13f, animationSprites, STATE.ATTACKING, Animation.PlayMode.LOOP);
+        animator.addNewFrames(0.20f, animationSprites, STATE.ATTACKING, Animation.PlayMode.LOOP);
 
     }
 
@@ -50,12 +50,16 @@ public class Slime extends Enemy {
         animate(delta, state);
     }
 
-
+    protected void attack() {
+        EnemyMelee melee = new EnemyMelee(this, strengh, turn, attackSpeed);
+        this.getStage().addActor(melee);
+    }
 
     @Override
     public void initStats() {
         this.actLife = this.maxLife = 50;
-        this.attackSpeed = 1;
+        this.attackSpeed = 3.5f;
+        this.attackTime = 1.1f;
         this.runSpeed = 1.4f;
         this.strengh = 15;
         this.attackRange = 2.4f;

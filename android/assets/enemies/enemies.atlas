@@ -55,6 +55,13 @@ fireball
   index: 8
 fireball
   rotate: false
+  xy: 206, 25
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 5
+fireball
+  rotate: false
   xy: 536, 57
   size: 32, 32
   orig: 32, 32
@@ -81,13 +88,6 @@ fireball
   orig: 32, 32
   offset: 0, 0
   index: 4
-fireball
-  rotate: false
-  xy: 672, 57
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
 fireball
   rotate: false
   xy: 706, 57
@@ -123,13 +123,6 @@ hero_run
   orig: 64, 64
   offset: 0, 0
   index: 2
-hero_run
-  rotate: false
-  xy: 134, 59
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 4
 hero_run
   rotate: false
   xy: 200, 59
@@ -174,7 +167,7 @@ mp_big
   index: -1
 mp_medium
   rotate: false
-  xy: 206, 25
+  xy: 672, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
