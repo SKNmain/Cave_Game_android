@@ -36,6 +36,8 @@ public abstract class Enemy extends GameCharacter {
 
     protected boolean following;
     protected boolean attacked;
+    protected boolean canAttack;
+
 
 
     protected Vector2 heroLastPos;
@@ -64,10 +66,6 @@ public abstract class Enemy extends GameCharacter {
     public Enemy setAttacked(boolean attacked) {
         this.attacked = attacked;
         return this;
-    }
-
-    public void attack(GameCharacter gameCharacter){
-        
     }
 
     public void setHeroLastPos(Vector2 pos) {
@@ -128,13 +126,15 @@ public abstract class Enemy extends GameCharacter {
 
     protected void moving() {
         // hero get away, set to patroling
-        if (attacked && body.getPosition().dst(heroLastPos) > 20f)
+        if (attacked && body.getPosition().dst(heroLastPos) > 20f){
             attacked = false;
+            state = STATE.RUNNING;
+        }
+
         if(flying){
             if(rightDownSensor < 0) setSpeedY(body.getMass());
             else if( leftDownSensor < 0) setSpeedY(body.getMass());
         }
-
 
         if (following || attacked) {
             followHero();
@@ -145,11 +145,16 @@ public abstract class Enemy extends GameCharacter {
     }
 
     protected void followHero() {
-        if (heroLastPos.x > body.getPosition().x - 3f && heroLastPos.x < body.getPosition().x + 3f) {
+        if (heroLastPos.x > body.getPosition().x - attackRange && heroLastPos.x < body.getPosition().x + attackRange) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
-        } else if (heroLastPos.x > body.getPosition().x - 3f) {
+            state = STATE.IDLE;
+        } else if (heroLastPos.x >= body.getPosition().x - attackRange) {
+            state = STATE.RUNNING;
+            turn = true;
             body.setLinearVelocity(runSpeed, body.getLinearVelocity().y);
-        } else if (heroLastPos.x < body.getPosition().x + 3f) {
+        } else if (heroLastPos.x <= body.getPosition().x + attackRange) {
+            state = STATE.RUNNING;
+            turn = false;
             body.setLinearVelocity(-runSpeed, body.getLinearVelocity().y);
         }
     }

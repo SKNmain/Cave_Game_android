@@ -62,6 +62,7 @@ public class Hero extends GameCharacter implements Shootable {
 
         leftFootStep = Assets.manager.get(Assets.leftFootStep);
         rightFootStep = Assets.manager.get(Assets.rightFootStep);
+
         initStats();
 
     }
@@ -153,7 +154,7 @@ public class Hero extends GameCharacter implements Shootable {
         this.actAura += timeAura;
         if (this.actAura > maxAura) this.actAura = maxAura;
     }
-
+    @Override
     public void getDamage(int damage) {
         if (damageTimeout < 0) {
             setActLife(-damage);
@@ -198,6 +199,7 @@ public class Hero extends GameCharacter implements Shootable {
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout <= 0) {
+                Assets.manager.get(Assets.jumpingSound).play(0.3f);
                 body.setLinearVelocity(0, 16.5f);
                 jumpTimeout = 65f;
             }
@@ -223,6 +225,7 @@ public class Hero extends GameCharacter implements Shootable {
     //zrobię to też interfejsem Melee
     public void meleeAttack() {
         if (attackSpeed <= attackDelta) {
+            Assets.manager.get(Assets.swordSound).play(0.1f);
             attackDelta = 0;
             Sword sword = new Sword(this, strengh, turn);
             this.getStage().addActor(sword);

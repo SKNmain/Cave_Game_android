@@ -28,18 +28,10 @@ public class GameContactListener implements ContactListener {
 
         //Insta Traps
         if (a.getBody().getUserData() instanceof GameCharacter && Utils.equalsWithNulls(b.getBody().getUserData(), "INSTA_TRAP")) {
-            Weapon weapon = (Weapon) a.getBody().getUserData();
-            if (weapon instanceof FireBall) {
-                weapon.setToDelete();
-                weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
-            }
+            ((GameCharacter) a.getBody().getUserData()).getDamage(1000);
             return;
-        } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Weapon) {
-            Weapon weapon = (Weapon) b.getBody().getUserData();
-            if (weapon instanceof FireBall) {
-                weapon.setToDelete();
-                weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
-            }
+        } else if (b.getBody().getUserData() instanceof GameCharacter && Utils.equalsWithNulls(a.getBody().getUserData(), "INSTA_TRAP")) {
+            ((GameCharacter) b.getBody().getUserData()).getDamage(1000);
             return;
         }
         //Enemy and hero touch
@@ -67,13 +59,15 @@ public class GameContactListener implements ContactListener {
             return;
         }
 
-        //Shooting
+        //Attack from hero to enemy
         if (!bIsSen && a.getBody().getUserData() instanceof Weapon && b.getBody().getUserData() instanceof Enemy) {
             Weapon weapon = (Weapon) a.getBody().getUserData();
             if (weapon.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) b.getBody().getUserData();
-                enemy.setActLife(-weapon.getHitPoint());
+                enemy.getDamage(weapon.getHitPoint());
                 enemy.setAttacked(true).setHeroLastPos(weapon.getGameCharacter().getBody().getPosition());
+                enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
+                        enemy.getBody().getWorldCenter(), true);
                 weapon.setToDelete();
             }
             return;
@@ -81,8 +75,10 @@ public class GameContactListener implements ContactListener {
             Weapon weapon = (Weapon) b.getBody().getUserData();
             if (weapon.getGameCharacter() instanceof Hero) {
                 Enemy enemy = (Enemy) a.getBody().getUserData();
-                enemy.setActLife(-weapon.getHitPoint());
+                enemy.getDamage(weapon.getHitPoint());
                 enemy.setAttacked(true).setHeroLastPos(weapon.getGameCharacter().getBody().getPosition());
+                enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
+                        enemy.getBody().getWorldCenter(), true);
                 weapon.setToDelete();
             }
             return;
@@ -157,26 +153,26 @@ public class GameContactListener implements ContactListener {
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_DOWN_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
             return;
         }
         if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
             return;
         }
 
@@ -186,26 +182,26 @@ public class GameContactListener implements ContactListener {
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
             return;
         }
         if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         }
     }
@@ -254,26 +250,26 @@ public class GameContactListener implements ContactListener {
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_DOWN_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.LEFT_DOWN_SENSOR);
             return;
         }
         if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            enemy.setSensorUp((byte) 1, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
             return;
         }
 
@@ -282,26 +278,26 @@ public class GameContactListener implements ContactListener {
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.LEFT_UP_SENSOR);
             return;
         }
         if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp((byte)-1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            enemy.setSensorUp((byte) -1, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         }
 

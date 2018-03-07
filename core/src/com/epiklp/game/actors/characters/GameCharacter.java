@@ -7,10 +7,12 @@ import com.epiklp.game.actors.GameObject;
  * Created by Asmei on 2017-11-27.
  */
 
+
 public abstract class GameCharacter extends GameObject {
-    public enum SENSORS{
+    public enum SENSORS {
         JUMP_SENSOR, CLIMB_SENSOR, HEAD_SENSOR, PATROL_SENSOR, LEFT_DOWN_SENSOR, RIGHT_DOWN_SENSOR, LEFT_UP_SENSOR, RIGHT_UP_SENSOR
     }
+
     public int actLife;
     public int maxLife;
 
@@ -49,7 +51,7 @@ public abstract class GameCharacter extends GameObject {
 
     public void setActLife(int actLife) {
         this.actLife += actLife;
-        if(this.actLife > maxLife) this.actLife = maxLife;
+        if (this.actLife > maxLife) this.actLife = maxLife;
         if (isDead())
             setToDelete();
     }
@@ -64,6 +66,10 @@ public abstract class GameCharacter extends GameObject {
 
     public void setAttackSpeed(float attackSpeed) {
         this.attackSpeed = attackSpeed;
+    }
+
+    public void getDamage(int damage) {
+        setActLife(-damage);
     }
 
     protected void setState(GameCharacter.STATE state) {

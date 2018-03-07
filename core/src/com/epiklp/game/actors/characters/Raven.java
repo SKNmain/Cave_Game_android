@@ -33,6 +33,7 @@ public class Raven extends Enemy {
 
         Array<Sprite> spritesForRunning = Assets.manager.get(Assets.textureAtlas).createSprites("crown");
         animator.addNewFrames(0.08f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
+        animator.addNewFrames(0.08f, spritesForRunning, STATE.IDLE, Animation.PlayMode.LOOP);
 
 
     }
@@ -50,7 +51,7 @@ public class Raven extends Enemy {
         this.attackSpeed = 2;
         this.runSpeed = 5;
         this.strengh = 10;
-        this.attackRange = 5f;
+        this.attackRange = 2.2f;
         this.patrolRange = 4f;
         this.flying = true;
         state = STATE.RUNNING;
