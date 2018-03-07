@@ -1,16 +1,11 @@
 package com.epiklp.game.actors.items;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
-
-import java.util.Random;
 
 /**
  * Created by Asmei on 2018-02-12.
@@ -25,7 +20,7 @@ public class Bottle extends GameObject {
     //type must be "hp" or "mp"
     //sizeOfBottle must be "big", "medium" or "small"
     public Bottle(float x, float y, String type, String sizeOfBottle) {
-        super(Assets.manager.get(Assets.textureAtlas).createSprite(type + "_" + sizeOfBottle,-1), 16, 20);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite(type + "_" + sizeOfBottle,-1), 16, 20);
         this.type = type;
         this.size = sizeOfBottle;
         body = BodyCreator.createBody(x, y, false);

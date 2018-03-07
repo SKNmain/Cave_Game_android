@@ -16,7 +16,7 @@ import com.epiklp.game.functionals.b2d.TheBox;
 public class Raven extends Enemy {
 
     public Raven(float x, float y) {
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("crown", 1), 33, 32);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("crown", 1), 33, 32);
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 30f, 20f, 1f, 0);
@@ -31,7 +31,7 @@ public class Raven extends Enemy {
         initStats();
         setPatrolPoints();
 
-        Array<Sprite> spritesForRunning = Assets.manager.get(Assets.textureAtlas).createSprites("crown");
+        Array<Sprite> spritesForRunning = Assets.MANAGER.get(Assets.textureAtlas).createSprites("crown");
         animator.addNewFrames(0.08f, spritesForRunning, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.08f, spritesForRunning, STATE.IDLE, Animation.PlayMode.LOOP);
 

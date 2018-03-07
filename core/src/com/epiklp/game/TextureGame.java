@@ -23,7 +23,7 @@ public class TextureGame {
         Gdx.input.setInputProcessor(stage);
         textures = new Array<Texture>();
         for (int i = 0; i < 9; i++) {
-            textures.add(Assets.manager.get(Assets.layer[i]));
+            textures.add(Assets.MANAGER.get(Assets.layer[i]));
         }
         parallaxBackground = new ParallaxBackground(textures);
         parallaxBackground.setSize(Cave.WIDTH, Cave.HEIGHT);

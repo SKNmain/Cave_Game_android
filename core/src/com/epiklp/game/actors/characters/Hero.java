@@ -40,7 +40,7 @@ public class Hero extends GameCharacter implements Shootable {
     private boolean whichFoot;
 
     public Hero(float x, float y) {
-        super(new Sprite(Assets.manager.get(Assets.player)), 64, 64);
+        super(new Sprite(Assets.MANAGER.get(Assets.player)), 64, 64);
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 24, 58, 1f, 0f);
@@ -51,15 +51,15 @@ public class Hero extends GameCharacter implements Shootable {
         light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
 
 
-        Array<Sprite> sprites = Assets.manager.get(Assets.textureAtlas).createSprites("hero_idle");
+        Array<Sprite> sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("hero_idle");
         animator.addNewFrames(0.5f, sprites, STATE.IDLE, Animation.PlayMode.LOOP);
         sprites.clear();
-        sprites = Assets.manager.get(Assets.textureAtlas).createSprites("hero_run");
+        sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("hero_run");
         animator.addNewFrames(0.2f, sprites, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.2f, sprites, STATE.CLIMBING, Animation.PlayMode.LOOP);
 
-        leftFootStep = Assets.manager.get(Assets.leftFootStep);
-        rightFootStep = Assets.manager.get(Assets.rightFootStep);
+        leftFootStep = Assets.MANAGER.get(Assets.leftFootStep);
+        rightFootStep = Assets.MANAGER.get(Assets.rightFootStep);
 
         initStats();
 
@@ -197,7 +197,7 @@ public class Hero extends GameCharacter implements Shootable {
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout <= 0) {
-                Assets.manager.get(Assets.jumpingSound).play(0.3f);
+                Assets.MANAGER.get(Assets.jumpingSound).play(0.3f);
                 body.setLinearVelocity(0, 16.5f);
                 jumpTimeout = 65f;
             }
@@ -223,7 +223,7 @@ public class Hero extends GameCharacter implements Shootable {
     //zrobię to też interfejsem Melee
     public void meleeAttack() {
         if (attackSpeed <= attackDelta) {
-            Assets.manager.get(Assets.swordSound).play(0.1f);
+            Assets.MANAGER.get(Assets.swordSound).play(0.1f);
             attackDelta = 0;
             Sword sword = new Sword(this, strengh, turn);
             this.getStage().addActor(sword);

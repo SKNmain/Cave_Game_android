@@ -22,6 +22,7 @@ import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
+import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
@@ -144,8 +145,19 @@ public class GameLevel implements Screen {
             {
                 TheBox.cleanWorld();
                 dispose();
-                Cave.state = Cave.STATE.GAME;
                 cave.setScreen(new Menu(cave));
+                OwnSound.stop();
+                Cave.CaveState = Cave.CaveGame.MENU;
+                Cave.state = Cave.STATE.GAME;
+                if(OwnSound.MUSIC)
+                    OwnSound.play();
+            }
+            if(Cave.menuPause.getRestartButton())
+            {
+                TheBox.cleanWorld();
+                dispose();
+                Cave.state = Cave.STATE.GAME;
+                cave.setScreen(new GameLevel(cave));
             }
         }
         if(Cave.renderBox2D)

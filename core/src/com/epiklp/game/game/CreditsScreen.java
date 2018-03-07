@@ -22,7 +22,8 @@ class CreditsScreen extends Stage {
         labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
         text = new Label("Autors:\nRafal Rybowski\nKamil Sykula", labelStyle);
         text.setPosition(0, Cave.HEIGHT / 2);
-        Layer = new Image(Assets.manager.get(Assets.menuLayer));
+        text.setFontScale(4.5f);
+        Layer = new Image(Assets.MANAGER.get(Assets.menuLayer));
         Layer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         addActor(Layer);
         addActor(text);

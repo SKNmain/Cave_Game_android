@@ -21,7 +21,7 @@ public class Logo implements Screen {
     public Logo(Cave cave) {
         this.cave = cave;
         stage = new Stage();
-        image = new Image(Assets.manager.get(Assets.logo));
+        image = new Image(Assets.MANAGER.get(Assets.logo));
         image.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(image);
     }
