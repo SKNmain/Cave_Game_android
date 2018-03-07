@@ -52,7 +52,6 @@ public class Menu implements Screen {
     public Menu(final Cave cave) {
 
         this.cave = cave;
-
         creditsScreen = new CreditsScreen();
 
         enterCredit = false;
@@ -102,7 +101,7 @@ public class Menu implements Screen {
         Cave.controller = new Controller(true);
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
-        inputMultiplexer.addProcessor(Cave.MenuPause);
+        inputMultiplexer.addProcessor(Cave.menuPause);
         inputMultiplexer.addProcessor(Cave.ui);
         inputMultiplexer.addProcessor(Cave.controller);
         inputMultiplexer.addProcessor(creditsScreen);
@@ -186,7 +185,7 @@ public class Menu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (Cave.state.equals(Cave.STATE.OPTION)) {
             stage.draw();
-            Cave.MenuPause.draw();
+            Cave.menuPause.draw();
         //    updateMenu(Gdx.graphics.getDeltaTime());
         } else if (Cave.state.equals(Cave.STATE.GAME)) {
             stage.act();

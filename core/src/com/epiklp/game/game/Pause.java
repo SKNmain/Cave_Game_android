@@ -22,7 +22,7 @@ public class Pause extends Stage {
     private final float BUTTON_SIZE = 128;
     private Image buttonResume,  buttonPlayMusic, buttonPlayEffects, buttonExit, buttonBox;
     private Table tablePlayer, tableDev;
-
+    private boolean menuButton=false;
     private Label textResume, textMusic, textEffects, textExit, textBox;
     private Label.LabelStyle labelStyle;
 
@@ -53,11 +53,16 @@ public class Pause extends Stage {
         });
 
         buttonExit = new Image(Assets.manager.get(Assets.exit));
-        buttonExit.addListener(new InputListener()
-        {
+        buttonExit.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                menuButton = true;
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                menuButton = false;
             }
         });
 
@@ -90,5 +95,9 @@ public class Pause extends Stage {
             tableDev.add(buttonBox).size(BUTTON_SIZE, BUTTON_SIZE);;
             addActor(tableDev);
         }
+    }
+
+    public boolean getMenuButton() {
+        return menuButton;
     }
 }

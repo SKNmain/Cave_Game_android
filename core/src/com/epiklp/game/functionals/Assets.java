@@ -53,7 +53,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> sellectButton = new AssetDescriptor<Texture>("ControlerButtons/sellect.png", Texture.class);
     public static final AssetDescriptor<Texture> leftButton = new AssetDescriptor<Texture>("ControlerButtons/Left.png", Texture.class);
     public static final AssetDescriptor<Texture> rightButton = new AssetDescriptor<Texture>("ControlerButtons/Right.png", Texture.class);
-    public static final AssetDescriptor<Texture> attackButton = new AssetDescriptor<Texture>("ControlerButtons/Attack.png", Texture.class);
+    public static final AssetDescriptor<Texture> mageAttackButton = new AssetDescriptor<Texture>("ControlerButtons/mageAttack.png", Texture.class);
+    public static final AssetDescriptor<Texture> swordAttackButton = new AssetDescriptor<Texture>("ControlerButtons/swordAttack.png", Texture.class);
     public static final AssetDescriptor<Texture> upButton = new AssetDescriptor<Texture>("ControlerButtons/Up.png", Texture.class);
     public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("ControlerButtons/home2.png", Texture.class);
     /*******************************************/
@@ -127,7 +128,8 @@ public class Assets {
         manager.load(leftButton);
         manager.load(rightButton);
         manager.load(upButton);
-        manager.load(attackButton);
+        manager.load(mageAttackButton);
+        manager.load(swordAttackButton);
         manager.load(homeButton);
 
         //PauseButtons
@@ -187,6 +189,7 @@ public class Assets {
     }
 
     public static void dispose() {
+        manager.dispose();
         manager.dispose();
     }
 

@@ -32,7 +32,7 @@ public class Cave extends Game {
     public static FileHandle FILE;
     public static UI ui;
     public static boolean renderBox2D, change;
-    public static Pause MenuPause;
+    public static Pause menuPause;
     public static Controller controller;
 
     @Override
@@ -59,7 +59,7 @@ public class Cave extends Game {
         ui = new UI();
         //Create physics
         TheBox.initWorld();
-        MenuPause = new Pause(true);
+        menuPause = new Pause(true);
         controller = null;
         //this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
@@ -99,7 +99,8 @@ public class Cave extends Game {
 
     @Override
     public void dispose() {
-
+        controller.dispose();
+        menuPause.dispose();
         ui.dispose();
         Assets.dispose();
         super.dispose();

@@ -75,7 +75,7 @@ public class Controller extends Stage {
                 }
             });
 
-            buttonAttack = new Image(Assets.manager.get(Assets.attackButton));
+            buttonAttack = new Image(Assets.manager.get(Assets.swordAttackButton));
             buttonAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
             buttonAttack.addListener(new InputListener() {
                 @Override
