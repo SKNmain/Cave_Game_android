@@ -17,19 +17,19 @@ import com.epiklp.game.functionals.b2d.TheBox;
 public class Raven extends Enemy {
 
     public Raven(float x, float y) {
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("crown", 1), 40, 34);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("crown", 1), 40, 34);
 
         body = BodyCreator.createBody(x, y, false);
-        BodyCreator.createBoxShape(body, 25f, 16f, 1f, 0);
+        BodyCreator.createBoxShape(body, 25f, 16f, 4f, 0);
         BodyCreator.createBoxSensor(body, 150f, 70f, new Vector2(0, 25f), SENSORS.PATROL_SENSOR);
         body.setUserData(this);
         //body.setGravityScale(10f);
-        setSensorAround(new Vector2(5f, 40f), new Vector2(5f, 40f), new Vector2(5f, 5f), new Vector2(5f, 5f),
-                        new Vector2(-30f, -25f), new Vector2(30f, -25f), new Vector2(-40f, 10f), new Vector2(40f, 10f),
+        setSensorAround(new Vector2(10f, 40f), new Vector2(10f, 40f), new Vector2(5f, 5f), new Vector2(5f, 5f),
+                        new Vector2(-10f, -25f), new Vector2(10f, -25f), new Vector2(-40f, 10f), new Vector2(40f, 10f),
                         new Vector2(10f, 50f), new Vector2(10f, 50f), new Vector2(-42f, 0f), new Vector2(42f, 0f));
 
 
-        light = TheBox.createPointLight(body, 64, new Color(1.0f, 0.498f, 0.314f, .6f), true, 10, 0, 0);
+        light = TheBox.createPointLight(body, 64, new Color(1.0f, 0.498f, 0.314f, .2f), true, 4, 0, 0);
         initStats();
         setPatrolPoints();
 

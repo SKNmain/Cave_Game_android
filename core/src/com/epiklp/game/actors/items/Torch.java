@@ -24,7 +24,7 @@ public class Torch extends GameObject {
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxSensor(body, 16f, 20f);
-        light = TheBox.createPointLight(body, 32, new Color(1.000f, 0.8f, 0.814f, 1f), false, 12, 0, 0);
+        light = TheBox.createPointLight(body, 32, new Color(1.000f, 0.8f, 0.814f, 0.7f), false, 11, 0, 0);
       //  light = TheBox.createPointLight(body, 32, new Color(0,0,1,1), false, 16, 0, 0);
 
         body.setGravityScale(0);
@@ -37,7 +37,7 @@ public class Torch extends GameObject {
     @Override
     public void act(float delta) {
         timeToUpdateLight += delta;
-        if(timeToUpdateLight > 0.07){
+        if(timeToUpdateLight > 0.08){
             light.setDistance(11 + new Random().nextFloat()*2);
             timeToUpdateLight = 0;
         }

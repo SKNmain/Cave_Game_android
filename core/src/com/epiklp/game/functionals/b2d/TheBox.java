@@ -75,7 +75,7 @@ public class TheBox {
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         //rayHandler.setAmbientLight(0.7f);
-        rayHandler.setAmbientLight(new Color(.1f, .1f, .1f, 0.1f));
+        rayHandler.setAmbientLight(new Color(0.05f, 0.05f, 0.05f, 0.7f));
         rayHandler.setBlurNum(3);
         rayHandler.setBlur(true);
         rayHandler.diffuseBlendFunc.set(GL20.GL_DST_COLOR, GL20.GL_SRC_COLOR);
@@ -98,7 +98,7 @@ public class TheBox {
     //chamska metoda, do zmiany, jak wymyślę lepszą....
     //Jednak sama deklaracja raczej zostanie
     public static void cleanWorld() {
-        world = new World(new Vector2(0, -25f), true);
+        world = new World(new Vector2(0, -30f), true);
         initRayHandler();
     }
 

@@ -140,10 +140,7 @@ public abstract class Enemy extends GameCharacter {
             state = STATE.RUNNING;
         }
 
-        if (flying) {
-            if (rightDownSensor) setSpeedY(body.getMass());
-            else if (leftDownSensor) setSpeedY(body.getMass());
-        }
+        if (flying && (rightDownSensor || leftDownSensor)) setSpeedY(body.getMass());
 
         if (following || attacked) {
             followHero();

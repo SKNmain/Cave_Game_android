@@ -49,7 +49,7 @@ public class Hero extends GameCharacter implements Shootable {
         BodyCreator.createBoxSensor(body, 28f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
         body.setUserData(this);
         //light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 11, -2, -2);
-        light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .9f), true, 11, -2, -2);
+        light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .7f), true, 7, -2, -2);
 
 
         Array<Sprite> sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("hero_idle");
@@ -202,7 +202,7 @@ public class Hero extends GameCharacter implements Shootable {
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout >= 1.2f) {
-                Assets.manager.get(Assets.jumpingSound).play(0.3f);
+                Assets.MANAGER.get(Assets.jumpingSound).play(0.3f);
                 body.setLinearVelocity(0, 16.5f);
                 jumpTimeout = 0;
             }
@@ -228,7 +228,7 @@ public class Hero extends GameCharacter implements Shootable {
     //zrobię to też interfejsem Melee
     public void meleeAttack() {
         if (attackSpeed <= attackDelta) {
-            Assets.manager.get(Assets.swordSound).play(0.1f);
+            Assets.MANAGER.get(Assets.swordSound).play(0.1f);
             Sword sword = new Sword(this, strengh, turn);
             this.getStage().addActor(sword);
             attackDelta = 0;
