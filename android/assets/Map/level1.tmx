@@ -218,7 +218,7 @@
   </object>
   <object id="71" name="Spikes" x="896.5" y="850" width="128" height="14">
    <properties>
-    <property name="damage" type="int" value="0"/>
+    <property name="damage" type="int" value="100"/>
    </properties>
   </object>
  </objectgroup>
