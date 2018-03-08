@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" nextobjectid="82">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" nextobjectid="98">
  <tileset firstgid="1" source="level1.tsx"/>
  <tileset firstgid="17" source="new.tsx"/>
  <layer name="BG TILE" width="150" height="50">
@@ -110,6 +110,11 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
+ <objectgroup name="characters">
+  <object id="60" name="hero" x="1179.33" y="996.833" width="6" height="32"/>
+  <object id="92" name="Raven" x="601" y="941.75" width="48" height="48"/>
+  <object id="95" name="Slime" x="1555.33" y="923.333" width="32" height="32"/>
+ </objectgroup>
  <objectgroup name="collision">
   <object id="1" x="32" y="32">
    <polyline points="0,0 0,128 288,128 288,160 160,160"/>
@@ -230,8 +235,15 @@
   </object>
   <object id="78" name="Torch" x="1024" y="992" width="32" height="32"/>
   <object id="81" name="Torch" x="896" y="992" width="32" height="32"/>
- </objectgroup>
- <objectgroup name="characters">
-  <object id="60" name="hero" x="845.333" y="1007.5" width="6" height="32"/>
+  <object id="96" name="Guillotine" x="1246.67" y="997.333" width="32" height="32">
+   <properties>
+    <property name="damage" type="int" value="10"/>
+   </properties>
+  </object>
+  <object id="97" name="Guillotine" x="1536" y="992" width="32" height="32">
+   <properties>
+    <property name="damage" type="int" value="10"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

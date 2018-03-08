@@ -1,5 +1,6 @@
 package com.epiklp.game.actors.characters;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -8,6 +9,7 @@ import com.epiklp.game.actors.weapons.EnemyMelee;
 import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
+import com.epiklp.game.functionals.b2d.TheBox;
 
 /**
  * Created by Asmei on 2018-03-07.
@@ -29,7 +31,7 @@ public class Slime extends Enemy {
         initStats();
         setPatrolPoints();
 
-        //light = TheBox.createPointLight(body, 64, new Color(1.000f, 0.498f, 0.314f, .75f), 10, 0, 0);
+        light = TheBox.createPointLight(body, 64, new Color(0.007f, 0.468f, 0.914f, .1f), true, 13, 0, 0);
 
 
         Array<Sprite> animationSprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("slime_idle");

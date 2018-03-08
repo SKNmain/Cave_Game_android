@@ -15,7 +15,8 @@ import com.epiklp.game.actors.characters.GameCharacter;
 
 public class Sword extends Weapon {
     private float time;
-    RevoluteJoint joint;
+    private RevoluteJoint joint;
+
     public Sword(GameCharacter gameCharacterRef, int hitPoints, boolean turn){
         super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("sejminar", -1), 22f, 38, hitPoints, gameCharacterRef);
         this.turn = turn;

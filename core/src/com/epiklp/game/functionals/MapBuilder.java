@@ -74,8 +74,7 @@ public class MapBuilder {
                 }else if(Utils.equalsWithNulls(object.getName(), Guillotine.class.getSimpleName())) {
                     float x = en.getRectangle().x + en.getRectangle().width/2;
                     float y = en.getRectangle().y + en.getRectangle().height/2;
-                    items.add(new Guillotine(BodyCreator.createStaticBodyForMapBuild( getRectangle(en), null, true),
-                             x, y, (int)object.getProperties().get("damage")) );
+                    items.add(new Guillotine(x, y, (int)object.getProperties().get("damage")) );
                 }
             }
         }

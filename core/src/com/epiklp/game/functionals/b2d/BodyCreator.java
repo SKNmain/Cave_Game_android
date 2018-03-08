@@ -3,6 +3,7 @@ package com.epiklp.game.functionals.b2d;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -69,7 +70,19 @@ public class BodyCreator {
         body.createFixture(fixDef).setUserData(userData);
         shape.dispose();
     }
-
+    public static void createCircleShape(Body body, float radius, float density, float friction, Vector2 shift, boolean sensor) {
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius / Cave.PPM);
+        shape.setPosition(shift);
+        fixDef.shape = shape;
+        fixDef.density = density;
+        fixDef.friction = friction;
+        fixDef.isSensor = sensor;
+        fixDef.filter.categoryBits = TheBox.CATEGORY_BODY;
+        fixDef.filter.maskBits = TheBox.MASK_BODY;
+        body.createFixture(fixDef);
+        shape.dispose();
+    }
     public static void createBoxShape(Body body, float width, float height, float density, float friction, Object userData) {
         createBoxShape(body, width, height, density, friction, new Vector2(0,0),  userData);
     }
