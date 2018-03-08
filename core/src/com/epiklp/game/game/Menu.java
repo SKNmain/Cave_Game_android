@@ -173,10 +173,6 @@ public class Menu implements Screen {
     }
 
 
-    public void initzializeWorld()
-    {
-
-    }
 
     @Override
     public void show() {

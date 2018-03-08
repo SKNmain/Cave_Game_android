@@ -48,42 +48,35 @@ fireball
   index: 7
 fireball
   rotate: false
-  xy: 332, 91
+  xy: 366, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 8
 fireball
   rotate: false
-  xy: 206, 25
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 5
-fireball
-  rotate: false
-  xy: 536, 57
+  xy: 570, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 fireball
   rotate: false
-  xy: 570, 57
+  xy: 604, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 fireball
   rotate: false
-  xy: 604, 57
+  xy: 638, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 fireball
   rotate: false
-  xy: 638, 57
+  xy: 672, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -94,7 +87,21 @@ fireball
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
+  index: 5
+fireball
+  rotate: false
+  xy: 740, 57
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
   index: 6
+guillotine
+  rotate: false
+  xy: 332, 59
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
 hero_idle
   rotate: false
   xy: 2, 59
@@ -146,35 +153,35 @@ hp_big
   index: -1
 hp_medium
   rotate: false
-  xy: 502, 57
+  xy: 536, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 hp_small
   rotate: false
-  xy: 172, 25
+  xy: 502, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mp_big
   rotate: false
-  xy: 240, 25
+  xy: 570, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mp_medium
   rotate: false
-  xy: 672, 57
+  xy: 536, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mp_small
   rotate: false
-  xy: 434, 91
+  xy: 468, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -195,7 +202,7 @@ rat
   index: 4
 rat
   rotate: false
-  xy: 366, 91
+  xy: 400, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -209,7 +216,7 @@ rat
   index: 2
 rat
   rotate: false
-  xy: 400, 91
+  xy: 434, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -223,7 +230,7 @@ rat
   index: 5
 sejminar
   rotate: false
-  xy: 672, 91
+  xy: 308, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -237,7 +244,7 @@ slime_attack
   index: 0
 slime_attack
   rotate: false
-  xy: 740, 68
+  xy: 774, 68
   size: 32, 21
   orig: 32, 21
   offset: 0, 0
@@ -251,7 +258,7 @@ slime_attack
   index: 2
 slime_attack
   rotate: false
-  xy: 774, 68
+  xy: 808, 68
   size: 32, 21
   orig: 32, 21
   offset: 0, 0
@@ -265,7 +272,7 @@ slime_attack
   index: 5
 slime_attack
   rotate: false
-  xy: 808, 68
+  xy: 842, 68
   size: 32, 21
   orig: 32, 21
   offset: 0, 0
@@ -279,7 +286,7 @@ slime_idle
   index: 0
 slime_idle
   rotate: false
-  xy: 842, 73
+  xy: 876, 73
   size: 32, 16
   orig: 32, 16
   offset: 0, 0
@@ -293,14 +300,14 @@ slime_run
   index: 0
 slime_run
   rotate: false
-  xy: 876, 73
+  xy: 910, 73
   size: 32, 16
   orig: 32, 16
   offset: 0, 0
   index: 1
 slime_run
   rotate: false
-  xy: 876, 73
+  xy: 910, 73
   size: 32, 16
   orig: 32, 16
   offset: 0, 0
@@ -335,42 +342,42 @@ spider
   index: 2
 spider
   rotate: false
-  xy: 332, 57
+  xy: 366, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 spider
   rotate: false
-  xy: 366, 57
+  xy: 400, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 spider
   rotate: false
-  xy: 400, 57
+  xy: 434, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 spider
   rotate: false
-  xy: 434, 57
+  xy: 468, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 6
 spider
   rotate: false
-  xy: 468, 57
+  xy: 502, 57
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 7
 staff
   rotate: false
-  xy: 468, 91
+  xy: 706, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -384,56 +391,56 @@ sword
   index: -1
 torch
   rotate: false
-  xy: 502, 91
+  xy: 172, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 8
 torch
   rotate: false
-  xy: 502, 91
+  xy: 172, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 torch
   rotate: false
-  xy: 536, 91
+  xy: 206, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 0
 torch
   rotate: false
-  xy: 570, 91
+  xy: 240, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 torch
   rotate: false
-  xy: 570, 91
+  xy: 240, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 9
 torch
   rotate: false
-  xy: 274, 25
+  xy: 604, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 3
 torch
   rotate: false
-  xy: 604, 91
+  xy: 274, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 5
 torch
   rotate: false
-  xy: 604, 91
+  xy: 274, 25
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -447,14 +454,14 @@ torch
   index: 6
 torch
   rotate: false
-  xy: 706, 91
+  xy: 672, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
 torch
   rotate: false
-  xy: 706, 91
+  xy: 672, 91
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

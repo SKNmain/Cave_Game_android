@@ -20,10 +20,11 @@ public class BodyCreator {
     private static FixtureDef fixDef = new FixtureDef();
 
     //It's only for building map from Tiled
-    public static Body createStaticBodyForMapBuild(Shape shape, Object userData) {
+    public static Body createStaticBodyForMapBuild(Shape shape, Object userData, boolean kinematic) {
         Body pBody;
         BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
+        if(kinematic)def.type = BodyDef.BodyType.KinematicBody;
+        else def.type = BodyDef.BodyType.StaticBody;
         def.fixedRotation = true;
         pBody = TheBox.world.createBody(def);
         Filter f = new Filter();
@@ -33,6 +34,10 @@ public class BodyCreator {
 
         pBody.setUserData(userData);
         return pBody;
+    }
+
+    public static Body createStaticBodyForMapBuild(Shape shape, Object userData){
+        return createStaticBodyForMapBuild(shape, userData, false);
     }
 
     //it need a position in PIXEL not in meter from box2d!
@@ -68,7 +73,7 @@ public class BodyCreator {
     public static void createBoxShape(Body body, float width, float height, float density, float friction, Object userData) {
         createBoxShape(body, width, height, density, friction, new Vector2(0,0),  userData);
     }
-    public static void createBoxShapeFromVer(Body body, float density, float friction, boolean isSensor, Vector2 ... verticles) {
+    public static void createBoxShapeFrom (Body body, float density, float friction, boolean isSensor, Vector2 ... verticles) {
         PolygonShape shape = new PolygonShape();
         shape.set(verticles);
         fixDef.shape = shape;

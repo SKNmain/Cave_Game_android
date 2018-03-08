@@ -62,6 +62,9 @@ public class GameLevel implements Screen {
         gameContactListener = new GameContactListener();
         Cave.controller = new Controller(false);
         Gdx.input.setInputProcessor(new InputMultiplexer());
+        TheBox.cleanWorld();
+        TheBox.world.setContactListener(gameContactListener);
+
 
 
         b2dr = new Box2DDebugRenderer();
@@ -119,11 +122,10 @@ public class GameLevel implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if (Cave.state.equals(Cave.STATE.GAME)) {
             update(Gdx.graphics.getDeltaTime());
-            TheBox.world.setContactListener(gameContactListener);
             tmr.render();
             stage.draw();
             TheBox.rayHandler.updateAndRender();
@@ -132,7 +134,6 @@ public class GameLevel implements Screen {
 
 
         } else  if (Cave.state.equals(Cave.STATE.RESTART)) {
-            TheBox.cleanWorld();
             dispose();
             cave.setScreen(new Menu(cave));
         }

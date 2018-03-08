@@ -10,8 +10,9 @@ import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.GameCharacter;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.items.Bottle;
+import com.epiklp.game.actors.traps.Trap;
 import com.epiklp.game.actors.weapons.FireBall;
-import com.epiklp.game.actors.weapons.Spikes;
+import com.epiklp.game.actors.traps.Spikes;
 import com.epiklp.game.actors.weapons.Weapon;
 
 /**
@@ -28,11 +29,11 @@ public class GameContactListener implements ContactListener {
         boolean bIsSen = b.isSensor();
 
         //Insta Traps
-        if (a.getBody().getUserData() instanceof GameCharacter && b.getBody().getUserData() instanceof Spikes) {
-            ((GameCharacter) a.getBody().getUserData()).getDamage(((Spikes) b.getBody().getUserData()).getHitPoint());
+        if (a.getBody().getUserData() instanceof GameCharacter && b.getBody().getUserData() instanceof Trap) {
+            ((GameCharacter) a.getBody().getUserData()).getDamage(((Trap) b.getBody().getUserData()).getHitPoint());
             return;
-        } else if (b.getBody().getUserData() instanceof GameCharacter && a.getBody().getUserData() instanceof Spikes) {
-            ((GameCharacter) b.getBody().getUserData()).getDamage(((Spikes) a.getBody().getUserData()).getHitPoint());
+        } else if (b.getBody().getUserData() instanceof GameCharacter && a.getBody().getUserData() instanceof Trap) {
+            ((GameCharacter) b.getBody().getUserData()).getDamage(((Trap) a.getBody().getUserData()).getHitPoint());
             return;
         }
         //Enemy and hero touch

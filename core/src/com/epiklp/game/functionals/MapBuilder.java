@@ -21,7 +21,8 @@ import com.epiklp.game.actors.characters.Slime;
 import com.epiklp.game.actors.characters.Spider;
 import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.items.Torch;
-import com.epiklp.game.actors.weapons.Spikes;
+import com.epiklp.game.actors.traps.Guillotine;
+import com.epiklp.game.actors.traps.Spikes;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 
 
@@ -66,6 +67,15 @@ public class MapBuilder {
                     String type = (String)object.getProperties().get("type");
                     String size = (String)object.getProperties().get("size");
                     items.add(new Bottle(en.getRectangle().x, en.getRectangle().y, type, size));
+                }else if(Utils.equalsWithNulls(object.getName(), Spikes.class.getSimpleName())) {
+                    Spikes spikes = new Spikes(BodyCreator.createStaticBodyForMapBuild( getRectangle(en), null),
+                                (int)object.getProperties().get("damage"));
+                    items.add(spikes);
+                }else if(Utils.equalsWithNulls(object.getName(), Guillotine.class.getSimpleName())) {
+                    float x = en.getRectangle().x + en.getRectangle().width/2;
+                    float y = en.getRectangle().y + en.getRectangle().height/2;
+                    items.add(new Guillotine(BodyCreator.createStaticBodyForMapBuild( getRectangle(en), null, true),
+                             x, y, (int)object.getProperties().get("damage")) );
                 }
             }
         }
@@ -83,13 +93,7 @@ public class MapBuilder {
                     bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "CLIMBING_WALL"));
                     shape.dispose();
                     continue;
-                }else if(Utils.equalsWithNulls(object.getName(), Spikes.class.getSimpleName())) {
-                    Spikes spikes = new Spikes(BodyCreator.createStaticBodyForMapBuild(shape, null), (int)object.getProperties().get("damage"));
-                    bodies.add(spikes.getBody());
-                    shape.dispose();
-                    continue;
                 }
-
             } else {
                 continue;
             }
