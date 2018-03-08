@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" infinite="0" nextobjectid="62">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" nextobjectid="72">
  <tileset firstgid="1" source="level1.tsx"/>
  <tileset firstgid="17" source="new.tsx"/>
  <layer name="BG TILE" width="150" height="50">
@@ -110,7 +110,7 @@
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
- <objectgroup name="colliion">
+ <objectgroup name="collision">
   <object id="1" x="32" y="32">
    <polyline points="0,0 0,128 288,128 288,160 160,160"/>
   </object>
@@ -216,8 +216,14 @@
   <object id="61" x="4608" y="1408">
    <polyline points="0,0 160,0 160,-128 -256,-128"/>
   </object>
+  <object id="71" name="Spikes" x="896.5" y="850" width="128" height="14">
+   <properties>
+    <property name="damage" type="int" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
+ <objectgroup name="items"/>
  <objectgroup name="characters">
-  <object id="60" name="hero" x="118.333" y="66.6667" width="6" height="32"/>
+  <object id="60" name="hero" x="906.333" y="620" width="6" height="32"/>
  </objectgroup>
 </map>

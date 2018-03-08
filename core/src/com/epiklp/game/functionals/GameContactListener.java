@@ -11,6 +11,7 @@ import com.epiklp.game.actors.characters.GameCharacter;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.weapons.FireBall;
+import com.epiklp.game.actors.weapons.Spikes;
 import com.epiklp.game.actors.weapons.Weapon;
 
 /**
@@ -27,11 +28,11 @@ public class GameContactListener implements ContactListener {
         boolean bIsSen = b.isSensor();
 
         //Insta Traps
-        if (a.getBody().getUserData() instanceof GameCharacter && Utils.equalsWithNulls(b.getBody().getUserData(), "INSTA_TRAP")) {
-            ((GameCharacter) a.getBody().getUserData()).getDamage(1000);
+        if (a.getBody().getUserData() instanceof GameCharacter && b.getBody().getUserData() instanceof Spikes) {
+            ((GameCharacter) a.getBody().getUserData()).getDamage(((Spikes) b.getBody().getUserData()).getHitPoint());
             return;
-        } else if (b.getBody().getUserData() instanceof GameCharacter && Utils.equalsWithNulls(a.getBody().getUserData(), "INSTA_TRAP")) {
-            ((GameCharacter) b.getBody().getUserData()).getDamage(1000);
+        } else if (b.getBody().getUserData() instanceof GameCharacter && a.getBody().getUserData() instanceof Spikes) {
+            ((GameCharacter) b.getBody().getUserData()).getDamage(((Spikes) a.getBody().getUserData()).getHitPoint());
             return;
         }
         //Enemy and hero touch
@@ -69,7 +70,7 @@ public class GameContactListener implements ContactListener {
                 enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
                         enemy.getBody().getWorldCenter(), true);
                 weapon.setToDelete();
-            }else if(weapon.getGameCharacter() instanceof Enemy && b.getBody().getUserData() instanceof Hero){
+            } else if (weapon.getGameCharacter() instanceof Enemy && b.getBody().getUserData() instanceof Hero) {
                 Hero hero = (Hero) b.getBody().getUserData();
                 hero.getDamage(weapon.getHitPoint());
                 weapon.setToDelete();
@@ -84,7 +85,7 @@ public class GameContactListener implements ContactListener {
                 enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
                         enemy.getBody().getWorldCenter(), true);
                 weapon.setToDelete();
-            }else if(weapon.getGameCharacter() instanceof Enemy && a.getBody().getUserData() instanceof Hero){
+            } else if (weapon.getGameCharacter() instanceof Enemy && a.getBody().getUserData() instanceof Hero) {
                 Hero hero = (Hero) a.getBody().getUserData();
                 hero.getDamage(weapon.getHitPoint());
                 weapon.setToDelete();
@@ -147,21 +148,21 @@ public class GameContactListener implements ContactListener {
 
         // ================ SENSORS FOR ENEMY AI ===============================
         //Enemy attack, if touch the sensor
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero){
-            Enemy enemy = (Enemy)a.getBody().getUserData();
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setSensorUp(true, GameCharacter.SENSORS.LEFT_ATTACK_SENSOR);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero ){
-            Enemy enemy = (Enemy)b.getBody().getUserData();
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setSensorUp(true, GameCharacter.SENSORS.LEFT_ATTACK_SENSOR);
             return;
         }
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero){
-            Enemy enemy = (Enemy)a.getBody().getUserData();
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero ){
-            Enemy enemy = (Enemy)b.getBody().getUserData();
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR);
             return;
         }
@@ -183,7 +184,7 @@ public class GameContactListener implements ContactListener {
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp( true, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
+            enemy.setSensorUp(true, GameCharacter.SENSORS.RIGHT_DOWN_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_DOWN_SENSOR)
                 &&
@@ -263,21 +264,21 @@ public class GameContactListener implements ContactListener {
         }
         // ================ SENSORS FOR ENEMY AI ===============================
         //Enemy sensor and hero touch (enemy is in following mode)
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero){
-            Enemy enemy = (Enemy)a.getBody().getUserData();
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_ATTACK_SENSOR);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero ){
-            Enemy enemy = (Enemy)b.getBody().getUserData();
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.LEFT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_ATTACK_SENSOR);
             return;
         }
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero){
-            Enemy enemy = (Enemy)a.getBody().getUserData();
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero ){
-            Enemy enemy = (Enemy)b.getBody().getUserData();
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+            Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR);
             return;
         }
@@ -327,13 +328,13 @@ public class GameContactListener implements ContactListener {
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
-            enemy.setSensorUp( false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_UP_SENSOR)
                 &&
                 (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") || Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL"))) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
-            enemy.setSensorUp( false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
+            enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
             return;
         }
 

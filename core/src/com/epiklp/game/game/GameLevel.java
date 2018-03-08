@@ -65,7 +65,7 @@ public class GameLevel implements Screen {
 
 
         b2dr = new Box2DDebugRenderer();
-        map = new TmxMapLoader().load("Map/level1.tmx"); //mapa  odpowiednimi wymiarami mieniona 32x32
+        map = new TmxMapLoader().load("Map/level1.tmx");
 
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
         mapBodies = MapBuilder.parseTiledObjectLayer(map.getLayers().get("collision").getObjects());

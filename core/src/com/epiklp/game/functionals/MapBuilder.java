@@ -21,6 +21,7 @@ import com.epiklp.game.actors.characters.Slime;
 import com.epiklp.game.actors.characters.Spider;
 import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.items.Torch;
+import com.epiklp.game.actors.weapons.Spikes;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 
 
@@ -76,18 +77,19 @@ public class MapBuilder {
             Shape shape;
             if (object instanceof PolylineMapObject) {
                 shape = createPolyLine((PolylineMapObject) object);
-                if(Utils.equalsWithNulls(object.getName(), "INSTA_TRAP")) {
-                    bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "INSTA_TRAP"));
-                    shape.dispose();
-                    continue;
-                }
             } else if (object instanceof RectangleMapObject) {
                 shape = getRectangle((RectangleMapObject) object);
                 if(Utils.equalsWithNulls(object.getName(), "CLIMBING_WALL")){
                     bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "CLIMBING_WALL"));
                     shape.dispose();
                     continue;
+                }else if(Utils.equalsWithNulls(object.getName(), Spikes.class.getSimpleName())) {
+                    Spikes spikes = new Spikes(BodyCreator.createStaticBodyForMapBuild(shape, null), (int)object.getProperties().get("damage"));
+                    bodies.add(spikes.getBody());
+                    shape.dispose();
+                    continue;
                 }
+
             } else {
                 continue;
             }
