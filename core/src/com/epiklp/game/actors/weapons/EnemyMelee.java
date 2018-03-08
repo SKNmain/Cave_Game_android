@@ -18,7 +18,7 @@ public class EnemyMelee extends Weapon {
     private float time;
 
     public EnemyMelee(GameCharacter gameCharacterRef, int hitPoints, boolean turn, float speed){
-        super(Assets.manager.get(Assets.textureAtlas).createSprite("sejminar", -1), 22f, 38, hitPoints, gameCharacterRef);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("sejminar", -1), 22f, 38, hitPoints, gameCharacterRef);
         this.turn = turn;
         this.time = 1f;
         float x = gameCharacterRef.getBody().getPosition().x * Cave.PPM / Cave.SCALE;

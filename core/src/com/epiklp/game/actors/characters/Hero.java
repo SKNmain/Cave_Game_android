@@ -202,7 +202,7 @@ public class Hero extends GameCharacter implements Shootable {
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout >= 1.2f) {
-                Assets.manager.get(Assets.jumpingSound).play(0.3f);
+                Assets.MANAGER.get(Assets.jumpingSound).play(0.3f);
                 body.setLinearVelocity(0, 16.5f);
                 jumpTimeout = 0;
             }
@@ -228,7 +228,7 @@ public class Hero extends GameCharacter implements Shootable {
     //zrobię to też interfejsem Melee
     public void meleeAttack() {
         if (attackSpeed <= attackDelta) {
-            Assets.manager.get(Assets.swordSound).play(0.1f);
+            Assets.MANAGER.get(Assets.swordSound).play(0.1f);
             Sword sword = new Sword(this, strengh, turn);
             this.getStage().addActor(sword);
             attackDelta = 0;

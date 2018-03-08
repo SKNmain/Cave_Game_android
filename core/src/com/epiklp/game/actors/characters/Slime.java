@@ -36,7 +36,7 @@ public class Slime extends Enemy {
         animator.addNewFrames(0.2f, animationSprites, STATE.IDLE, Animation.PlayMode.LOOP);
         animationSprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("slime_run");
         animator.addNewFrames(0.2f, animationSprites, STATE.RUNNING, Animation.PlayMode.LOOP);
-        animationSprites = Assets.manager.get(Assets.textureAtlas).createSprites("slime_attack");
+        animationSprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("slime_attack");
         animator.addNewFrames(0.20f, animationSprites, STATE.ATTACKING, Animation.PlayMode.LOOP);
 
     }
