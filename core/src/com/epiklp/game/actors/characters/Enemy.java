@@ -2,8 +2,6 @@ package com.epiklp.game.actors.characters;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.epiklp.game.actors.weapons.EnemyMelee;
-import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 
 /**
@@ -25,6 +23,7 @@ public abstract class Enemy extends GameCharacter {
     protected boolean flying; //if we want a flying creature, we need set it to true in constructor
     protected boolean following;
     protected boolean attacked;
+    protected boolean notMovable;
 
     protected float chanceOfDrop;
     protected float attackRange;
@@ -60,7 +59,7 @@ public abstract class Enemy extends GameCharacter {
     @Override
     public void act(float delta) {
         super.act(delta);
-        attackDelta   += delta;
+        attackDelta += delta;
         attackTimeout += delta;
         moving();
 
@@ -134,19 +133,23 @@ public abstract class Enemy extends GameCharacter {
     }
 
     protected void moving() {
-        // hero get away, set to patroling
-        if (attacked && body.getPosition().dst(heroLastPos) > 20f) {
-            attacked = false;
-            state = STATE.RUNNING;
-        }
-
-        if (flying && (rightDownSensor || leftDownSensor)) setSpeedY(body.getMass());
-
-        if (following || attacked) {
-            followHero();
-            setPatrolPoints();
+        if (notMovable) {
+            wantToAttack();
         } else {
-            patroling();
+            // hero get away, set to patroling
+            if (attacked && body.getPosition().dst(heroLastPos) > 20f) {
+                attacked = false;
+                state = STATE.RUNNING;
+            }
+
+            if (flying && (rightDownSensor || leftDownSensor)) setSpeedY(body.getMass());
+
+            if (following || attacked) {
+                followHero();
+                setPatrolPoints();
+            } else {
+                patroling();
+            }
         }
     }
 
@@ -180,7 +183,7 @@ public abstract class Enemy extends GameCharacter {
                 attack();
             }
             attackTimeout = 0;
-        } else if( attackTimeout >= attackTime){
+        } else if (attackTimeout >= attackTime) {
             state = STATE.IDLE;
         }
 

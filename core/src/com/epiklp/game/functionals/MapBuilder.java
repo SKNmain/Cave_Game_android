@@ -19,6 +19,7 @@ import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.characters.Rat;
 import com.epiklp.game.actors.characters.Slime;
 import com.epiklp.game.actors.characters.Spider;
+import com.epiklp.game.actors.characters.Tower;
 import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.items.Torch;
 import com.epiklp.game.actors.traps.Guillotine;
@@ -49,6 +50,8 @@ public class MapBuilder {
                     enemies.add(new Raven(en.getRectangle().x , en.getRectangle().y));
                 }else if(Utils.equalsWithNulls(object.getName(), Slime.class.getSimpleName())){
                     enemies.add(new Slime(en.getRectangle().x , en.getRectangle().y));
+                }else if(Utils.equalsWithNulls(object.getName(), Tower.class.getSimpleName())){
+                    enemies.add(new Tower(en.getRectangle().x , en.getRectangle().y));
                 }
             }
 

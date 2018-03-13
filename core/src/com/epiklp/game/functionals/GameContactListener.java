@@ -28,6 +28,27 @@ public class GameContactListener implements ContactListener {
         boolean aIsSen = a.isSensor();
         boolean bIsSen = b.isSensor();
 
+        //Can I JUMP?
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
+            Hero hero = (Hero) a.getBody().getUserData();
+            hero.onGround();
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR)) {
+            Hero hero = (Hero) b.getBody().getUserData();
+            hero.onGround();
+            return;
+        }
+
+        //Can I CLIMB?
+        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
+            Hero hero = (Hero) a.getBody().getUserData();
+            hero.setCanClimb(true);
+            return;
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR)) {
+            Hero hero = (Hero) b.getBody().getUserData();
+            hero.setCanClimb(true);
+            return;
+        }
         //Insta Traps
         if (a.getBody().getUserData() instanceof GameCharacter && b.getBody().getUserData() instanceof Trap) {
             ((GameCharacter) a.getBody().getUserData()).getDamage(((Trap) b.getBody().getUserData()).getHitPoint());
@@ -94,7 +115,6 @@ public class GameContactListener implements ContactListener {
             return;
         }
         //Missile gets wall
-        //If inside is only temporarry
         if (a.getBody().getUserData() instanceof Weapon && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Weapon weapon = (Weapon) a.getBody().getUserData();
             if (weapon instanceof FireBall) {
@@ -124,27 +144,6 @@ public class GameContactListener implements ContactListener {
             return;
         }
 
-        //Can I JUMP?
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
-            Hero hero = (Hero) a.getBody().getUserData();
-            hero.onGround();
-            return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.JUMP_SENSOR)) {
-            Hero hero = (Hero) b.getBody().getUserData();
-            hero.onGround();
-            return;
-        }
-
-        //Can I CLIMB?
-        if (aIsSen && !bIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR) && Utils.equalsWithNulls(b.getBody().getUserData(), "CLIMBING_WALL")) {
-            Hero hero = (Hero) a.getBody().getUserData();
-            hero.setCanClimb(true);
-            return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "CLIMBING_WALL") && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.CLIMB_SENSOR)) {
-            Hero hero = (Hero) b.getBody().getUserData();
-            hero.setCanClimb(true);
-            return;
-        }
 
 
         // ================ SENSORS FOR ENEMY AI ===============================
@@ -274,11 +273,11 @@ public class GameContactListener implements ContactListener {
             enemy.setSensorUp(false, GameCharacter.SENSORS.LEFT_ATTACK_SENSOR);
             return;
         }
-        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero) {
+        if (!bIsSen && aIsSen && Utils.equalsWithNulls(a.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) a.getBody().getUserData();
             enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR);
             return;
-        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && b.getBody().getUserData() instanceof Hero) {
+        } else if (!aIsSen && bIsSen && Utils.equalsWithNulls(b.getUserData(), GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR) && a.getBody().getUserData() instanceof Hero) {
             Enemy enemy = (Enemy) b.getBody().getUserData();
             enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_ATTACK_SENSOR);
             return;

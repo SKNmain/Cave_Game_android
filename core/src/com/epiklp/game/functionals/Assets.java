@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
@@ -19,21 +20,11 @@ public class Assets {
     //Asset
     public static final AssetManager MANAGER = new AssetManager();
 
-    public static final AssetDescriptor<TextureAtlas> textureAtlas = new AssetDescriptor<TextureAtlas>("enemies/enemies.atlas", TextureAtlas.class);
-
-    /*******************************************/
-    public static final AssetDescriptor<Texture> player = new AssetDescriptor<Texture>("character/hero64.png", Texture.class);
-
+    public static final AssetDescriptor<TextureAtlas> textureAtlas = new AssetDescriptor<TextureAtlas>("textures/enemies.atlas", TextureAtlas.class);
 
     //player
     public static final AssetDescriptor<Texture> logo = new AssetDescriptor<Texture>("logo.png", Texture.class);
     /*******************************************/
-
-    //Enemy
-    /*******************************************/
-    public static final AssetDescriptor<Texture> flameDemon = new AssetDescriptor<Texture>("enemies/FlameDemon.png", Texture.class);
-    /*******************************************/
-
 
     //Buttons
     /*******************************************/
@@ -115,9 +106,6 @@ public class Assets {
         MANAGER.load(logo);
 
         MANAGER.load(textureAtlas);
-
-        MANAGER.load(player);
-        MANAGER.load(flameDemon);
 
         //SFX
         MANAGER.load(leftFootStep);

@@ -54,6 +54,15 @@ public class BodyCreator {
         return pBody;
     }
 
+    public static Body createKinematicBody(float x, float y) {
+        Body pBody;
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.KinematicBody;
+        def.position.set(x / Cave.PPM * Cave.SCALE, y / Cave.PPM * Cave.SCALE);
+        pBody = TheBox.world.createBody(def);
+        return pBody;
+    }
+
     public static Body createBody(float x, float y, boolean isStatic) {
         return createBody(x, y, isStatic, true);
     }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" infinite="0" nextobjectid="142">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" nextobjectid="145">
  <tileset firstgid="1" source="level1.tsx"/>
  <tileset firstgid="17" source="new.tsx"/>
- <tileset firstgid="21" source="tower.tsx"/>
  <layer name="BG TILE" width="150" height="50">
   <data encoding="csv">
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
@@ -113,9 +112,9 @@
  </layer>
  <objectgroup name="characters">
   <object id="92" name="Raven" x="601" y="941.75" width="48" height="48"/>
-  <object id="95" name="Slime" x="1824" y="1024" width="32" height="32"/>
-  <object id="100" name="hero" x="110.908" y="100.721" width="6" height="32"/>
   <object id="132" name="Slime" x="3552" y="1056" width="32" height="32"/>
+  <object id="142" name="hero" x="2412.67" y="986.667" width="6" height="32"/>
+  <object id="144" name="Tower" x="2176" y="1056" width="32" height="64"/>
  </objectgroup>
  <objectgroup name="collision">
   <object id="1" x="32" y="32">
@@ -193,6 +192,9 @@
   <object id="141" x="832" y="544">
    <polyline points="0,0 0,32 32,32 32,64 96,64 96,0 0,0"/>
   </object>
+  <object id="143" x="3200" y="1060">
+   <polyline points="0,0 64,-64 384,-64 448,-128 800,-128 800,-96 448,-96 448,-64 416,-64 416,-32 64,-32 64,0 0,0"/>
+  </object>
  </objectgroup>
  <objectgroup name="items">
   <object id="72" name="Spikes" x="896.5" y="849.5" width="128" height="14">
@@ -242,7 +244,6 @@
     <property name="damage" type="int" value="100"/>
    </properties>
   </object>
-  <object id="128" name="Tower" x="1728" y="1056" width="32" height="64"/>
   <object id="129" name="Tower" x="3520" y="928" width="32" height="64"/>
   <object id="130" name="Tower" x="3936" y="864" width="32" height="64"/>
   <object id="131" name="Tower" x="3936" y="1056" width="32" height="64"/>
@@ -270,9 +271,6 @@
    <properties>
     <property name="damage" type="int" value="100"/>
    </properties>
-  </object>
-  <object id="138" x="3200" y="1056">
-   <polyline points="0,0 64,-64 384,-64 448,-128 800,-128 800,-96 448,-96 448,-64 416,-64 416,-32 64,-32 64,0 0,0"/>
   </object>
  </objectgroup>
 </map>

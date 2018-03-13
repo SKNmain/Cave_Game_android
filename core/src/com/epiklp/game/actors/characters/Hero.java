@@ -41,7 +41,7 @@ public class Hero extends GameCharacter implements Shootable {
     private boolean whichFoot;
 
     public Hero(float x, float y) {
-        super(new Sprite(Assets.MANAGER.get(Assets.player)), 64, 64);
+        super(new Sprite(Assets.MANAGER.get(Assets.textureAtlas).createSprite("hero_idle", 0)), 64, 64);
 
         body = BodyCreator.createBody(x, y, false);
         BodyCreator.createBoxShape(body, 24, 58, 1f, 0f);

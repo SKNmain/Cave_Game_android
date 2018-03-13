@@ -85,14 +85,21 @@ public class TheBox {
         Light.setGlobalContactFilter(CATEGORY_LIGHT, (short) 0, TheBox.MASK_LIGHT);
     }
 
-    public static PointLight createPointLight(Body body, int rays, Color color, boolean xRay, int distance, int x, int y) {
+    public static PointLight createPointLight(Body body, int rays, Color color, boolean xRay, int distance, float x, float y) {
         PointLight pointLight = new PointLight(rayHandler, rays, color, distance, x, y);
         pointLight.attachToBody(body);
         pointLight.setXray(true); // cienie
         pointLight.setIgnoreAttachedBody(false);
         pointLight.setSoftnessLength(2);
         return pointLight;
+    }
 
+    public static PointLight createStaticPointLight(int rays, Color color, boolean xRay, int distance, float x, float y){
+        PointLight pointLight = new PointLight(rayHandler, rays, color, distance, x, y);
+        pointLight.setXray(true); // cienie
+        pointLight.setIgnoreAttachedBody(false);
+        pointLight.setSoftnessLength(2);
+        return pointLight;
     }
 
     //chamska metoda, do zmiany, jak wymyślę lepszą....
