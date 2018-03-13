@@ -1,11 +1,13 @@
 package com.epiklp.game.functionals;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.epiklp.game.Cave;
 
 
@@ -14,6 +16,7 @@ public class Controller extends Stage {
     private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed, sellectPresed;
     private Table tabRight, tabLeft;
     private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, sellectButton;
+    private TextureRegionDrawable swordTexture, mageTexture;
 
     public Controller(boolean menu) {
         //Buttons on Left
@@ -58,6 +61,8 @@ public class Controller extends Stage {
         //Buttons on Right
         /*******************************************/
         if (menu == false) {
+            swordTexture = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.swordAttackButton)));
+            mageTexture = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.mageAttackButton)));
             tabRight = new Table();
             tabRight.setPosition(Gdx.graphics.getWidth() - 64, (Cave.WIDTH / 10));
             buttonUp = new Image(Assets.MANAGER.get(Assets.upButton));
@@ -75,7 +80,13 @@ public class Controller extends Stage {
                 }
             });
 
-            buttonAttack = new Image(Assets.MANAGER.get(Assets.swordAttackButton));
+            if(Cave.ui.getWeapon()) {
+                buttonAttack = new Image(swordTexture);
+            }
+            else {
+                buttonAttack = new Image(mageTexture);
+            }
+
             buttonAttack.setSize(BUTTON_SIZE, BUTTON_SIZE);
             buttonAttack.addListener(new InputListener() {
                 @Override
@@ -143,6 +154,15 @@ public class Controller extends Stage {
         sellectButton.remove();
     }
 
+    public void setAtackPressed(boolean weapon) {
+        if(Cave.state.equals(Cave.CaveGame.GAME)) {
+            if (weapon) {
+                buttonAttack.setDrawable(swordTexture);
+            } else {
+                buttonAttack.setDrawable(mageTexture);
+            }
+        }
+    }
 
     public boolean isUpPressed() {
         return upPressed;

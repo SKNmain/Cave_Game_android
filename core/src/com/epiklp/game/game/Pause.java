@@ -66,10 +66,21 @@ public class Pause extends Stage {
                 OwnSound.MUSIC = !OwnSound.MUSIC;
             }
         });
-        buttonPlayEffects = new Image(Assets.MANAGER.get(Assets.on));
+        if(OwnSound.EFFECTS) {
+            buttonPlayEffects = new Image(textureOn);
+        }
+        else {
+            buttonPlayEffects = new Image(textureOff);
+        }
         buttonPlayEffects.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if(OwnSound.EFFECTS) {
+                    buttonPlayEffects.setDrawable(textureOff);
+                }
+                else {
+                    buttonPlayEffects.setDrawable(textureOn);
+                }
                 OwnSound.EFFECTS = !OwnSound.EFFECTS;
             }
         });

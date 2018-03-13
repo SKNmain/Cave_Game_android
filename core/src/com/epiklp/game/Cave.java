@@ -49,7 +49,7 @@ public class Cave extends Game {
         OwnSound.initialize();
         JsonFunction.initzialie();
         FILE = Gdx.files.local("option.json");
-        if(!FILE.exists())
+        if (!FILE.exists())
             JsonFunction.Create();
         else
             JsonFunction.Read();
@@ -61,9 +61,9 @@ public class Cave extends Game {
         TheBox.initWorld();
         menuPause = new Pause(true);
         controller = null;
-        //this.setScreen(new Logo(this));
+        this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
-        this.setScreen(new GameLevel(this));
+        //this.setScreen(new GameLevel(this));
 
     }
 
