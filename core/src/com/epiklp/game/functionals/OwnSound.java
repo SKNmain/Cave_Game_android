@@ -1,6 +1,8 @@
 package com.epiklp.game.functionals;
 
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.epiklp.game.Cave;
 
 /**
@@ -34,7 +36,7 @@ public class OwnSound {
         }
         if( Cave.CaveState.equals(Cave.CaveGame.GAME)){
             gameMusic.play();
-            gameMusic.setVolume(0.4f);
+            gameMusic.setVolume(1f);
         }
     }
 
@@ -45,6 +47,11 @@ public class OwnSound {
         else {
             gameMusic.stop();
         }
+    }
+
+    public static void playEffect(AssetDescriptor<Sound> sfx, float volume) {
+        if(EFFECTS)
+            Assets.MANAGER.get(sfx).play(volume);
     }
 
 

@@ -57,6 +57,7 @@ public class UI extends Stage {
                 weapon = false;
                 sword.remove();
                 addActor(staff);
+                Cave.controller.setAtackPressed(weapon);
             }
         });
         staff = new Image(Assets.MANAGER.get(Assets.uiStaff));
@@ -69,6 +70,7 @@ public class UI extends Stage {
                 weapon = true;
                 staff.remove();
                 addActor(sword);
+                Cave.controller.setAtackPressed(weapon);
             }
         });
         addActor(statusBelt);

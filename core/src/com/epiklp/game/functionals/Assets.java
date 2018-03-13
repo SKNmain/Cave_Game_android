@@ -50,7 +50,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("ControlerButtons/home2.png", Texture.class);
     /*******************************************/
 
-    //PauseButtons
+    //Pause
     /*******************************************/
     public static final AssetDescriptor<Texture> exit = new AssetDescriptor<Texture>("PauseMenuButtons/Exit.png", Texture.class);
     public static final AssetDescriptor<Texture> on = new AssetDescriptor<Texture>("PauseMenuButtons/ON.png", Texture.class);
@@ -58,6 +58,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> resume = new AssetDescriptor<Texture>("PauseMenuButtons/Resume.png", Texture.class);
     public static final AssetDescriptor<Texture> restart = new AssetDescriptor<Texture>("PauseMenuButtons/Restart.png", Texture.class);
     public static final AssetDescriptor<Texture> render = new AssetDescriptor<Texture>("PauseMenuButtons/Box2D.png", Texture.class);
+    public static final AssetDescriptor<Texture> BACGROUND_PAUSE = new AssetDescriptor<Texture>("PauseMenuButtons/background_pause.png", Texture.class);
     /*******************************************/
 
 
@@ -71,10 +72,6 @@ public class Assets {
     public static final AssetDescriptor<Texture> cave2Layer = new AssetDescriptor<Texture>("menu/cave2.png", Texture.class);
     /*******************************************/
 
-    //pause
-    /*******************************************/
-
-    /*******************************************/
 
     //UI
     /*******************************************/
@@ -124,13 +121,14 @@ public class Assets {
         MANAGER.load(swordAttackButton);
         MANAGER.load(homeButton);
 
-        //PauseButtons
+        //Pause
         MANAGER.load(exit);
         MANAGER.load(on);
         MANAGER.load(off);
         MANAGER.load(resume);
         MANAGER.load(render);
         MANAGER.load(restart);
+        MANAGER.load(BACGROUND_PAUSE);
 
         //Buttons
         MANAGER.load(restartButton);
