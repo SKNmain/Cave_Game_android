@@ -13,7 +13,9 @@ import com.epiklp.game.actors.items.Bottle;
 import com.epiklp.game.actors.traps.Trap;
 import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.actors.traps.Spikes;
+import com.epiklp.game.actors.weapons.TowerFireBall;
 import com.epiklp.game.actors.weapons.Weapon;
+import com.epiklp.game.actors.weapons.WeaponCollision;
 
 /**
  * Created by Asmei on 2017-12-02.
@@ -89,8 +91,8 @@ public class GameContactListener implements ContactListener {
                 Enemy enemy = (Enemy) b.getBody().getUserData();
                 enemy.getDamage(weapon.getHitPoint());
                 enemy.setAttacked(true).setHeroLastPos(weapon.getGameCharacter().getBody().getPosition());
-                enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
-                        enemy.getBody().getWorldCenter(), true);
+                //enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
+                  //      enemy.getBody().getWorldCenter(), true);
                 weapon.setToDelete();
             } else if (weapon.getGameCharacter() instanceof Enemy && b.getBody().getUserData() instanceof Hero) {
                 Hero hero = (Hero) b.getBody().getUserData();
@@ -104,8 +106,8 @@ public class GameContactListener implements ContactListener {
                 Enemy enemy = (Enemy) a.getBody().getUserData();
                 enemy.getDamage(weapon.getHitPoint());
                 enemy.setAttacked(true).setHeroLastPos(weapon.getGameCharacter().getBody().getPosition());
-                enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
-                        enemy.getBody().getWorldCenter(), true);
+                //enemy.getBody().applyLinearImpulse(new Vector2((enemy.getTurn() ? -weapon.getHitPoint() * 10 : weapon.getHitPoint() * 10), 0),
+                //        enemy.getBody().getWorldCenter(), true);
                 weapon.setToDelete();
             } else if (weapon.getGameCharacter() instanceof Enemy && a.getBody().getUserData() instanceof Hero) {
                 Hero hero = (Hero) a.getBody().getUserData();
@@ -115,18 +117,33 @@ public class GameContactListener implements ContactListener {
             return;
         }
         //Missile gets wall
-        if (a.getBody().getUserData() instanceof Weapon && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
+        if (!bIsSen && a.getBody().getUserData() instanceof Weapon && Utils.equalsWithNulls(b.getBody().getUserData(), "MapBuilder")) {
             Weapon weapon = (Weapon) a.getBody().getUserData();
             if (weapon instanceof FireBall) {
                 weapon.setToDelete();
                 weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
             }
             return;
-        } else if (Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Weapon) {
+        } else if (!aIsSen && Utils.equalsWithNulls(a.getBody().getUserData(), "MapBuilder") && b.getBody().getUserData() instanceof Weapon) {
             Weapon weapon = (Weapon) b.getBody().getUserData();
             if (weapon instanceof FireBall) {
                 weapon.setToDelete();
                 weapon.getBody().getFixtureList().first().getFilterData().maskBits = (short) 0;
+            }
+            return;
+        }
+        //Missile touch missile
+        if (aIsSen && bIsSen && a.getBody().getUserData() instanceof Weapon && b.getBody().getUserData() instanceof Weapon) {
+            if (a.getBody().getUserData() instanceof FireBall && b.getBody().getUserData() instanceof TowerFireBall) {
+                FireBall fireBall = (FireBall)a.getBody().getUserData();
+                TowerFireBall towerFireBall = (TowerFireBall)b.getBody().getUserData();
+
+                WeaponCollision.collisionMissiles(fireBall, towerFireBall);
+            }else if(aIsSen && bIsSen && b.getBody().getUserData() instanceof FireBall && a.getBody().getUserData() instanceof TowerFireBall) {
+                FireBall fireBall = (FireBall)b.getBody().getUserData();
+                TowerFireBall towerFireBall = (TowerFireBall)a.getBody().getUserData();
+
+                WeaponCollision.collisionMissiles(fireBall, towerFireBall);
             }
             return;
         }

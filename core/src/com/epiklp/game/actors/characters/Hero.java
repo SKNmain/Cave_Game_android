@@ -73,7 +73,7 @@ public class Hero extends GameCharacter implements Shootable {
         this.attackSpeed = 0.8f;
         this.runSpeed = 3.5f;
         this.climbingSpeed = body.getMass() * 0.8f;
-        this.strengh = 10;
+        this.strengh = 20;
         state = STATE.IDLE;
 
     }

@@ -24,7 +24,7 @@ public class FireBall extends Weapon {
         float y = gameCharacterRef.getBody().getPosition().y * Cave.PPM / Cave.SCALE;
 
         body = BodyCreator.createBody((x + (turn ? 14 : -14)), y, false);
-        BodyCreator.createBoxShape(body, 25f, 30f, 0.1f, 0);
+        BodyCreator.createBoxSensor(body, 25f, 30f, 0.1f, 0f, null);
         //body.setTransform(x + (turn ? 2 : -2), y, 0);
         body.setGravityScale(0);
         body.setUserData(this);

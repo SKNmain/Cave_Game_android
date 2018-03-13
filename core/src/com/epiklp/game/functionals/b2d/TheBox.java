@@ -57,6 +57,7 @@ public class TheBox {
 
     public static void initWorld() {
         world = new World(new Vector2(0, -30f), true);
+
         initRayHandler();
     }
 

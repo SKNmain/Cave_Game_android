@@ -32,6 +32,12 @@ public abstract class Weapon extends GameObject {
         return hitPoint;
     }
 
+    public void setHitPoint(int hitPoint){
+        int temp = this.hitPoint - hitPoint;
+        if(temp > 0) setToDelete();
+        else this.hitPoint = temp;
+    }
+
     public GameCharacter getGameCharacter() {
         return gameCharacter;
     }

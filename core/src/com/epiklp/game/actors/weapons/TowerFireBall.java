@@ -24,7 +24,7 @@ public class TowerFireBall extends Weapon{
         float y = gameCharacterRef.getBody().getPosition().y * Cave.PPM / Cave.SCALE;
 
         body = BodyCreator.createBody((x + (turn ? 14 : -14)), y, false);
-        BodyCreator.createBoxShape(body, 20f, 15f, 0.1f, 0);
+        BodyCreator.createBoxSensor(body, 20f, 15f, 0.1f, 0, null);
 
         body.setGravityScale(0);
         body.setUserData(this);
