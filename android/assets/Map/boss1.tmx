@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="32" tileheight="32" nextobjectid="34">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="32" tileheight="32" infinite="0" nextobjectid="55">
  <tileset firstgid="1" source="level1.tsx"/>
  <tileset firstgid="17" source="new.tsx"/>
  <layer name="BG TILE" width="25" height="15">
@@ -24,52 +24,62 @@
  <layer name="Tile Layer 2" width="25" height="15">
   <data encoding="csv">
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
-2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,1,1,1,15,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,14,
-2,2,2,2,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,2,2,2,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,2,2,2,14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,2,2,2,2,0,0,1,1,1,16,16,1,1,1,1,16,16,1,1,1,0,0,0,14,
-2,2,2,2,2,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,14,
-2,0,10,12,2147483658,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,0,9,13,2147483657,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,0,9,13,2147483657,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,14,
-2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,0,0,0,0,0,0,0,0,0,0,10,11,0,0,0,0,0,0,0,0,0,0,0,0,
+2,0,0,0,0,0,0,0,0,0,0,6,7,0,0,0,0,0,0,0,0,0,0,0,0,
+2,0,0,0,0,0,0,2147483652,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,
+2,0,10,2147483658,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,0,9,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,1,1,1,1,1,1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,0,0,0,0,0,0,0,0,0,
+2,0,0,0,0,0,0,0,0,0,0,0,0,0,9,7,0,0,0,0,0,0,0,0,0,
+2,0,0,12,0,0,0,2147483652,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,
+2,0,9,13,2147483657,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,0,9,13,2147483657,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
  <objectgroup name="collision">
-  <object id="15" x="160" y="256">
-   <polyline points="0,0 0,64 -128,64 -128,160 608,160"/>
+  <object id="34" x="800" y="416">
+   <properties>
+    <property name="x" value="98"/>
+    <property name="y" value="180"/>
+   </properties>
+   <polyline points="0,0 -768,0 -768,-160 -544,-160 -576,-192 -768,-192 -768,-384 0,-384"/>
   </object>
-  <object id="16" x="160" y="128">
-   <polyline points="0,0 -128,0 -128,-96 576,-96 608,-96"/>
+  <object id="35" name="p3" type="Triger" x="224" y="160">
+   <properties>
+    <property name="x" value="384"/>
+    <property name="y" value="100"/>
+   </properties>
+   <polyline points="0,0 32,-32 320,-32 320,0 0,0"/>
   </object>
-  <object id="17" x="256" y="128">
-   <polyline points="0,0 0,32 416,32 416,0 0,0"/>
+  <object id="36" x="224" y="352">
+   <polyline points="0,0 32,-32 320,-32 320,0 0,0"/>
   </object>
-  <object id="18" x="224" y="256">
-   <polyline points="0,0 0,64 448,64 448,0 352,0 352,32 288,32 288,0 160,0 160,32 96,32 96,0 0,0"/>
+  <object id="49" name="p2" type="Triger" x="32" y="218.099" width="188.269" height="5.90104"/>
+  <object id="50" name="p1" type="Triger" x="256" y="311.415" width="288.705" height="8.58507">
+   <properties>
+    <property name="x" value="482"/>
+    <property name="y" value="279"/>
+   </properties>
   </object>
-  <object id="19" name="CLIMBING_WALL" x="128" y="128" width="32" height="128"/>
+  <object id="53" name="Trigger" x="258.247" y="119.358" width="282.118" height="10.8507"/>
+  <object id="54" x="585.938" y="544.705"/>
  </objectgroup>
  <objectgroup name="items">
-  <object id="20" name="Torch" x="220.43" y="350.536" width="32" height="32"/>
-  <object id="21" name="Torch" x="419.087" y="353.334" width="32" height="32"/>
-  <object id="22" name="Torch" x="640.128" y="350.536" width="32" height="32"/>
-  <object id="23" name="Torch" x="704.481" y="195.248" width="32" height="32"/>
-  <object id="24" name="Torch" x="521.213" y="191.051" width="32" height="32"/>
-  <object id="25" name="Torch" x="336.546" y="191.051" width="32" height="32"/>
-  <object id="26" name="Torch" x="198.046" y="185.455" width="32" height="32"/>
-  <object id="27" name="Torch" x="95.9194" y="60.9446" width="32" height="32"/>
-  <object id="28" name="Torch" x="288.98" y="63.7426" width="32" height="32"/>
-  <object id="29" name="Torch" x="462.456" y="66.5406" width="32" height="32"/>
-  <object id="30" name="Torch" x="644.325" y="56.7476" width="32" height="32"/>
+  <object id="37" name="Torch" x="608" y="352" width="32" height="32"/>
+  <object id="38" name="Torch" x="609" y="252" width="32" height="32"/>
+  <object id="39" name="Torch" x="608" y="160" width="32" height="32"/>
+  <object id="40" name="Torch" x="320" y="224" width="32" height="32"/>
+  <object id="41" name="Torch" x="448" y="224" width="32" height="32"/>
+  <object id="42" name="Torch" x="128" y="128" width="32" height="32"/>
+  <object id="43" name="Torch" x="256" y="64" width="32" height="32"/>
+  <object id="44" name="Torch" x="448" y="64" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="characters">
-  <object id="31" name="hero" x="110.318" y="349.137" width="6" height="32"/>
-  <object id="33" name="SlimeBoss" x="704" y="352" width="48" height="48"/>
+  <object id="45" name="hero" x="156" y="355" width="6" height="32"/>
+  <object id="46" name="SlimeBoss" x="672" y="288" width="128" height="128"/>
  </objectgroup>
 </map>
