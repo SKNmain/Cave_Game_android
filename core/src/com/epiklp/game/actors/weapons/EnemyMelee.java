@@ -33,6 +33,21 @@ public class EnemyMelee extends Weapon {
         sprite.setAlpha(0);
     }
 
+    public EnemyMelee(GameCharacter gameCharacterRef, int hitPoints, boolean turn, float speed, float width, float height, float time){
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("sejminar", -1), 22f, 38, hitPoints, gameCharacterRef);
+        this.turn = turn;
+        this.time = time;
+        float x = gameCharacterRef.getBody().getPosition().x * Cave.PPM / Cave.SCALE;
+        float y = gameCharacterRef.getBody().getPosition().y * Cave.PPM / Cave.SCALE;
+
+        body = BodyCreator.createBody(x, y, false);
+        BodyCreator.createBoxSensor(body, width, height, 1f, 0.1f, null);
+        body.setGravityScale(0);
+        body.setUserData(this);
+        body.setBullet(true);
+        body.applyLinearImpulse((turn ? 1 : -1) * speed, 0, x, y, true);
+        sprite.setAlpha(0);
+    }
     @Override
     public void act(float delta) {
         time -= delta;

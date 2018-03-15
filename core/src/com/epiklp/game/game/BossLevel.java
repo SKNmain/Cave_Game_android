@@ -5,7 +5,6 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -21,7 +20,6 @@ import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
-import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
@@ -33,10 +31,8 @@ import com.epiklp.game.functionals.b2d.TheBox;
  * Created by epiklp on 27.11.17.
  */
 
-public class GameLevel implements Screen {
+public class BossLevel implements Screen {
     final Cave cave;
-
-    public static boolean BOSS_MAP = false;
 
     private Stage stage;
 
@@ -59,10 +55,10 @@ public class GameLevel implements Screen {
 
     private ParticlesManager pEM = new ParticlesManager();
 
-    private int takeAura = 1;
+    private int takeAura = 0;
     private double time = 0;
 
-    public GameLevel(Cave cave) {
+    public BossLevel(Cave cave) {
         this.cave = cave;
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
@@ -78,17 +74,17 @@ public class GameLevel implements Screen {
 
 
         b2dr = new Box2DDebugRenderer();
-        map = new TmxMapLoader().load("Map/level1.tmx");
+        map = new TmxMapLoader().load("Map/boss1.tmx");
 
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
         mapBodies = MapBuilder.parseTiledObjectLayer(map.getLayers().get("collision").getObjects());
         items = MapBuilder.parseItemsAndObjectFromObjectLayer(map.getLayers().get("items").getObjects());
         enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
-        for (Enemy ac : enemies) {
-            stage.addActor(ac);
-        }
         for (GameObject i : items) {
             stage.addActor(i);
+        }
+        for (Enemy ac : enemies) {
+            stage.addActor(ac);
         }
         hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
         stage.addActor(hero);
@@ -109,15 +105,6 @@ public class GameLevel implements Screen {
 	private double currentTime;
 	private float step = 1.0f / 60.0f;
 	public void update(float delta) {
-
-
-
-	    //To jest najgłupsze, ale działające i szybkie rozwiązanie !
-	    if(BOSS_MAP)cave.setScreen(new BossLevel(cave));
-
-
-
-
         double newTime = TimeUtils.millis() / 1000.0;
         double frameTime = Math.min(newTime - currentTime, 0.25);
 		accumulator += delta;
@@ -188,7 +175,7 @@ public class GameLevel implements Screen {
                 TheBox.cleanWorld();
                 dispose();
                 Cave.state = Cave.STATE.GAME;
-                cave.setScreen(new GameLevel(cave));
+                cave.setScreen(new BossLevel(cave));
             }
         }
         if(Cave.renderBox2D)

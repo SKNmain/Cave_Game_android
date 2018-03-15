@@ -4,12 +4,14 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.actors.weapons.FireBall;
 import com.epiklp.game.actors.weapons.Shootable;
 import com.epiklp.game.actors.weapons.Sword;
 import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
 
@@ -22,13 +24,12 @@ public class Hero extends GameCharacter implements Shootable {
     private boolean canClimb;
     private boolean wantToJump; //flaga od sterowania, gdy gracz chce skoczyć, nie ma nic wspólnego z wykrywaniem możliwości skoku!
 
-    private Sound rightFootStep;
-    private Sound leftFootStep;
-
     public int actMana;
     public int maxMana;
     public int maxAura;
     public int actAura;
+    public int actLV;
+    public int actEXP;
     private float horizontalSpeed;
     private float climbingSpeed;
 
@@ -49,7 +50,7 @@ public class Hero extends GameCharacter implements Shootable {
         BodyCreator.createBoxSensor(body, 28f, 45f, new Vector2(0, -5), SENSORS.CLIMB_SENSOR);
         body.setUserData(this);
         //light = TheBox.createPointLight(body, 720, new Color(1.000f, 0.549f, 0.000f, .8f), 11, -2, -2);
-        light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .7f), true, 7, -2, -2);
+        light = TheBox.createPointLight(body, 32, new Color(.9f, .6f, .3f, .85f), true, 13, -2, -2);
 
 
         Array<Sprite> sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("hero_idle");
@@ -58,9 +59,6 @@ public class Hero extends GameCharacter implements Shootable {
         sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("hero_run");
         animator.addNewFrames(0.2f, sprites, STATE.RUNNING, Animation.PlayMode.LOOP);
         animator.addNewFrames(0.2f, sprites, STATE.CLIMBING, Animation.PlayMode.LOOP);
-
-        leftFootStep = Assets.MANAGER.get(Assets.leftFootStep);
-        rightFootStep = Assets.MANAGER.get(Assets.rightFootStep);
 
         initStats();
 
@@ -86,7 +84,8 @@ public class Hero extends GameCharacter implements Shootable {
         attackDelta += delta;
         jumpTimeout += delta;
         damageTimeout += delta;
-
+        float progress = Math.min(1f, light.getDistance()/actAura);   // 0 -> 1
+        light.setDistance(MathUtils.lerp(13,5,progress));
         if (actAura <= 0) light.setActive(false);
         else light.setActive(true);
 
@@ -99,10 +98,10 @@ public class Hero extends GameCharacter implements Shootable {
             if (timeToNextFootStep > .4f && onGround > 0) {
                 if (whichFoot) {
                     whichFoot = false;
-                    leftFootStep.play(0.1f);
+                    OwnSound.playEffect(Assets.leftFootStep, 0.1f);
                 } else {
                     whichFoot = true;
-                    rightFootStep.play(0.1f);
+                    OwnSound.playEffect(Assets.rightFootStep, 0.1f);
                 }
                 timeToNextFootStep = 0;
             }
@@ -198,11 +197,10 @@ public class Hero extends GameCharacter implements Shootable {
         this.actLife += actLife;
         if (this.actLife > maxLife) this.actLife = maxLife;
     }
-
     private void jump() {
         if (onGround > 0) {
             if (jumpTimeout >= 1.2f) {
-                Assets.MANAGER.get(Assets.jumpingSound).play(0.3f);
+                OwnSound.playEffect(Assets.jumpingSound, 0.3f);
                 body.setLinearVelocity(0, 16.5f);
                 jumpTimeout = 0;
             }
@@ -228,7 +226,6 @@ public class Hero extends GameCharacter implements Shootable {
     //zrobię to też interfejsem Melee
     public void meleeAttack() {
         if (attackSpeed <= attackDelta) {
-            Assets.MANAGER.get(Assets.swordSound).play(0.1f);
             Sword sword = new Sword(this, strengh, turn);
             this.getStage().addActor(sword);
             attackDelta = 0;

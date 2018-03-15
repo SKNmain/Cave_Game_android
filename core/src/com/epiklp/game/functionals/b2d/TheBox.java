@@ -76,7 +76,7 @@ public class TheBox {
         RayHandler.setGammaCorrection(true);
         RayHandler.useDiffuseLight(true);
         //rayHandler.setAmbientLight(0.7f);
-        rayHandler.setAmbientLight(new Color(0.05f, 0.05f, 0.05f, 0.7f));
+        rayHandler.setAmbientLight(new Color(0.07f, 0.07f, 0.07f, 0.6f));
         rayHandler.setBlurNum(1);
         rayHandler.setBlur(true);
         rayHandler.diffuseBlendFunc.set(GL20.GL_DST_COLOR, GL20.GL_SRC_COLOR);

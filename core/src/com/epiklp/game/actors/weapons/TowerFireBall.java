@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.Cave;
 import com.epiklp.game.actors.characters.GameCharacter;
 import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
 
@@ -19,7 +20,7 @@ public class TowerFireBall extends Weapon{
     public TowerFireBall(GameCharacter gameCharacterRef, int hitPoints, boolean turn) {
         super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("tower_fire"), 20, 15, hitPoints, gameCharacterRef);
         this.turn = turn;
-        time = 5f;
+        time = 3f;
         float x = gameCharacterRef.getBody().getPosition().x * Cave.PPM / Cave.SCALE;
         float y = gameCharacterRef.getBody().getPosition().y * Cave.PPM / Cave.SCALE;
 
@@ -36,7 +37,7 @@ public class TowerFireBall extends Weapon{
         Array<Sprite> sprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("tower_fire");
         animator.addNewFrames(0.15f, sprites, STATE.ITEM, Animation.PlayMode.LOOP);
 
-        Assets.MANAGER.get(Assets.castingFlameSpell).play(0.35f);
+        OwnSound.playEffect(Assets.castingFlameSpell, 0.35f);
     }
 
     @Override

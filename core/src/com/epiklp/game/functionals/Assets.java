@@ -26,6 +26,8 @@ public class Assets {
     public static final AssetDescriptor<Texture> logo = new AssetDescriptor<Texture>("logo.png", Texture.class);
     /*******************************************/
 
+    public static final AssetDescriptor<ParticleEffect> hitParticleEff = new AssetDescriptor<ParticleEffect>("particles/hitEffect.p", ParticleEffect.class);
+
     //Buttons
     /*******************************************/
     public static final AssetDescriptor<Texture> pauseWindow = new AssetDescriptor<Texture>("PauseMenu/window.png", Texture.class);
@@ -103,7 +105,7 @@ public class Assets {
         MANAGER.load(logo);
 
         MANAGER.load(textureAtlas);
-
+       // MANAGER.load(hitParticleEff);
         //SFX
         MANAGER.load(leftFootStep);
         MANAGER.load(rightFootStep);

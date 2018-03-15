@@ -34,7 +34,7 @@ public abstract class Weapon extends GameObject {
 
     public void setHitPoint(int hitPoint){
         int temp = this.hitPoint - hitPoint;
-        if(temp > 0) setToDelete();
+        if(temp <= 0) setToDelete();
         else this.hitPoint = temp;
     }
 

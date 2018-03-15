@@ -18,6 +18,7 @@ import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
 import com.epiklp.game.actors.characters.Rat;
 import com.epiklp.game.actors.characters.Slime;
+import com.epiklp.game.actors.characters.SlimeBoss;
 import com.epiklp.game.actors.characters.Spider;
 import com.epiklp.game.actors.characters.Tower;
 import com.epiklp.game.actors.items.Bottle;
@@ -52,6 +53,8 @@ public class MapBuilder {
                     enemies.add(new Slime(en.getRectangle().x , en.getRectangle().y));
                 }else if(Utils.equalsWithNulls(object.getName(), Tower.class.getSimpleName())){
                     enemies.add(new Tower(en.getRectangle().x , en.getRectangle().y));
+                }else if(Utils.equalsWithNulls(object.getName(), SlimeBoss.class.getSimpleName())){
+                    enemies.add(new SlimeBoss(en.getRectangle().x , en.getRectangle().y));
                 }
             }
 
@@ -93,6 +96,10 @@ public class MapBuilder {
                 shape = getRectangle((RectangleMapObject) object);
                 if(Utils.equalsWithNulls(object.getName(), "CLIMBING_WALL")){
                     bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "CLIMBING_WALL"));
+                    shape.dispose();
+                    continue;
+                }else if( Utils.equalsWithNulls(object.getName(), "BOSS_MAP")){
+                    bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "BOSS_MAP"));
                     shape.dispose();
                     continue;
                 }

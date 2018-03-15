@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.epiklp.game.Cave;
 import com.epiklp.game.functionals.Assets;
+import com.epiklp.game.functionals.OwnSound;
 import com.epiklp.game.functionals.b2d.BodyCreator;
 import com.epiklp.game.functionals.b2d.JointCreator;
 import com.epiklp.game.functionals.b2d.TheBox;
@@ -39,8 +40,9 @@ public class Sword extends Weapon {
             JointCreator.setLimitForRevoluteJoint(true, -.25f, 0f, 2.0f);
             JointCreator.setMotorForRevoluteJoint(true, 8f, 70f);
         }
-
         joint = JointCreator.createRevoluteJoint();
+
+        OwnSound.playEffect(Assets.swordSound, .1f);
     }
 
     float alpha = 0.1f;

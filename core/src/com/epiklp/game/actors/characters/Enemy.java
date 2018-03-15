@@ -169,7 +169,7 @@ public abstract class Enemy extends GameCharacter {
         }
     }
 
-    private void wantToAttack() {
+    protected void wantToAttack() {
         if (attackDelta >= attackSpeed) {
             if (leftAttackSensor) {
                 state = STATE.ATTACKING;
