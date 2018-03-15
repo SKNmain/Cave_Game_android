@@ -275,6 +275,6 @@ public class Menu implements Screen {
         Cave.controller.dispose();
         Cave.controller = null;
         System.gc();
-        hero.destroy();
+        //hero.destroy();
     }
 }

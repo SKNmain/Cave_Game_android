@@ -23,7 +23,6 @@ public class Controller extends Stage {
         /*******************************************/
         tabLeft = new Table();
         tabLeft.bottom().left();
-
         buttonRight = new Image(Assets.MANAGER.get(Assets.rightButton));
         buttonRight.setSize(BUTTON_SIZE, BUTTON_SIZE);
         buttonRight.addListener(new InputListener() {
@@ -155,7 +154,7 @@ public class Controller extends Stage {
     }
 
     public void setAtackPressed(boolean weapon) {
-        if(Cave.state.equals(Cave.CaveGame.GAME)) {
+        if(Cave.CaveState.equals(Cave.CaveGame.GAME)) {
             if (weapon) {
                 buttonAttack.setDrawable(swordTexture);
             } else {
