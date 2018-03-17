@@ -50,6 +50,7 @@ public class Assets {
     public static final AssetDescriptor<Texture> swordAttackButton = new AssetDescriptor<Texture>("ControlerButtons/swordAttack.png", Texture.class);
     public static final AssetDescriptor<Texture> upButton = new AssetDescriptor<Texture>("ControlerButtons/Up.png", Texture.class);
     public static final AssetDescriptor<Texture> homeButton = new AssetDescriptor<Texture>("ControlerButtons/home2.png", Texture.class);
+    public static final AssetDescriptor<Texture> changeButton = new AssetDescriptor<Texture>("ControlerButtons/change.png", Texture.class);
     /*******************************************/
 
     //Pause
@@ -123,6 +124,7 @@ public class Assets {
         MANAGER.load(mageAttackButton);
         MANAGER.load(swordAttackButton);
         MANAGER.load(homeButton);
+        MANAGER.load(changeButton);
 
         //Pause
         MANAGER.load(exit);

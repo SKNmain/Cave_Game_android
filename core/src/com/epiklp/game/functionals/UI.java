@@ -18,12 +18,9 @@ public class UI extends Stage {
     private Label.LabelStyle labelStyle;
     private Image lifeTexture, magicTexture, auraTexture;
     private Image heart, mana, aura, empty[];
-    private Image sword, staff;
-    private boolean weapon;
 
 
     public UI() {
-        weapon = false;
         labelStyle = new Label.LabelStyle(Assets.smallFont, Color.WHITE);
         text = new Label("FPS:" + Gdx.graphics.getFramesPerSecond(), labelStyle);
         text.setPosition(0, Cave.HEIGHT /2);
@@ -91,9 +88,6 @@ public class UI extends Stage {
         return tmp;
     }
 
-    public boolean getWeapon() {
-        return weapon;
-    }
 
     public void update(int maxLife, int life,int maxMagic, int magic, int maxAura, int aura, int coin, int lv, int actExp, int maxExp) {
 

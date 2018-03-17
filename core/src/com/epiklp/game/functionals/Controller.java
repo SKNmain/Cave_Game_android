@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.epiklp.game.Cave;
 
@@ -15,10 +16,12 @@ public class Controller extends Stage {
     private final float BUTTON_SIZE = 128;
     private boolean upPressed, atackPressed, leftPressed, rightPressed, homePresed, sellectPresed;
     private Table tabRight, tabLeft;
-    private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, sellectButton;
+    private Image buttonRight, buttonLeft, buttonUp, buttonAttack, buttonHome, sellectButton, changeButton;
     private TextureRegionDrawable swordTexture, mageTexture;
+    public boolean weapon; //true - sword // false - mage
 
     public Controller(boolean menu) {
+        weapon = true;
         //Buttons on Left
         /*******************************************/
         tabLeft = new Table();
@@ -53,14 +56,36 @@ public class Controller extends Stage {
                 leftPressed = false;
             }
         });
-        tabLeft.add(buttonLeft).size(BUTTON_SIZE, BUTTON_SIZE);
-        tabLeft.add(buttonRight).size(BUTTON_SIZE, BUTTON_SIZE);
-        addActor(tabLeft);
+        if(!menu) {
+            changeButton = new Image(Assets.MANAGER.get(Assets.changeButton));
+            changeButton.setSize(BUTTON_SIZE, BUTTON_SIZE);
+            changeButton.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    weapon = !weapon;
+                    if (weapon) {
+                        buttonAttack.setDrawable(swordTexture);
+                    } else {
+                        buttonAttack.setDrawable(mageTexture);
+                    }
+                }
+            });
+            tabLeft.add(changeButton).size(BUTTON_SIZE, BUTTON_SIZE);
+            tabLeft.row();
+            tabLeft.add(buttonLeft).size(BUTTON_SIZE, BUTTON_SIZE);
+            tabLeft.add(buttonRight).size(BUTTON_SIZE, BUTTON_SIZE);
+            addActor(tabLeft);
+        }
+        else {
+            tabLeft.add(buttonLeft).size(BUTTON_SIZE, BUTTON_SIZE);
+            tabLeft.add(buttonRight).size(BUTTON_SIZE, BUTTON_SIZE);
+            addActor(tabLeft);
+        }
         /*******************************************/
 
         //Buttons on Right
         /*******************************************/
-        if (menu == false) {
+        if (!menu) {
             swordTexture = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.swordAttackButton)));
             mageTexture = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.mageAttackButton)));
             tabRight = new Table();
@@ -80,7 +105,7 @@ public class Controller extends Stage {
                 }
             });
 
-            if(Cave.ui.getWeapon()) {
+            if(weapon) {
                 buttonAttack = new Image(swordTexture);
             }
             else {
@@ -152,16 +177,6 @@ public class Controller extends Stage {
 
     public void enterOff() {
         sellectButton.remove();
-    }
-
-    public void setAtackPressed(boolean weapon) {
-        if(Cave.state.equals(Cave.CaveGame.GAME)) {
-            if (weapon) {
-                buttonAttack.setDrawable(swordTexture);
-            } else {
-                buttonAttack.setDrawable(mageTexture);
-            }
-        }
     }
 
     public boolean isUpPressed() {

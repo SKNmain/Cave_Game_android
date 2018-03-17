@@ -231,7 +231,7 @@ public class GameLevel implements Screen {
         }
 
         if (Cave.controller.isAttackPressed()) {
-            if(Cave.ui.getWeapon())
+            if(Cave.controller.weapon)
                 hero.meleeAttack();
             else
                 hero.shoot();
