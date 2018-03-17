@@ -33,7 +33,7 @@ public class Pause extends Stage {
     {
         textureOff = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.off)));
         textureOn = new TextureRegionDrawable(new TextureRegion(Assets.MANAGER.get(Assets.on)));
-        labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
+        labelStyle = new Label.LabelStyle(Assets.smallFont, Color.WHITE);
         textResume = new Label("RESUME", labelStyle);
         textMusic = new Label("MUSIC", labelStyle);
         textEffects = new Label("EFFECTS", labelStyle);

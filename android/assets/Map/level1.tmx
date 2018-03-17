@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" nextobjectid="148">
+<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="150" height="50" tilewidth="32" tileheight="32" infinite="0" nextobjectid="158">
  <tileset firstgid="1" source="level1.tsx"/>
  <tileset firstgid="17" source="new.tsx"/>
  <layer name="BG TILE" width="150" height="50">
@@ -112,12 +112,13 @@
  </layer>
  <objectgroup name="characters">
   <object id="92" name="Raven" x="601" y="941.75" width="48" height="48"/>
-  <object id="132" name="Slime" x="3552" y="1056" width="32" height="32"/>
-  <object id="142" name="hero" x="2412.67" y="986.667" width="6" height="32"/>
+  <object id="132" name="SlimeBoss" x="2752" y="1024" width="32" height="32"/>
   <object id="144" name="Tower" x="2176" y="1056" width="32" height="64"/>
   <object id="145" name="Tower" x="3872" y="1056" width="32" height="64"/>
   <object id="146" name="Tower" x="3872" y="864" width="32" height="64"/>
   <object id="147" name="Tower" x="3456" y="928" width="32" height="64"/>
+  <object id="148" name="Slime" x="3545.33" y="1048" width="32" height="32"/>
+  <object id="157" name="hero" x="4629.86" y="1354.54" width="6" height="32"/>
  </objectgroup>
  <objectgroup name="collision">
   <object id="1" x="32" y="32">
@@ -198,6 +199,7 @@
   <object id="143" x="3200" y="1060">
    <polyline points="0,0 64,-64 384,-64 448,-128 800,-128 800,-96 448,-96 448,-64 416,-64 416,-32 64,-32 64,0 0,0"/>
   </object>
+  <object id="149" name="BOSS_MAP" x="4704" y="1344" width="32" height="64"/>
  </objectgroup>
  <objectgroup name="items">
   <object id="72" name="Spikes" x="896.5" y="849.5" width="128" height="14">
@@ -222,7 +224,7 @@
     <property name="damage" type="int" value="10"/>
    </properties>
   </object>
-  <object id="98" name="Guillotine" x="314.51" y="450.602" width="32" height="32">
+  <object id="98" name="Guillotine" x="320" y="448" width="32" height="32">
    <properties>
     <property name="damage" type="int" value="10"/>
    </properties>

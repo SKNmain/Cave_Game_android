@@ -103,6 +103,12 @@ public class MapBuilder {
                     shape.dispose();
                     continue;
                 }
+                else if(Utils.equalsWithNulls((object.getProperties().get("type")), "Triger"))
+                {
+                    bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, object.getName()));
+                    shape.dispose();
+                    continue;
+                }
             } else {
                 continue;
             }

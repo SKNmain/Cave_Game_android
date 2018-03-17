@@ -30,6 +30,8 @@ public class Hero extends GameCharacter implements Shootable {
     public int actAura;
     public int actLV;
     public int actEXP;
+    public int coin;
+    public int maxEXP;
     private float horizontalSpeed;
     private float climbingSpeed;
 
@@ -73,7 +75,10 @@ public class Hero extends GameCharacter implements Shootable {
         this.climbingSpeed = body.getMass() * 0.8f;
         this.strengh = 20;
         state = STATE.IDLE;
-
+        actLV = 1;
+        actEXP = 0;
+        coin = 0;
+        maxEXP = 1000;
     }
 
 

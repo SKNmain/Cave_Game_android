@@ -41,8 +41,6 @@ public class Menu implements Screen {
     private float horizontalForce = 0;
     private Box2DDebugRenderer b2dr;
     private Image image;
-    private Image shop;
-    private Image credit;
     private boolean enterShop, enterCredit, enterCave;
     private Body creditBody, shopBody, caveBody;
     private CreditsScreen creditsScreen;
@@ -61,36 +59,28 @@ public class Menu implements Screen {
         //Download Assets
         image = new Image(Assets.MANAGER.get(Assets.menuLayer));
         image.setSize(Cave.WIDTH, Cave.HEIGHT);
-        shop = new Image(Assets.MANAGER.get(Assets.shopLayer));
-        shop.setSize(200, 200);
-        shop.setPosition(500, 55);
-        credit = new Image(Assets.MANAGER.get(Assets.creditLayer));
-        credit.setSize(150, 150);
-        credit.setPosition(180, 55);
 
         //Create stage
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.5f, Cave.HEIGHT / 1.2f, camera);
         stage = new Stage(viewport);
         stage.addActor(image);
-        stage.addActor(shop);
-        stage.addActor(credit);;
         hero = new Hero(10, 100);  //Hero, przykładowa pozycja
         stage.addActor(hero);
 
 
         b2dr = new Box2DDebugRenderer();
-        Body floor = BodyCreator.createBody(0, 25, true);
+        Body floor = BodyCreator.createBody(0, 15, true);
         floor.setUserData("floor");
         BodyCreator.createBoxShape(floor, Cave.WIDTH, 2, 0, 0);
         BodyCreator.createBoxShape(floor, 2, Cave.HEIGHT, 0, 0);
 
-        creditBody = BodyCreator.createBody(130, 75, true);
-        BodyCreator.createBoxSensor(creditBody, 60, 60);
+        creditBody = BodyCreator.createBody(115, 75, true);
+        BodyCreator.createBoxSensor(creditBody, 150, 60);
         creditBody.setUserData("credit");
 
-        shopBody = BodyCreator.createBody(300, 75, true);
-        BodyCreator.createBoxSensor(shopBody, 80, 50);
+        shopBody = BodyCreator.createBody(375, 75, true);
+        BodyCreator.createBoxSensor(shopBody, 200, 50);
         shopBody.setUserData("shop");
 
         caveBody = BodyCreator.createBody(520, 75, true);
@@ -192,7 +182,7 @@ public class Menu implements Screen {
             stage.act();
             stage.draw();
             Cave.controller.draw();
-            Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura);
+            Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura, hero.coin, hero.actLV, hero.actEXP, hero.maxEXP);
             cave.ui.draw();
             update(Gdx.graphics.getDeltaTime());
             //TheBox.world.setContactListener(myContactListner);

@@ -120,7 +120,7 @@ public class BossLevel implements Screen {
             cameraUpdate();
             tmr.setView(camera);
             stage.getViewport().setCamera(camera);
-            cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura);
+            Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura, hero.coin, hero.actLV, hero.actEXP, hero.maxEXP);
             TheBox.rayHandler.setCombinedMatrix(camera.combined.cpy().scl(Cave.PPM));
 
         }

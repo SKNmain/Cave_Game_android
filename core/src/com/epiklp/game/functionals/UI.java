@@ -14,75 +14,71 @@ import com.epiklp.game.Cave;
 
 
 public class UI extends Stage {
-    private Label text, lifeText, magicText, auraText;
+    private Label text, lifeText, magicText, auraText, lvText, coinText;
     private Label.LabelStyle labelStyle;
-    private Image lifeTexture, magicTexture, timeTexture;
-    private Image statusBelt;
+    private Image lifeTexture, magicTexture, auraTexture;
+    private Image heart, mana, aura, empty[];
     private Image sword, staff;
-    private int length;
     private boolean weapon;
 
 
     public UI() {
-        weapon = true;
-        labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
+        weapon = false;
+        labelStyle = new Label.LabelStyle(Assets.smallFont, Color.WHITE);
         text = new Label("FPS:" + Gdx.graphics.getFramesPerSecond(), labelStyle);
         text.setPosition(0, Cave.HEIGHT /2);
         addActor(text);
-        lifeTexture = new Image(Assets.MANAGER.get(Assets.statusHp));
-        lifeTexture.setPosition(219, Cave.HEIGHT - 69);
-        lifeTexture.setScale(Cave.SCALE*1.5f);
+        empty = new Image[4];
+        for(int i=0; i<3; i++) {
+            empty[i] = new Image(Assets.MANAGER.get(Assets.EMPTY_BAR));
+            empty[i].setScale(2);
+            empty[i].setPosition(32 + 210*i, Cave.HEIGHT - 68);
+            addActor(empty[i]);
+        }
+        lifeTexture = new Image(Assets.MANAGER.get(Assets.STATUS_HP));
+        lifeTexture.setScale(2);
+        lifeTexture.setPosition(32, Cave.HEIGHT - 68);
         lifeText = new Label("HP: 0/0", labelStyle);
-        lifeText.setPosition(219, Cave.HEIGHT - 69);
-        magicTexture = new Image(Assets.MANAGER.get(Assets.statusMana));
-        magicTexture.setPosition(219, Cave.HEIGHT - 105);
-        magicTexture.setScale(Cave.SCALE*1.5f);
-        magicText = new Label("MP: 0/0", labelStyle);
-        magicText.setPosition(219, Cave.HEIGHT - 105);
-        timeTexture = new Image(Assets.MANAGER.get(Assets.statusTime));
-        timeTexture.setPosition(219, Cave.HEIGHT - 140);
-        timeTexture.setScale(Cave.SCALE*1.5f);
-        auraText = new Label("AURA: 0/0", labelStyle);
-        auraText.setPosition(219, Cave.HEIGHT - 140);
-        statusBelt = new Image(Assets.MANAGER.get(Assets.statusBelt));
-        statusBelt.setScale(Cave.SCALE*1.5f);
-        statusBelt.setPosition(0, Cave.HEIGHT-statusBelt.getHeight()*2*1.5f);
-        sword = new Image(Assets.MANAGER.get(Assets.uiSword));
-        sword.setScale(1.75f);
-        sword.setPosition(38, Cave.HEIGHT - sword.getHeight()*2 - 10);
-        sword.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                weapon = false;
-                sword.remove();
-                addActor(staff);
-                Cave.controller.setAtackPressed(weapon);
-            }
-        });
-        staff = new Image(Assets.MANAGER.get(Assets.uiStaff));
-        staff.setScale(2.25f);
-        staff.setPosition(25, Cave.HEIGHT - sword.getHeight()*2 - 40);
-        staff.addListener(new ClickListener()
-        {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                weapon = true;
-                staff.remove();
-                addActor(sword);
-                Cave.controller.setAtackPressed(weapon);
-            }
-        });
-        addActor(statusBelt);
-        addActor(sword);
-        //addActor(staff);
+        lifeText.setPosition(64, Cave.HEIGHT - 48);
         addActor(lifeTexture);
-        addActor(magicTexture);
-        addActor(timeTexture);
-        addActor(auraText);
         addActor(lifeText);
+        heart = new Image(Assets.MANAGER.get(Assets.HEART));
+        heart.setScale(2);
+        heart.setPosition(0, Cave.HEIGHT-64);
+        addActor(heart);
+        magicTexture = new Image(Assets.MANAGER.get(Assets.STATUS_MANA));
+        magicTexture.setScale(2);
+        magicTexture.setPosition(242, Cave.HEIGHT - 68);
+        magicText = new Label("0/0", labelStyle);
+        magicText.setPosition(274, Cave.HEIGHT - 48);
+        addActor(magicTexture);
         addActor(magicText);
-        length = (int)timeTexture.getWidth();
+        mana = new Image(Assets.MANAGER.get(Assets.MANA));
+        mana.setScale(2);
+        mana.setPosition(210, Cave.HEIGHT-64);
+        addActor(mana);
+        auraTexture = new Image(Assets.MANAGER.get(Assets.STATUS_AURA));
+        auraTexture.setScale(2);
+        auraTexture.setPosition(452, Cave.HEIGHT - 68);
+        auraText = new Label("0/0", labelStyle);
+        auraText.setPosition(484, Cave.HEIGHT - 48);
+        addActor(auraTexture);
+        addActor(auraText);
+        aura = new Image(Assets.MANAGER.get(Assets.AURA));
+        aura.setScale(2);
+        aura.setPosition(420, Cave.HEIGHT-64);
+        addActor(aura);
+        empty[3] = new Image(Assets.MANAGER.get(Assets.EMPTY_BAR));
+        empty[3].setScale(2);
+        empty[3].setPosition(32, Cave.HEIGHT - 128);
+        addActor(empty[3]);
+        lvText = new Label("lv: 0", labelStyle);
+        lvText.setPosition(36, Cave.HEIGHT - 104);
+        addActor(lvText);
+
+        coinText = new Label("coin: 0", labelStyle);
+        coinText.setPosition(lvText.getWidth()+46, Cave.HEIGHT - 104);
+        addActor(coinText);
     }
 
     private Texture CreateTexture(int width, int hight, int r, int g, int b, int a) {
@@ -99,14 +95,16 @@ public class UI extends Stage {
         return weapon;
     }
 
-    public void update(int maxLife, int life,int maxMagic, int magic, int maxAura, int aura) {
+    public void update(int maxLife, int life,int maxMagic, int magic, int maxAura, int aura, int coin, int lv, int actExp, int maxExp) {
 
-        lifeTexture.setWidth((life/(float)maxLife)*100 + 1);
-        magicTexture.setWidth((magic/(float)maxMagic)*100 + 1);
-        timeTexture.setWidth((aura/(float)maxAura)*100 + 1);
+        lifeTexture.setWidth((life/(float)maxLife)*84);
+        lifeText.setText(life + "/" + maxLife);
+        magicTexture.setWidth((magic/(float)maxMagic)*84);
+        magicText.setText(magic + "/" + maxMagic);
+        auraTexture.setWidth((aura/(float)maxAura)*84);
+        auraText.setText(aura + "/" + maxAura);
+        lvText.setText("lv:" +lv );
+        coinText.setText("coin:" + coin);
         text.setText("FPS:" + Gdx.graphics.getFramesPerSecond());
-        lifeText.setText("HP: " + life + "/" + maxLife);
-        magicText.setText("MP: " + magic + "/" + maxMagic);
-        auraText.setText("AURA: " + aura + "/" + maxAura);
     }
 }

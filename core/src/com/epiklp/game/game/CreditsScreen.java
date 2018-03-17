@@ -19,11 +19,10 @@ class CreditsScreen extends Stage {
     private Boolean backPress;
 
     public CreditsScreen() {
-        labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
+        labelStyle = new Label.LabelStyle(Assets.bigFont, Color.WHITE);
         text = new Label("Autors:\nRafal Rybowski\nKamil Sykula", labelStyle);
-        text.setPosition(0, Cave.HEIGHT / 2);
-        text.setFontScale(4.5f);
-        Layer = new Image(Assets.MANAGER.get(Assets.menuLayer));
+        text.setPosition(0, Cave.HEIGHT / 3);
+        Layer = new Image(Assets.MANAGER.get(Assets.creditLayer));
         Layer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         addActor(Layer);
         addActor(text);

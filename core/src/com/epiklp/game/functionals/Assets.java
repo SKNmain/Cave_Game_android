@@ -66,21 +66,21 @@ public class Assets {
 
     //menu
     /*******************************************/
-    public static final AssetDescriptor<Texture> menuMap = new AssetDescriptor<Texture>("Map/menu_map.png", Texture.class);
-    public static final AssetDescriptor<Texture> menuLayer = new AssetDescriptor<Texture>("menu/all.png", Texture.class);
-    public static final AssetDescriptor<Texture> shopLayer = new AssetDescriptor<Texture>("menu/shop.png", Texture.class);
+    public static final AssetDescriptor<Texture> menuLayer = new AssetDescriptor<Texture>("menu/menu.png", Texture.class);
     public static final AssetDescriptor<Texture> creditLayer = new AssetDescriptor<Texture>("menu/credit.png", Texture.class);
-    public static final AssetDescriptor<Texture> cave1Layer = new AssetDescriptor<Texture>("menu/cave1.png", Texture.class);
-    public static final AssetDescriptor<Texture> cave2Layer = new AssetDescriptor<Texture>("menu/cave2.png", Texture.class);
     /*******************************************/
 
 
     //UI
     /*******************************************/
-    public static final AssetDescriptor<Texture> statusBelt = new AssetDescriptor<Texture>("UI/status_belt.png", Texture.class);
-    public static final AssetDescriptor<Texture> statusHp = new AssetDescriptor<Texture>("UI/status_hp.png", Texture.class);
-    public static final AssetDescriptor<Texture> statusMana = new AssetDescriptor<Texture>("UI/status_mana.png", Texture.class);
-    public static final AssetDescriptor<Texture> statusTime = new AssetDescriptor<Texture>("UI/status_time.png", Texture.class);
+    public static final AssetDescriptor<Texture> STATUS_HP = new AssetDescriptor<Texture>("UI/statusbar/hp_bar.png", Texture.class);
+    public static final AssetDescriptor<Texture> STATUS_MANA = new AssetDescriptor<Texture>("UI/statusbar/mp_bar.png", Texture.class);
+    public static final AssetDescriptor<Texture> STATUS_AURA = new AssetDescriptor<Texture>("UI/statusbar/aura_bar.png", Texture.class);
+    public static final AssetDescriptor<Texture> EMPTY_BAR = new AssetDescriptor<Texture>("UI/statusbar/empty_bar.png", Texture.class);
+    public static final AssetDescriptor<Texture> HEART = new AssetDescriptor<Texture>("UI/statusbar/Heart.png", Texture.class);
+    public static final AssetDescriptor<Texture> MANA = new AssetDescriptor<Texture>("UI/statusbar/Mana.png", Texture.class);
+    public static final AssetDescriptor<Texture> AURA = new AssetDescriptor<Texture>("UI/statusbar/Aura.png", Texture.class);
+
     public static final AssetDescriptor<Texture> uiSword = new AssetDescriptor<Texture>("UI/sword.png", Texture.class);
     public static final AssetDescriptor<Texture> uiStaff = new AssetDescriptor<Texture>("UI/staff.png", Texture.class);
     public static final AssetDescriptor<Texture> uiBag = new AssetDescriptor<Texture>("UI/bag.png", Texture.class);
@@ -96,7 +96,8 @@ public class Assets {
     public static final AssetDescriptor<Music> gameMusic = new AssetDescriptor<Music>("SFX/cave_theme.ogg", Music.class);
 
 
-    public static BitmapFont Font; //Font
+    public static BitmapFont smallFont; //Font
+    public static BitmapFont bigFont; //Font
 
     public static final AssetDescriptor<Texture>[] layer = new AssetDescriptor[9]; // GameOver
 
@@ -146,17 +147,16 @@ public class Assets {
 
         //Menu
         MANAGER.load(menuLayer);
-        MANAGER.load(shopLayer);
         MANAGER.load(creditLayer);
-        MANAGER.load(cave1Layer);
-        MANAGER.load(cave2Layer);
-        MANAGER.load(menuMap);
 
         //UI
-        MANAGER.load(statusBelt);
-        MANAGER.load(statusHp);
-        MANAGER.load(statusMana);
-        MANAGER.load(statusTime);
+        MANAGER.load(STATUS_HP);
+        MANAGER.load(STATUS_MANA);
+        MANAGER.load(STATUS_AURA);
+        MANAGER.load(EMPTY_BAR);
+        MANAGER.load(HEART);
+        MANAGER.load(AURA);
+        MANAGER.load(MANA);
         MANAGER.load(uiStaff);
         MANAGER.load(uiSword);
         MANAGER.load(uiBag);
@@ -176,13 +176,19 @@ public class Assets {
         parameter.size = 16;
         parameter.characters = FreeTypeFontGenerator.DEFAULT_CHARS;
         BitmapFont character = generator.generateFont(parameter);
-        Font = character;
+        //BitmapFont character2 = generator.generateFont(parameter);
+        smallFont = character;
+        parameter.size = 80;
+        BitmapFont character2 = generator.generateFont(parameter);
+        bigFont = character2;
+        parameter = null;
+        generator.dispose();
 
     }
 
     public static void dispose() {
         MANAGER.dispose();
-        MANAGER.dispose();
+
     }
 
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.epiklp.game.Cave;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.TextureGame;
+import com.epiklp.game.functionals.OwnSound;
 
 /**
  * Created by Asmei on 2017-11-27.
@@ -20,10 +21,9 @@ import com.epiklp.game.TextureGame;
 
 public class EndScreen implements Screen {
     final Cave cave;
-
-    private TextureGame textMenu;
+    private Image Layer;
+    //private TextureGame textMenu;
     private Stage stage;
-    private BitmapFont bitmapFont;
     private Label text;
     private Label.LabelStyle labelStyle;
     private Image backImage;
@@ -33,11 +33,13 @@ public class EndScreen implements Screen {
         this.cave = cave;
 
 
-        textMenu = new TextureGame();
+        //textMenu = new TextureGame();
+        Layer = new Image(Assets.MANAGER.get(Assets.creditLayer));
+        Layer.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage();
+        stage.addActor(Layer);
         Gdx.input.setInputProcessor(stage);
-        bitmapFont = new BitmapFont();
-        labelStyle = new Label.LabelStyle(Assets.Font, Color.WHITE);
+        labelStyle = new Label.LabelStyle(Assets.bigFont, Color.WHITE);
         text = new Label("GAME OVER!", labelStyle);
         text.setPosition(0, Cave.HEIGHT / 2);
         stage.addActor(text);
@@ -65,11 +67,15 @@ public class EndScreen implements Screen {
     public void render(float delta) {
 
         if (backPress == true) {
-            Cave.CaveState = Cave.CaveGame.MENU;
-            Cave.change = true;
+            cave.setScreen(new Menu(cave));
+            OwnSound.stop();
             dispose();
+            Cave.CaveState = Cave.CaveGame.MENU;
+            Cave.state = Cave.STATE.GAME;
+            if(OwnSound.MUSIC)
+                OwnSound.play();
         }
-        textMenu.draw();
+        //textMenu.draw();
         stage.act();
         stage.draw();
     }
@@ -96,7 +102,7 @@ public class EndScreen implements Screen {
 
     @Override
     public void dispose() {
-        textMenu.dispose();
+        //textMenu.dispose();
         stage.dispose();
     }
 }
