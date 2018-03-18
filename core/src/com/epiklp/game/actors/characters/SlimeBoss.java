@@ -18,15 +18,17 @@ import com.epiklp.game.functionals.b2d.TheBox;
 
 public class SlimeBoss extends Enemy implements Shootable {
 
+    private Hero hero;
+
     public SlimeBoss(float x, float y) {
-        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("slime_run", 0), 90, 80);
+        super(Assets.MANAGER.get(Assets.textureAtlas).createSprite("slime_run", 0), 50, 40);
 
         body = BodyCreator.createBody(x, y, false);
-        BodyCreator.createBoxShape(body, 68f, 60f, 10f, 0);
+        BodyCreator.createBoxShape(body, 30, 25, 10f, 0);
         //Sensors
-        BodyCreator.createBoxSensor(body, 300f, 200f, new Vector2(0, 0f), SENSORS.PATROL_SENSOR);
-        setSensorAround(new Vector2(-80f, -80f), new Vector2(80f, -80f), new Vector2(-90f, 32f), new Vector2(90f, 32f),
-                new Vector2(50f, 100f), new Vector2(30f, 100f), new Vector2(-84f, 0f), new Vector2(84f, 0f));
+        BodyCreator.createBoxSensor(body, 30f, 20f, new Vector2(0, 0f), SENSORS.PATROL_SENSOR);
+        setSensorAround(new Vector2(-30f, -25f), new Vector2(30f, -25f), new Vector2(-30f, 25f), new Vector2(30f, 25f),
+                new Vector2(20f, 40f), new Vector2(20f, 40f), new Vector2(-30f, 0f), new Vector2(30f, 0f));
         body.setUserData(this);
         body.setGravityScale(30f);
         initStats();
@@ -41,7 +43,10 @@ public class SlimeBoss extends Enemy implements Shootable {
         animator.addNewFrames(0.2f, animationSprites, STATE.RUNNING, Animation.PlayMode.LOOP);
         animationSprites = Assets.MANAGER.get(Assets.textureAtlas).createSprites("slime_attack");
         animator.addNewFrames(0.20f, animationSprites, STATE.ATTACKING, Animation.PlayMode.LOOP);
+    }
 
+    public void positionHero(Hero hero) {
+        this.hero = hero;
     }
 
 
@@ -92,6 +97,17 @@ public class SlimeBoss extends Enemy implements Shootable {
     protected void moving() {
         if (notMovable) {
             wantToAttack();
+        }
+        if(hero.getBody().getPosition().x < body.getPosition().x) {
+            state = STATE.RUNNING;
+            turn = false;
+            body.setLinearVelocity(-runSpeed, body.getLinearVelocity().y);
+        }
+        else
+        {
+            state = STATE.RUNNING;
+            turn = true;
+            body.setLinearVelocity(runSpeed, body.getLinearVelocity().y);
         }
     }
 

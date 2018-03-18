@@ -29,7 +29,7 @@ public class EndScreen implements Screen {
     private Image backImage;
     private Boolean backPress;
 
-    public EndScreen(Cave cave) {
+    public EndScreen(Cave cave, boolean win) {
         this.cave = cave;
 
 
@@ -40,7 +40,11 @@ public class EndScreen implements Screen {
         stage.addActor(Layer);
         Gdx.input.setInputProcessor(stage);
         labelStyle = new Label.LabelStyle(Assets.bigFont, Color.WHITE);
-        text = new Label("GAME OVER!", labelStyle);
+        if(win) {
+            text = new Label("Congratulation\n You Win!!!", labelStyle);
+        } else {
+            text = new Label("GAME OVER!", labelStyle);
+        }
         text.setPosition(0, Cave.HEIGHT / 2);
         stage.addActor(text);
         backPress = false;

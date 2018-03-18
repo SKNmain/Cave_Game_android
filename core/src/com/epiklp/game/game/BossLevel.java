@@ -20,6 +20,7 @@ import com.epiklp.game.Cave;
 import com.epiklp.game.actors.GameObject;
 import com.epiklp.game.actors.characters.Enemy;
 import com.epiklp.game.actors.characters.Hero;
+import com.epiklp.game.actors.characters.SlimeBoss;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.GameContactListener;
 import com.epiklp.game.functionals.MapBuilder;
@@ -47,7 +48,7 @@ public class BossLevel implements Screen {
     //hero
     private Hero hero;
 
-    private Array<Enemy> enemies;
+    private SlimeBoss slime;
     private Array<GameObject> items;
     private Array<Body> mapBodies;
 
@@ -79,15 +80,14 @@ public class BossLevel implements Screen {
         tmr = new OrthogonalTiledMapRenderer(map, 2f);
         mapBodies = MapBuilder.parseTiledObjectLayer(map.getLayers().get("collision").getObjects());
         items = MapBuilder.parseItemsAndObjectFromObjectLayer(map.getLayers().get("items").getObjects());
-        enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());
+        slime = MapBuilder.findBoss(map.getLayers().get("characters").getObjects());
         for (GameObject i : items) {
             stage.addActor(i);
         }
-        for (Enemy ac : enemies) {
-            stage.addActor(ac);
-        }
+        stage.addActor(slime);
         hero = MapBuilder.parseHeroFromObjectLayer(map.getLayers().get("characters").getObjects());
         stage.addActor(hero);
+        slime.positionHero(hero);
 
 
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
@@ -101,8 +101,8 @@ public class BossLevel implements Screen {
 
     }
 
-	private double accumulator;
-	private double currentTime;
+	private double accumulator=0;
+	private double currentTime=0;
 	private float step = 1.0f / 60.0f;
 	public void update(float delta) {
         double newTime = TimeUtils.millis() / 1000.0;
@@ -150,11 +150,7 @@ public class BossLevel implements Screen {
             cave.ui.draw();
 
 
-        } else  if (Cave.state.equals(Cave.STATE.RESTART)) {
-            dispose();
-            cave.setScreen(new Menu(cave));
-        }
-        else if (Cave.state.equals(Cave.STATE.OPTION)){
+        } else if (Cave.state.equals(Cave.STATE.OPTION)){
             tmr.render();
             stage.draw();
             TheBox.rayHandler.updateAndRender();
@@ -185,7 +181,12 @@ public class BossLevel implements Screen {
 
     private void checkEndGame() {
         if (hero.isDead()) {
-            cave.setScreen(new EndScreen(cave));
+            TheBox.cleanWorld();
+            cave.setScreen(new EndScreen(cave, false));
+        }
+        if(slime.isDead()){
+            TheBox.cleanWorld();
+            cave.setScreen(new EndScreen(cave, true));
         }
     }
 
@@ -252,6 +253,7 @@ public class BossLevel implements Screen {
     @Override
     public void dispose() {
         //TheBox.destroyWorld();
+        TheBox.cleanWorld();
         b2dr.dispose();
         Cave.controller.dispose();
         Cave.controller = null;

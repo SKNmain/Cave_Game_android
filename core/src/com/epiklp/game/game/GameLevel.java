@@ -113,7 +113,9 @@ public class GameLevel implements Screen {
 
 
 	    //To jest najgłupsze, ale działające i szybkie rozwiązanie !
-	    if(BOSS_MAP)cave.setScreen(new BossLevel(cave));
+	    if(BOSS_MAP){
+	        cave.setScreen(new BossLevel(cave));
+        }
 
 
 
@@ -198,7 +200,7 @@ public class GameLevel implements Screen {
 
     private void checkEndGame() {
         if (hero.isDead()) {
-            cave.setScreen(new EndScreen(cave));
+            cave.setScreen(new EndScreen(cave, false));
         }
     }
 

@@ -38,6 +38,16 @@ public class MapBuilder {
         return new Hero(0, 0);
     }
 
+    public static SlimeBoss findBoss(MapObjects objects) {
+        for(MapObject object : objects){
+            RectangleMapObject en = ((RectangleMapObject) object);
+            if(Utils.equalsWithNulls(object.getName(), SlimeBoss.class.getSimpleName())){
+                return new SlimeBoss(en.getRectangle().x , en.getRectangle().y);
+            }
+        }
+        return null;
+    }
+
     public static Array<Enemy> parseEnemiesFromObjectLayer(MapObjects objects){
         Array<Enemy> enemies = new Array<Enemy>();
         for(MapObject object : objects){
