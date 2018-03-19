@@ -18,7 +18,8 @@ public class UI extends Stage {
     private Label.LabelStyle labelStyle;
     private Image lifeTexture, magicTexture, auraTexture;
     private Image heart, mana, aura, empty[];
-
+    private Image hpBoss;
+    private Label bossText;
 
     public UI() {
         labelStyle = new Label.LabelStyle(Assets.smallFont, Color.WHITE);
@@ -86,6 +87,25 @@ public class UI extends Stage {
         tmp = new Texture(pixmap);
         pixmap.dispose();
         return tmp;
+    }
+
+    public void addHpBoss() {
+        hpBoss = new Image(CreateTexture(1,20, 1,0,0,0));
+        hpBoss.setPosition(64*4,20);
+        addActor(hpBoss);
+        bossText = new Label("0/0", labelStyle);
+        bossText.setPosition(500, 20);
+        addActor(bossText);
+    }
+
+    public void deleteHpBoss() {
+        hpBoss.remove();
+        bossText.remove();
+    }
+
+    public void updateHpBoss(int actHp, int maxHp){
+        hpBoss.setWidth((actHp/(float)maxHp)*800);
+        bossText.setText(actHp + "/" + maxHp);
     }
 
 

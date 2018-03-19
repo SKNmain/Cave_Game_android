@@ -1,5 +1,6 @@
 package com.epiklp.game.actors.traps;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
@@ -32,8 +33,7 @@ public class Guillotine extends Trap {
         JointCreator.initialRevoluteJoint(this.handlerBody,body, false, new Vector2(0,0), new Vector2(0, 2.5f));
 
         JointCreator.setLimitForRevoluteJoint(false, 0, 0, 0);
-        JointCreator.setMotorForRevoluteJoint(true, 2f, 50000f);
-
+        JointCreator.setMotorForRevoluteJoint(true, MathUtils.random(2,7), 50000f);
         this.joint = JointCreator.createRevoluteJoint();
     }
 

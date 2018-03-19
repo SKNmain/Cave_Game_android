@@ -60,6 +60,7 @@ public class BossLevel implements Screen {
     private double time = 0;
 
     public BossLevel(Cave cave) {
+        GameLevel.BOSS_MAP = false;
         this.cave = cave;
         camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
         viewport = new ExtendViewport(Cave.WIDTH / 1.2f, Cave.HEIGHT / 1.2f, camera);
@@ -72,7 +73,7 @@ public class BossLevel implements Screen {
 
      //   pEM.addParticleEffect(ParticlesManager.FIRE, Assets.MANAGER.get(Assets.hitParticleEff), 1/64f);
 
-
+        Cave.ui.addHpBoss();
 
         b2dr = new Box2DDebugRenderer();
         map = new TmxMapLoader().load("Map/boss1.tmx");
@@ -147,6 +148,7 @@ public class BossLevel implements Screen {
             stage.draw();
             TheBox.rayHandler.updateAndRender();
             Cave.controller.draw();
+            Cave.ui.updateHpBoss(slime.actLife, slime.maxLife);
             cave.ui.draw();
 
 
@@ -165,16 +167,18 @@ public class BossLevel implements Screen {
                 Cave.state = Cave.STATE.GAME;
                 if(OwnSound.MUSIC)
                     OwnSound.play();
+                Cave.ui.deleteHpBoss();
             }
             if(Cave.menuPause.getRestartButton())
             {
                 TheBox.cleanWorld();
                 dispose();
+                Cave.ui.deleteHpBoss();
                 Cave.state = Cave.STATE.GAME;
                 cave.setScreen(new BossLevel(cave));
             }
         }
-        if(Cave.renderBox2D)
+        if(Cave.renderBox2D && !Cave.CaveState.equals(Cave.CaveGame.MENU))
             b2dr.render(TheBox.world, camera.combined.scl(Cave.PPM));
     }
 
@@ -183,10 +187,12 @@ public class BossLevel implements Screen {
         if (hero.isDead()) {
             TheBox.cleanWorld();
             cave.setScreen(new EndScreen(cave, false));
+            Cave.ui.deleteHpBoss();
         }
         if(slime.isDead()){
             TheBox.cleanWorld();
             cave.setScreen(new EndScreen(cave, true));
+            Cave.ui.deleteHpBoss();
         }
     }
 

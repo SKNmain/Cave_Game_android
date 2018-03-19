@@ -68,10 +68,10 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public void initStats() {
-        this.actLife = this.maxLife = this.maxAura = 100;
-        this.actMana = this.maxMana = this.actAura = 100;
+        this.actLife = this.maxLife = 200;
+        this.actMana = this.maxMana = this.actAura = this.maxAura = 100;
         this.attackSpeed = 0.8f;
-        this.runSpeed = 3.5f;
+        this.runSpeed = 9f;
         this.climbingSpeed = body.getMass() * 0.8f;
         this.strengh = 20;
         state = STATE.IDLE;
@@ -149,7 +149,7 @@ public class Hero extends GameCharacter implements Shootable {
 
     @Override
     public float getRunSpeed() {
-        return runSpeed + actLife * 0.03f;
+        return runSpeed * (actLife/(float)maxLife);
     }
 
     public void setActMana(int mana) {

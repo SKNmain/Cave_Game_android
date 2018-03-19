@@ -66,12 +66,12 @@ public class SlimeBoss extends Enemy implements Shootable {
 
     @Override
     public void initStats() {
-        this.actLife = this.maxLife = 100;
-        this.attackSpeed = 5.5f;
+        this.actLife = this.maxLife = 500;
+        this.attackSpeed = 10f;
         this.attackTime = 1.1f;
         this.runSpeed = 2.4f;
         this.strengh = 20;
-        this.attackRange = 4.1f;
+        this.attackRange = 2f;
         this.patrolRange = 5f;
         state = STATE.IDLE;
         turn = false;
@@ -98,12 +98,17 @@ public class SlimeBoss extends Enemy implements Shootable {
         if (notMovable) {
             wantToAttack();
         }
-        if(hero.getBody().getPosition().x < body.getPosition().x) {
+        if (hero.getBody().getPosition().x > body.getPosition().x - attackRange
+                && hero.getBody().getPosition().x < body.getPosition().x + attackRange) {
+            body.setLinearVelocity(0, body.getLinearVelocity().y);
+            wantToAttack();
+        }
+        else if(hero.getBody().getPosition().x < body.getPosition().x + attackRange) {
             state = STATE.RUNNING;
             turn = false;
             body.setLinearVelocity(-runSpeed, body.getLinearVelocity().y);
         }
-        else
+        else if(hero.getBody().getPosition().x > body.getPosition().x - attackRange)
         {
             state = STATE.RUNNING;
             turn = true;
@@ -113,7 +118,7 @@ public class SlimeBoss extends Enemy implements Shootable {
 
     protected void wantToAttack() {
         if (attackDelta >= attackSpeed) {
-            if (leftAttackSensor) {
+            if (leftAttackSensor || rightAttackSensor) {
                 attack();
                 state = STATE.ATTACKING;
                 attackDelta = elapsedTime = 0;

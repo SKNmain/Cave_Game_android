@@ -367,7 +367,6 @@ public class GameContactListener implements ContactListener {
                 enemy.setSensorUp(false, GameCharacter.SENSORS.RIGHT_UP_SENSOR);
                 return;
             }
-
         }
 
         @Override

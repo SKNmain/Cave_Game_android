@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="32" tileheight="32" infinite="0" nextobjectid="57">
+<map version="1.0" tiledversion="2017.07.26" orientation="orthogonal" renderorder="right-down" width="25" height="15" tilewidth="32" tileheight="32" nextobjectid="59">
  <tileset firstgid="1" source="level1.tsx"/>
  <tileset firstgid="17" source="new.tsx"/>
  <layer name="BG TILE" width="25" height="15">
@@ -28,8 +28,8 @@
 2,0,0,0,0,0,0,0,0,0,0,10,11,0,0,0,0,0,0,0,0,0,0,0,2,
 2,0,0,0,0,0,0,0,0,0,0,6,7,0,0,0,0,0,0,0,0,0,0,0,2,
 2,0,0,0,0,0,0,2147483652,1,1,1,1,1,1,1,1,1,4,0,0,0,0,0,0,2,
-2,0,10,2147483658,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-2,0,9,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+2,0,10,2147483658,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2147483659,11,0,0,2,
+2,0,9,8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,9,7,0,0,2,
 2,1,1,1,1,1,1,4,0,0,0,0,0,0,0,0,0,2147483652,1,1,1,1,1,1,2,
 2,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,0,0,0,0,0,0,0,0,2,
 2,0,0,0,0,0,0,0,0,0,0,0,0,0,9,7,0,0,0,0,0,0,0,0,2,
@@ -48,7 +48,7 @@
    </properties>
    <polyline points="-32,0 -768,0 -768,-160 -544,-160 -576,-192 -768,-192 -768,-384 -32,-384"/>
   </object>
-  <object id="35" name="p3" type="Triger" x="224" y="160">
+  <object id="35" x="224" y="160">
    <properties>
     <property name="x" value="384"/>
     <property name="y" value="100"/>
@@ -58,17 +58,19 @@
   <object id="36" x="224" y="352">
    <polyline points="0,0 32,-32 320,-32 352,0 0,0"/>
   </object>
-  <object id="49" name="p2" type="Triger" x="32" y="224" width="188.269" height="5.90104"/>
-  <object id="50" name="p1" type="Triger" x="256" y="320" width="288.705" height="8.58507">
+  <object id="49" name="p2" type="Triger" x="84" y="230" width="14.269" height="14.901"/>
+  <object id="50" name="p1" type="Triger" x="440" y="420" width="14.705" height="16.5851">
    <properties>
     <property name="x" value="482"/>
     <property name="y" value="279"/>
    </properties>
   </object>
-  <object id="53" name="Trigger" x="256" y="128" width="282.118" height="10.8507"/>
+  <object id="53" name="p3" type="Triger" x="375" y="136" width="18.118" height="12.8507"/>
   <object id="55" x="768" y="32">
    <polyline points="0,0 0.406387,191.985 -192,192 -224,224 0,224 0,384"/>
   </object>
+  <object id="57" name="p4" type="Triger" x="664.941" y="228.575" width="18.118" height="12.8507"/>
+  <object id="58" name="p5" type="Triger" x="470.941" y="322.575" width="18.118" height="12.8507"/>
  </objectgroup>
  <objectgroup name="items">
   <object id="37" name="Torch" x="640" y="320" width="32" height="32"/>
