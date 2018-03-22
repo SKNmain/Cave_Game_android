@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 
 public interface Shootable {
     final int LIMIT = 5;
-    Array<Bullet> activeBullets = new Array<Bullet>();
+    Array<Weapon> activeBullets = new Array<Weapon>();
 
     void shoot();
 

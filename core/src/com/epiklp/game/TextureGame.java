@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.epiklp.game.functionals.Assets;
 
 /**
  * Created by epiklp on 18.11.17.
@@ -22,7 +23,7 @@ public class TextureGame {
         Gdx.input.setInputProcessor(stage);
         textures = new Array<Texture>();
         for (int i = 0; i < 9; i++) {
-            textures.add(Assets.manager.get(Assets.layer[i]));
+            textures.add(Assets.MANAGER.get(Assets.layer[i]));
         }
         parallaxBackground = new ParallaxBackground(textures);
         parallaxBackground.setSize(Cave.WIDTH, Cave.HEIGHT);

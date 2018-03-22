@@ -1,4 +1,38 @@
 TODO LIST
 
 - Przerobić Credits screen, endscreen itp na klasy dziedziczące po jednym screenie i już (może maszyna stanów?)
-- Dodać wykrywanie kolizji dla potworków
+- Dodać wykrywanie kolizji dla potworków - zrobione
+
+=======================
+LISTA:
+- Pociski będą się odbijać albo z fizyką od Boxa, albo z własną (licząc kąt odbicia i wgl), wtedy można dodać jakieś iskry czy cos)
+- Magia będzie zależeć od "mocy" im większa tym będzie bardziej się świecić, jak spotka inną, to wtedy ta z większą przejdzie dalej, z mniejszą
+energią + mniejszym świeceniem. Ta druga zniknie
+- Przepisać i zrobić menadżer poziomów
+- Dźwięki
+- ANIMACJE KURWA
+- 
+
+
+=======================
+
+
+//28.01.18 - Kamil
+Wszystkie disposy powinny się robić wtedy kiedy naprawdę ich nie potrzebujemy - czyli zazwyczaj na koniec, przy wyjściu z aplikacji
+
+Trzeba poprawić po naciśnięciu resume, wywala poruszanie się postaci
+Nie porównuje się napisów za pomocą ==, od tego jest equals!
+
+I ogólnie, trzeba porobić porządek w kodzie - tj. klasy które działają na stage'ach - tak, na was patrzę GameScreen i Menu - dać klasę rodzica,
+i porobić trochę dziedziczenia, to wtedy po pierwsze odpadną potwórki w kodzie (sterownaie chociażby) no i co ważne, odpadnie kilku krotne ładowanie
+tych samych obiektów - chociazby klasa bohatera.
+
+Ogólnie, myślę że dobrą sprawą prowadzić takie zapiski - są w jednym miejscu i później, jeśli chce się sprawdzić dlaczego np jest w kodzie tak
+a nie inaczej, nie trzeba szukać albo zastanawiać się, tylko przejrzeć jeden plik.
+============================================================================================================================================
+
+
+//30.01.18 - Kamil
+Dodane masy, zmieniłem grawitację, żeby skok był "płynny",
+Bardzo zastanwiam się nad ustwianiem masek i filtrów kolizji - bo w zasadzie jedyne zastosowanie mają w przypadku potworów - reszta powinna ze
+sobą kolidować.
