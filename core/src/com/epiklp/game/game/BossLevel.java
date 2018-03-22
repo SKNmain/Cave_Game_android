@@ -51,6 +51,7 @@ public class BossLevel implements Screen {
     private SlimeBoss slime;
     private Array<GameObject> items;
     private Array<Body> mapBodies;
+    private Array<Enemy> enemies;
 
     private GameContactListener gameContactListener;
 
@@ -82,7 +83,11 @@ public class BossLevel implements Screen {
         mapBodies = MapBuilder.parseTiledObjectLayer(map.getLayers().get("collision").getObjects());
         items = MapBuilder.parseItemsAndObjectFromObjectLayer(map.getLayers().get("items").getObjects());
         slime = MapBuilder.findBoss(map.getLayers().get("characters").getObjects());
+        enemies = MapBuilder.parseEnemiesFromObjectLayer(map.getLayers().get("characters").getObjects());;
         for (GameObject i : items) {
+            stage.addActor(i);
+        }
+        for (GameObject i : enemies) {
             stage.addActor(i);
         }
         stage.addActor(slime);
@@ -137,6 +142,8 @@ public class BossLevel implements Screen {
         }
 
     }
+
+
     @Override
     public void render(float delta) {
 
@@ -150,8 +157,6 @@ public class BossLevel implements Screen {
             Cave.controller.draw();
             Cave.ui.updateHpBoss(slime.actLife, slime.maxLife);
             cave.ui.draw();
-
-
         } else if (Cave.state.equals(Cave.STATE.OPTION)){
             tmr.render();
             stage.draw();

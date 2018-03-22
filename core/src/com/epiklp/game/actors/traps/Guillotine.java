@@ -33,7 +33,7 @@ public class Guillotine extends Trap {
         JointCreator.initialRevoluteJoint(this.handlerBody,body, false, new Vector2(0,0), new Vector2(0, 2.5f));
 
         JointCreator.setLimitForRevoluteJoint(false, 0, 0, 0);
-        JointCreator.setMotorForRevoluteJoint(true, MathUtils.random(2,7), 50000f);
+        JointCreator.setMotorForRevoluteJoint(true, MathUtils.random(3,4    ), 50000f);
         this.joint = JointCreator.createRevoluteJoint();
     }
 

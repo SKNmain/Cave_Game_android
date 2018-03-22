@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.epiklp.game.actors.weapons.EnemyMelee;
 import com.epiklp.game.actors.weapons.Shootable;
@@ -66,7 +67,7 @@ public class SlimeBoss extends Enemy implements Shootable {
 
     @Override
     public void initStats() {
-        this.actLife = this.maxLife = 500;
+        this.actLife = this.maxLife = 450;
         this.attackSpeed = 10f;
         this.attackTime = 1.1f;
         this.runSpeed = 2.4f;
@@ -102,14 +103,11 @@ public class SlimeBoss extends Enemy implements Shootable {
                 && hero.getBody().getPosition().x < body.getPosition().x + attackRange) {
             body.setLinearVelocity(0, body.getLinearVelocity().y);
             wantToAttack();
-        }
-        else if(hero.getBody().getPosition().x < body.getPosition().x + attackRange) {
+        } else if (hero.getBody().getPosition().x < body.getPosition().x + attackRange) {
             state = STATE.RUNNING;
             turn = false;
             body.setLinearVelocity(-runSpeed, body.getLinearVelocity().y);
-        }
-        else if(hero.getBody().getPosition().x > body.getPosition().x - attackRange)
-        {
+        } else if (hero.getBody().getPosition().x > body.getPosition().x - attackRange) {
             state = STATE.RUNNING;
             turn = true;
             body.setLinearVelocity(runSpeed, body.getLinearVelocity().y);

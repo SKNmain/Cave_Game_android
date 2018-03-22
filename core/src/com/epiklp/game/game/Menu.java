@@ -68,7 +68,6 @@ public class Menu implements Screen {
         hero = new Hero(10, 100);  //Hero, przykładowa pozycja
         stage.addActor(hero);
 
-
         b2dr = new Box2DDebugRenderer();
         Body floor = BodyCreator.createBody(0, 15, true);
         floor.setUserData("floor");
@@ -90,6 +89,7 @@ public class Menu implements Screen {
         //Multi Events
 
         Cave.controller = new Controller(true);
+
         Gdx.input.setInputProcessor(new InputMultiplexer());
         InputMultiplexer inputMultiplexer = (InputMultiplexer) Gdx.input.getInputProcessor();
         inputMultiplexer.addProcessor(Cave.menuPause);
@@ -181,6 +181,7 @@ public class Menu implements Screen {
         } else if (Cave.state.equals(Cave.STATE.GAME)) {
             stage.act();
             stage.draw();
+            //Cave.ui.setViewport(viewport);
             Cave.controller.draw();
             Cave.ui.update(hero.maxLife, hero.actLife, hero.maxMana, hero.actMana, hero.maxAura, hero.actAura, hero.coin, hero.actLV, hero.actEXP, hero.maxEXP);
             cave.ui.draw();
@@ -243,7 +244,6 @@ public class Menu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override

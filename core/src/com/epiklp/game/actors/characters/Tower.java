@@ -41,7 +41,7 @@ public class Tower extends Enemy implements Shootable{
     @Override
     public void initStats() {
         this.actLife = this.maxLife = 100;
-        this.attackSpeed = 3.5f;
+        this.attackSpeed = 6f;
         this.attackTime = 1.1f;
         this.runSpeed = 0;
         this.strengh = 5;

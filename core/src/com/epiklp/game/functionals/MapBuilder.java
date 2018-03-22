@@ -63,9 +63,9 @@ public class MapBuilder {
                     enemies.add(new Slime(en.getRectangle().x , en.getRectangle().y));
                 }else if(Utils.equalsWithNulls(object.getName(), Tower.class.getSimpleName())){
                     enemies.add(new Tower(en.getRectangle().x , en.getRectangle().y));
-                }else if(Utils.equalsWithNulls(object.getName(), SlimeBoss.class.getSimpleName())){
-                    enemies.add(new SlimeBoss(en.getRectangle().x , en.getRectangle().y));
-                }
+                }//else if(Utils.equalsWithNulls(object.getName(), SlimeBoss.class.getSimpleName())){
+                   // enemies.add(new SlimeBoss(en.getRectangle().x , en.getRectangle().y));
+                //}
             }
 
         }
@@ -110,12 +110,6 @@ public class MapBuilder {
                     continue;
                 }else if( Utils.equalsWithNulls(object.getName(), "BOSS_MAP")){
                     bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, "BOSS_MAP"));
-                    shape.dispose();
-                    continue;
-                }
-                else if(Utils.equalsWithNulls((object.getProperties().get("type")), "Triger"))
-                {
-                    bodies.add(BodyCreator.createStaticBodyForMapBuild(shape, object.getName()));
                     shape.dispose();
                     continue;
                 }

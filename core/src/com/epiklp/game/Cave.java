@@ -3,6 +3,9 @@ package com.epiklp.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.epiklp.game.functionals.Assets;
 import com.epiklp.game.functionals.Controller;
 import com.epiklp.game.functionals.JsonFunction;
@@ -35,11 +38,14 @@ public class Cave extends Game {
     public static boolean renderBox2D, change;
     public static Pause menuPause;
     public static Controller controller;
-
+    public static OrthographicCamera camera;
+    public static Viewport viewport;
     @Override
     public void create() {
+        camera = new OrthographicCamera(Cave.WIDTH, Cave.HEIGHT);
+        viewport = new ExtendViewport(Cave.WIDTH, Cave.HEIGHT, camera);
         change = true;
-        renderBox2D = true;
+        renderBox2D = false;
         Assets.load();
         //Assets.MANAGER.finishLoading();
         //this.setScreen(new Logo(this));
@@ -57,21 +63,21 @@ public class Cave extends Game {
         JsonFunction.edit("Music");
         OwnSound.firstPlay();
         JsonFunction.updateJSON();
+
         ui = new UI();
         //Create physics
         TheBox.initWorld();
         menuPause = new Pause(true);
         controller = null;
-        //this.setScreen(new Logo(this));
+        this.setScreen(new Logo(this));
         //this.setScreen(new Menu(this));
         //this.setScreen(new GameLevel(this));
-        this.setScreen(new BossLevel(this));
+        //this.setScreen(new BossLevel(this));
 
     }
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override
